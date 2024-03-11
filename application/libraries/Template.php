@@ -14,6 +14,7 @@ class Template {
     //To render admin contents
     public function template_render($content, $data = NULL)
     {
+        $data['url']= base_url('/inspinia').'/';
         if ( ! $content)
         {
             return NULL;

@@ -26,10 +26,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $config['base_url'] = "http://localhost/fleet/";
 $config['base_url'] = "http://".$_SERVER['HTTP_HOST']."/fleet/";
 $config['theme'] = "-inspinia";
+$config['company_name'] = "Sangha";
 if(isset($_GET['old']) || $_SERVER['HTTP_HOST'] == 'localhost')
 {
 
-	$config['theme'] = "";
+	// $config['theme'] = "";
 }
 /*
 |--------------------------------------------------------------------------

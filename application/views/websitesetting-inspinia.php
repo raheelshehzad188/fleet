@@ -6,13 +6,6 @@
             </h1>
          </div>
          <!-- /.col -->
-         <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-               <li class="breadcrumb-item"><a href="<?= base_url(); ?>/dashboard">Home</a></li>
-               <li class="breadcrumb-item active">Settings</li>
-            </ol>
-         </div>
-         <!-- /.col -->
       </div>
       <!-- /.row -->
    </div>
@@ -23,10 +16,11 @@
    <div class="container-fluid">
       <div class="card">
          <div class="card-header">
-            <h3 class="card-title">Website Setting</h3>
+            <h3 class="card-title m-0 text-dark">Website Setting</h3>
          </div>
+         <div class="ibox-content">
          <form id="addnewcategory" class="basicvalidation" role="form" action="websitesetting_save" method="post" class="col-md-6" enctype='multipart/form-data'>
-            <div class="card-body">
+            <div class="card-body ">
                <div class="row">
                   <div class="col-sm-6 col-md-4">
                      <div class="form-group">
@@ -85,7 +79,7 @@
                      <button type="button" class="logodelete btn btn-primary">Delete</button>
                      <?php } ?>
                   </div>
-                  <div class="col-sm-6 col-md-3">
+                  <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label for="s_date_format" class="form-label">Date Format</label>
                         <select id="s_date_format" name="s_date_format" class="form-control " required="">
@@ -95,12 +89,14 @@
                         </select>
                       </div>
                     </div>     
-                  <div id="addnewcategory_submit" class="btn-block text-right mt-3">
-                     <button type="submit" class="btn btn-primary">Submit</button>
+                   <div style="padding-top: 13px;" class="col-md-12 btn-block text-right mt-3 border border-dark border-top">
+                            <button type="submit" class="btn btn-primary  ">Submit</button>
                   </div>
                </div>
             </div>
+        
          </form>
+      </div>
       </div>
    </div>
 </section>
