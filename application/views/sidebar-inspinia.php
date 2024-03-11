@@ -59,6 +59,27 @@
                </a>
             </li>
                <?php } ?>
+               <?php if(userpermission('lr_drivers_list') || userpermission('lr_drivers_add')) { ?>
+            <li class="<?php echo activate_menu('drivers');?> <?php echo activate_menu('adddrivers');?><?php echo activate_menu('editdriver');?>">
+                <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Driver's</span> <span class="fa arrow"></span></a>
+               
+               <ul class="nav nav-treeview">
+                  <?php if(userpermission('lr_drivers_list')) { ?>
+                  <li class="<?php echo activate_menu('drivers');?><?php echo activate_menu('editdriver');?>">
+                     <a href="<?= base_url(); ?>drivers" >
+                        Driver List
+                     </a>
+                  </li>
+                  <?php } if(userpermission('lr_drivers_add')) { ?>
+                  <li class="<?php echo activate_menu('adddrivers');?>">
+                     <a href="<?= base_url(); ?>drivers/adddrivers">
+                        Add Driver
+                     </a>
+                  </li>
+                  <?php } ?>
+               </ul>
+            </li>
+            <?php } ?>
                <li class="<?php echo activate_menu('vehicle');?> <?php echo activate_menu('addvehicle');?><?php echo activate_menu('viewvehicle');?><?php echo activate_menu('editvehicle');?><?php echo activate_menu('vehiclegroup');?>">
                     <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Vehicle's</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
