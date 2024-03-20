@@ -20,7 +20,7 @@ class Login extends CI_Controller {
             header("location: $url");
         } else {
         	if($this->config->item('theme'))
-	            $this->load->view('login'.$this->config->item('theme'));
+	            $this->load->view($this->config->item('theme').'/login');
         	else
             $this->load->view('login');
         }

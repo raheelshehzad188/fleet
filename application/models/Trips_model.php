@@ -2,12 +2,13 @@
 class Trips_model extends CI_Model{
 	public function add_trips($data) {   
 		unset($data['bookingemail']);
+		unset($data['petrol']);
+		unset($data['route']);
+		unset($data['expense']);
 		$insertdata = $data;
-		$insertdata['t_trackingcode'] = uniqid();
-		$insertdata['t_start_date'] = reformatDatetime($data['t_start_date']);
-		$insertdata['t_end_date'] = reformatDatetime($data['t_end_date']);
+		$insertdata['t_start_date'] = date("Y-m-d H:i:s", strtotime($data['t_start_date']));
+		$insertdata['t_end_date'] =  date("Y-m-d H:i:s", strtotime($data['t_end_date']));
 		$this->db->insert('trips',$insertdata);
-		//echo $this->db->last_query();
 		return $this->db->insert_id();
 	} 
     public function getall_customer() { 
@@ -70,8 +71,11 @@ class Trips_model extends CI_Model{
             return '';
         }
     }
-	public function get_tripdetails($t_id) { 
-		return $this->db->select('*')->from('trips')->where('t_id',$t_id)->get()->result_array();
+	public function get_tripdetails($t_id) {
+	    $det = $this->db->select('*')->from('trips')->where('t_id',$t_id)->get()->row_array();
+	    $route = $this->db->select('*')->from('trip_routes')->where('trip_id',$t_id)->get()->result_array();
+	    $expense = $this->db->select('*')->from('vih_expense')->where('trip_id',$t_id)->get()->result_array();
+		return array('detail'=>$det,'route'=>$route,'expense'=>$expense); 
 	}
 	public function update_trips($data) { 
 		$data['t_start_date'] = reformatDatetime($data['t_start_date']);

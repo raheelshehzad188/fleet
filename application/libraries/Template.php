@@ -24,11 +24,11 @@ class Template {
             if($this->CI->config->item('theme'))
             {
 
-                $this->template['header']  = $this->CI->load->view('header'.$this->CI->config->item('theme'), $data, TRUE);
-            $this->template['sidebar']  = $this->CI->load->view('sidebar'.$this->CI->config->item('theme'), $data, TRUE);
-            $this->template['content'] = $this->CI->load->view($content.$this->CI->config->item('theme'), $data, TRUE);
-            $this->template['footer']  = $this->CI->load->view('footer'.$this->CI->config->item('theme'), $data, TRUE);
-            return $this->CI->load->view('template'.$this->CI->config->item('theme'), $this->template);
+                $this->template['header']  = $this->CI->load->view($this->CI->config->item('theme').'/header', $data, TRUE);
+            $this->template['sidebar']  = $this->CI->load->view($this->CI->config->item('theme').'/sidebar', $data, TRUE);
+            $this->template['content'] = $this->CI->load->view($this->CI->config->item('theme').'/'.$content, $data, TRUE);
+            $this->template['footer']  = $this->CI->load->view($this->CI->config->item('theme').'/footer', $data, TRUE);
+            return $this->CI->load->view($this->CI->config->item('theme').'/template', $this->template);
             }
             else
             {

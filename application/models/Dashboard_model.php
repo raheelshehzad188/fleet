@@ -51,7 +51,7 @@ class Dashboard_model extends CI_Model
     }
     public function getvechicle_status()
     {
-        $SQLquery = 'SELECT `t_vechicle`,`t_trip_status`,b.v_name,b.v_registration_no FROM  trips a INNER join vehicles b on a.`t_vechicle`=b.v_id WHERE `t_id` IN (SELECT MAX(`t_id`) AS `t_id` FROM trips GROUP BY `t_vechicle`) ORDER BY t_trip_status';
+        $SQLquery = 'SELECT `t_vechicle`,b.v_name,b.v_registration_no FROM  trips a INNER join vehicles b on a.`t_vechicle`=b.v_id WHERE `t_id` IN (SELECT MAX(`t_id`) AS `t_id` FROM trips GROUP BY `t_vechicle`) ';
         $query    = $this->db->query($SQLquery);
         $vechdata = $query->result_array();
         if (!empty($vechdata)) {

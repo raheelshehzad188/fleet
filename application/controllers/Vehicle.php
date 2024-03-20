@@ -126,6 +126,11 @@ class Vehicle extends CI_Controller {
 		$data['vehiclegroup'] = $this->vehicle_model->get_vehiclegroup();
 		$this->template->template_render('vehicle_group',$data);
 	}
+	public function vehiclepart($id)
+	{
+		$data['vehiclegroup'] = $this->vehicle_model->get_vehiclepart();
+		$this->template->template_render('parts_types',$data);
+	}
 	public function vehiclegroup_delete()
 	{
 		$gr_id = $this->uri->segment(3);
