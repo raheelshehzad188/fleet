@@ -39,20 +39,21 @@ h5 {
   font-weight: 600;
 }
 .nav > li > a {
-  color: #a7b1c2;
+  color: #fff;
   font-weight: 600;
-  padding: 14px 20px 14px 25px;
+  padding: 10px 20px 10px 25px;
 }
 .nav.navbar-right > li > a {
   color: #999c9e;
 }
 .nav > li.active > a {
-  color: #ffffff;
+  color: #000;
+  background: #f2d900;
 }
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus {
-  background-color: #293846;
-  color: white;
+  background-color: #f2d900;
+  color: #222;
 }
 .nav .open > a,
 .nav .open > a:hover,
@@ -70,8 +71,8 @@ h5 {
   border: 0;
 }
 .navbar-default {
-  background-color: transparent;
-  border-color: #2f4050;
+  background-color: #007137;
+  border-color: #007137;
 }
 .navbar-top-links li {
   display: inline-block;
@@ -169,8 +170,7 @@ h5 {
 }
 .nav-header {
   padding: 33px 25px;
-  background-color: #2f4050;
-  background-image: url("patterns/header-profile.png");
+  background-color: #f2d900;
 }
 .pace-done .nav-header {
   transition: all 0.4s;
@@ -180,7 +180,7 @@ ul.nav-second-level {
 }
 .nav > li.active {
   border-left: 4px solid #19aa8d;
-  background: #293846;
+  background: #007137;
 }
 .nav.nav-second-level > li.active {
   border: none;
@@ -189,10 +189,10 @@ ul.nav-second-level {
   height: auto !important;
 }
 .nav-header a {
-  color: #DFE4ED;
+  color: #000;
 }
 .nav-header .text-muted {
-  color: #8095a8;
+  color: #222;
 }
 .minimalize-styl-2 {
   padding: 4px 12px;
@@ -651,8 +651,8 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   color: #fff;
 }
 .btn-primary {
-  background-color: #1ab394;
-  border-color: #1ab394;
+  background-color: #007137;
+  border-color: #007137;
   color: #FFFFFF;
 }
 .btn-primary:hover,
@@ -1088,7 +1088,7 @@ button.dim:active:before {
 }
 .label-primary,
 .badge-primary {
-  background-color: #1ab394;
+  background-color: #007137;
   color: #FFFFFF;
 }
 .label-success,
@@ -3472,7 +3472,7 @@ body.tour-open .animated {
 }
 body {
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #2f4050;
+  background-color: #f3f3f4;
   font-size: 13px;
   color: #676a6c;
   overflow-x: hidden;
@@ -3630,7 +3630,7 @@ video {
   padding: 0 20px;
 }
 .wrapper-content {
-  padding: 20px 10px 40px;
+  padding: 20px 3px 40px 0;
 }
 #page-wrapper {
   padding: 0 15px;
@@ -5866,6 +5866,7 @@ body.body-small .vote-icon {
 }
 .metismenu .collapse.in {
   display: block;
+  background: #f2d900;
 }
 .metismenu .collapsing {
   position: relative;
@@ -8432,8 +8433,10 @@ body.md-skin {
   }
   .navbar-static-side {
     z-index: 2001;
-    position: absolute;
+    position: fixed;
     width: 220px;
+    overflow-y: auto;
+    height: 100%;
   }
   .navbar-top-links .dropdown-messages,
   .navbar-top-links .dropdown-tasks,
@@ -8556,4 +8559,102 @@ body.md-skin {
 }
 .invalid-feedback{
   color: red !important;
+}
+
+
+.logo_box {
+    text-align: center;
+    padding: 8px 0 26px;
+}
+.logo_box img {
+    width: 100px;
+    /* border-radius: 100%; */
+    /* height: 100px; */
+    /* object-fit: cover; */
+}
+.body_bg{
+  background: url(https://fleet.quickon.pk/assets/uploads/canva-courier.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.formbox .btn-primary{
+    color: #fff;
+    background-image: linear-gradient(#f2d900, #f2d900);
+    border-radius: 35px;
+    border: none;
+    padding: 7px 0 10px;
+    outline: none;
+    font-size: 17px;
+    color: #000;
+}  
+.formbox  .ibox-content {
+    border-radius: 7px;
+    padding: 18px 26px 30px;
+}
+.head_box  h1{
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    margin: 0 0 10px;
+}
+
+ul.tabs{
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+ul.tabs li{
+  background: #f5f5f5;
+  color: #222;
+  display: inline-block;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+ul.tabs li.current{
+  background: #007137;
+  color: #fff;
+}
+.tab-content{
+  display: none;
+  background: #f5f5f5;
+  padding: 15px;
+  border: 1px solid #cccccca3;
+}
+.tab-content.current{
+  display: inherit;
+}
+.table_design table td{background: #fff;}
+.table_design table th{
+  background: #fff;
+}
+.card-footer{
+  padding-top: 15px;
+}
+.formbox .btn-white{
+    background: #007137;
+    color: #fff;
+    border-radius: 35px;
+    padding: 12px 0;
+    font-size: 14px;
+}
+.nav > li > a p{
+  margin-bottom: 0;
+}
+.metismenu .collapse.in a{
+  color: #000;
+}
+.white_bg{
+    margin: 0;
+    background: #fff;
+    padding: 10px 4px;
+    border: 1px solid #cccccc94;
+}
+.right_box .custom-checkbox{
+  display: inline-block;
+  margin: 0 21px 0 0;
+  width: 16%;
+}
+.left_box label{
+  color: #000;
 }
