@@ -28,7 +28,8 @@ class Template {
             $this->template['sidebar']  = $this->CI->load->view($this->CI->config->item('theme').'/sidebar', $data, TRUE);
             $this->template['content'] = $this->CI->load->view($this->CI->config->item('theme').'/'.$content, $data, TRUE);
             $this->template['footer']  = $this->CI->load->view($this->CI->config->item('theme').'/footer', $data, TRUE);
-            return $this->CI->load->view($this->CI->config->item('theme').'/template', $this->template);
+
+            return $this->CI->load->view($this->CI->config->item('theme').'/template', $this->template);#exit();
             }
             else
             {

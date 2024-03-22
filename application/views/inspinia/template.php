@@ -64,7 +64,11 @@ if (isset($footer))
     -moz-border-radius: 4px;
     border-radius: 4px;
 }
+.show{
+    display: nonefn q !important;
+}
     </style>
+}
 
 
 </head>
@@ -655,6 +659,23 @@ if (isset($footer))
         }
         function cal_distance()
         {
+            var pet = 0;
+            $('.dqty').each(function(i, obj) {
+                var key = $(this).attr('key');
+                var rate = 0;
+                if(parseFloat($('#drate_'+key).val()))
+                {
+                    rate = parseFloat($('#drate_'+key).val());
+                }
+                var qty = 0;
+                if(parseFloat($('#dqty_'+key).val()))
+                {
+                    qty = parseFloat($('#dqty_'+key).val());
+                }
+                var temp = rate * qty;
+                $('#dtot_'+key).val(temp);
+                pet = pet + parseFloat(temp);
+});
             var apr = 0;
             $('.route_dist').each(function(i, obj) {
                 apr = apr + parseFloat($(this).val());

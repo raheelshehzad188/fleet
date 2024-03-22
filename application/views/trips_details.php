@@ -19,8 +19,9 @@
       <div class="container-fluid">
     <div class="card">
       <?php
+      
       $totalpaidamt = 0;
-      if(count($paymentdetails)>=1) {
+      if(is_array($paymentdetails) && count($paymentdetails)>=1) {
       foreach ($paymentdetails as $payment) {
           $totalpaidamt += $payment['tp_amount'];
       } }

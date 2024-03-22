@@ -8,6 +8,8 @@ class Trips_model extends CI_Model{
 		$insertdata = $data;
 		$insertdata['t_start_date'] = date("Y-m-d H:i:s", strtotime($data['t_start_date']));
 		$insertdata['t_end_date'] =  date("Y-m-d H:i:s", strtotime($data['t_end_date']));
+		$insertdata['t_trip_amount'] =  $insertdata['tot_amount'];
+		unset($insertdata['tot_amount']);
 		$this->db->insert('trips',$insertdata);
 		return $this->db->insert_id();
 	} 
@@ -37,7 +39,7 @@ class Trips_model extends CI_Model{
 	public function getall_trips($trackingcode=false) { 
 		$newtripdata = array();
 		if($trackingcode) {
-			$tripdata = $this->db->select('*')->from('trips')->where('t_trackingcode',$trackingcode)->order_by('t_id','desc')->get()->result_array();
+			$tripdata = $this->db->select('*')->from('trips')->where('t_id',$trackingcode)->order_by('t_id','desc')->get()->result_array();
 		} else {
 			$tripdata = $this->db->select('*')->from('trips')->order_by('t_id','desc')->get()->result_array();
 		}
@@ -75,11 +77,25 @@ class Trips_model extends CI_Model{
 	    $det = $this->db->select('*')->from('trips')->where('t_id',$t_id)->get()->row_array();
 	    $route = $this->db->select('*')->from('trip_routes')->where('trip_id',$t_id)->get()->result_array();
 	    $expense = $this->db->select('*')->from('vih_expense')->where('trip_id',$t_id)->get()->result_array();
-		return array('detail'=>$det,'route'=>$route,'expense'=>$expense); 
+	    $fuel = $this->db->select('*')->from('tbl_fuel')->where('trip_id',$t_id)->get()->result_array();
+
+	    $vih=  array();
+	    if($det)
+            $vih =  $this->db->select('*')->from('vehicles')->where('v_id',$det['t_vechicle'])->get()->row();
+	    $diriver =  array();
+	    if($det)
+	    $diriver =  $this->db->select('*')->from('drivers')->where('d_id',$det['t_driver'])->get()->row();
+		return array('detail'=>$det,'route'=>$route,'expense'=>$expense,'driver'=>$diriver,'vehicle'=> $vih,'fuel'=>$fuel);
 	}
 	public function update_trips($data) { 
-		$data['t_start_date'] = reformatDatetime($data['t_start_date']);
-		$data['t_end_date'] = reformatDatetime($data['t_end_date']);
+		unset($data['bookingemail']);
+		unset($data['petrol']);
+		unset($data['route']);
+		unset($data['expense']);
+		$data['t_start_date'] = date("Y-m-d H:i:s", strtotime($data['t_start_date']));
+		$data['t_end_date'] =  date("Y-m-d H:i:s", strtotime($data['t_end_date']));
+		$data['t_trip_amount'] =  $data['tot_amount'];
+		unset($data['tot_amount']);
 		$this->db->where('t_id',$this->input->post('t_id'));
 		$this->db->update('trips',$data);
 		return $this->input->post('t_id');

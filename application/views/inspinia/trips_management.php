@@ -51,7 +51,7 @@
                             <a class="icon" href="<?php echo base_url(); ?>trips/edittrip/<?php echo output($triplists['t_id']); ?>">
                               <i class="fa fa-edit"></i>
                             </a> | 
-                            <a class="icon" href="<?php echo base_url(); ?>trips/details/<?php echo output($triplists['t_id']); ?>">
+                            <a class="icon" href="<?php echo base_url(); ?>trips/invoice/<?php echo output($triplists['t_id']); ?>">
                               <i class="fa fa-eye"></i>
                             </a>
                             <?php  } if(userpermission('lr_booking_del')) { ?> |

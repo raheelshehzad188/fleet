@@ -51,20 +51,54 @@ class Trips extends CI_Controller {
 		$data['vehiclegroup'] = $this->db->get('exp_types')->result_array();
 		$this->template->template_render('exp_type',$data);
 	}
+	//pumps
+
+	public function delpump($id)
+	{
+		$response = $this->db->where('id',$id)->delete('pumps');
+		if($response) {
+			$this->session->set_flashdata('successmessage', 'Pump deleted successfully..');
+		    redirect('trips/pump');
+		} else
+		{
+			$this->session->set_flashdata('warningmessage', 'Something went wrong..Try again');
+		    redirect('trips/pump');
+		}
+	}
+
+	public function addpump()
+	{
+		$response = $this->db->insert('pumps',$this->input->post());
+		if($response) {
+			$this->session->set_flashdata('successmessage', 'Pump added successfully..');
+		    redirect('trips/pump');
+		} else
+		{
+			$this->session->set_flashdata('warningmessage', 'Something went wrong..Try again');
+		    redirect('trips/pump');
+		}
+	}
+	public function pump()
+	{
+		$data['vehiclegroup'] = $this->db->get('pumps')->result_array();
+		$this->template->template_render('pumps',$data);
+	}
 	public function addtrips()
 	{
 		$data['customerlist'] = $this->trips_model->getall_customer();
 		$data['exp_types'] = $this->db->where('is_default','1')->get('exp_types')->result_array();
+		$data['pumps'] = $this->db->get('pumps')->result_array();
 		$data['vechiclelist'] = $this->trips_model->getall_vechicle();
 		$data['driverlist'] = $this->trips_model->getall_driverlist();
 		$this->template->template_render('trips_add',$data);
 	}
 	public function inserttrips() 
 	{
-		$testxss = xssclean($_POST);
+		$testxss = $_POST;
 		if($testxss){
 		    $route = $_POST['route'];
 		    $expense = $_POST['expense'];
+		    $petrol = $_POST['petrol'];
 			$response = $this->trips_model->add_trips($this->input->post());
 			if($route && $response)
 			{
@@ -72,16 +106,38 @@ class Trips extends CI_Controller {
 			
 			    for($i = 0 ; $i <= count($route) ;$i++)
 			    {
-			        $in = array(
-			            'route_from' => $route['route_from'][$i],
-			            'route_to' => $route['route_to'][$i],
-			            'distance' => $route['distance'][$i],
-			            'weight' => $route['weight'][$i],
-			            'unit_price' => $route['unit_price'][$i],
-			            'total' => $route['wages'][$i],
-			            'trip_id' => $response,
-			            );
-			        $r = $this->db->insert('trip_routes',$in);
+			    		if(!empty($route['route_from'][$i]))
+			    		{
+					        $in = array(
+					            'route_from' => $route['route_from'][$i],
+					            'route_to' => $route['route_to'][$i],
+					            'distance' => $route['distance'][$i],
+					            'weight' => $route['weight'][$i],
+					            'unit_price' => $route['unit_price'][$i],
+					            'total' => $route['wages'][$i],
+					            'trip_id' => $response,
+					            );
+					        $r = $this->db->insert('trip_routes',$in);
+					   }
+			    }
+			}
+			if($petrol && $response)
+			{
+			
+			
+			    for($i = 0 ; $i <= count($petrol) ;$i++)
+			    {
+			    		if(!empty($petrol['name'][$i]))
+			    		{
+					        $in = array(
+					            'pump' => $petrol['name'][$i],
+					            'fuel_quantity' => $petrol['fuel_quantity'][$i],
+					            'rate' => $petrol['rate'][$i],
+					            'amount' => $petrol['amount'][$i],
+					            'trip_id' => $response,
+					            );
+					        $r = $this->db->insert('tbl_fuel',$in);
+					   }
 			    }
 			}
 			if($expense && $response)
@@ -90,15 +146,26 @@ class Trips extends CI_Controller {
 			    {
 			        if(isset($expense['expense_id'][$i]) && !$expense['expense_id'][$i])
 			        {
-			            $expense['expense_id'][$i] = $this->db->insert('exp_types',array('name'=>$expense['exp_name'][$i]))->insert_id();
+                        $r = $this->db->insert('exp_types',array('name'=>$expense['exp_name'][$i]));
+                        if($r)
+                        {
+                            $expense['expense_id'][$i] = $this->db->insert_id();
+                        }
+                        else{
+                            var_dump($this->db->last_query());
+                            die();
+                        }
 			        }
-			        $in = array(
-			            'expense_id' => $expense['expense_id'][$i],
-			            'exp_name' => $expense['exp_name'][$i],
-			            'amount' => $expense['amount'][$i],
-			            'trip_id' => $response,
-			            );
-			        $r = $this->db->insert('vih_expense',$in);
+			        if(!empty($expense['expense_id'][$i]))
+			        {
+				        $in = array(
+				            'expense_id' => $expense['expense_id'][$i],
+				            'exp_name' => $expense['exp_name'][$i],
+				            'amount' => intval($expense['amount'][$i]),
+				            'trip_id' => $response,
+				            );
+				        $r = $this->db->insert('vih_expense',$in);
+				   }
 			    }
 			}
 			
@@ -122,6 +189,7 @@ class Trips extends CI_Controller {
 		$data['customerlist'] = $this->trips_model->getall_customer();
 		$data['vechiclelist'] = $this->trips_model->getall_vechicle();
 		$data['driverlist'] = $this->trips_model->getall_driverlist();
+        $data['pumps'] = $this->db->get('pumps')->result_array();
 		$data['exp_types'] = $this->db->where('is_default','1')->get('exp_types')->result_array();
 		$t_id = $this->uri->segment(3);
 		$data['tripdetails'] = $this->trips_model->get_tripdetails($t_id);
@@ -131,30 +199,51 @@ class Trips extends CI_Controller {
 
 	public function updatetrips()
 	{
-		$testxss = xssclean($_POST);
+		$testxss = $_POST;
 		if($testxss){
 			$route = $_POST['route'];
 		    $expense = $_POST['expense'];
+		    $petrol = $_POST['petrol'];
 			$response = $this->trips_model->update_trips($this->input->post());
 			if($route && $response)
 			{
 			    $this->db->where('trip_id',$response)->delete('trip_routes');
 			
 			
-			    for($i = 0 ; $i <= count($route) ;$i++)
+			    for($i = 0 ; $i <= count($route)-1 ;$i++)
 			    {
 			        $in = array(
-			            'route_from' => $route['route_from'][$i],
-			            'route_to' => $route['route_to'][$i],
-			            'distance' => $route['distance'][$i],
-			            'weight' => $route['weight'][$i],
-			            'unit_price' => $route['unit_price'][$i],
-			            'total' => $route['wages'][$i],
+			            'route_from' => isset($route['route_from'][$i])?$route['route_from'][$i]:'',
+			            'route_to' => (isset($route['route_to'][$i])?$route['route_to'][$i]:''),
+			            'distance' => (isset($route['distance'][$i])?$route['distance'][$i]:''),
+			            'weight' => (isset($route['weight'][$i])?$route['weight'][$i]:0),
+			            'unit_price' => (isset($route['unit_price'][$i])?$route['unit_price'][$i]:0),
+			            'total' => isset($route['wages'][$i])?$route['wages'][$i]:0,
 			            'trip_id' => $response,
 			            );
 			        $r = $this->db->insert('trip_routes',$in);
 			    }
 			}
+            if($petrol && $response)
+            {
+                $this->db->where('trip_id',$response)->delete('tbl_fuel');
+
+
+                for($i = 0 ; $i <= count($petrol) ;$i++)
+                {
+                    if(!empty($petrol['name'][$i]))
+                    {
+                        $in = array(
+                            'pump' => $petrol['name'][$i],
+                            'fuel_quantity' => $petrol['fuel_quantity'][$i],
+                            'rate' => $petrol['rate'][$i],
+                            'amount' => $petrol['amount'][$i],
+                            'trip_id' => $response,
+                        );
+                        $r = $this->db->insert('tbl_fuel',$in);
+                    }
+                }
+            }
 			if($expense && $response)
 			{
 			    $this->db->where('trip_id',$response)->delete('vih_expense');
@@ -173,13 +262,17 @@ class Trips extends CI_Controller {
 			                die();
 			            }
 			        }
-			        $in = array(
-			            'expense_id' => $expense['expense_id'][$i],
-			            'exp_name' => $expense['exp_name'][$i],
-			            'amount' => $expense['amount'][$i],
-			            'trip_id' => $response,
-			            );
-			        $r = $this->db->insert('vih_expense',$in);
+			        if(isset($expense['expense_id'][$i]))
+			        {
+				        $in = array(
+				            'expense_id' => $expense['expense_id'][$i],
+				            'exp_name' => $expense['exp_name'][$i],
+				            'amount' => $expense['amount'][$i],
+				            'trip_id' => $response,
+				            );
+
+				        $r = $this->db->insert('vih_expense',$in);
+			   		}
 			    }
 			}
 			if($response) {
@@ -198,13 +291,17 @@ class Trips extends CI_Controller {
 		$data = array();
 		$b_id = $this->uri->segment(3);
 		$tripdetails = $this->trips_model->get_tripdetails($b_id);
-		if(isset($tripdetails[0]['t_id'])) {
-			$customerdetails = $this->customer_model->get_customerdetails($tripdetails[0]['t_customer_id']);
-			$driverdetails = $this->drivers_model->get_driverdetails($tripdetails[0]['t_driver']);
-			$data['paymentdetails'] = $this->trips_model->get_paymentdetails($tripdetails[0]['t_id']);
-			$data['tripdetails'] = $tripdetails[0];
-			$data['customerdetails'] = (isset($customerdetails[0]['c_id']))?$customerdetails[0]:'';
-			$data['driverdetails'] =  (isset($driverdetails[0]['d_id']))?$driverdetails[0]:'';
+		if(isset($tripdetails['detail']['t_id'])) {
+			$customerdetails = $this->customer_model->get_customerdetails($tripdetails['detail']['t_customer_id']);
+			if(isset($customerdetails[0]))
+			{
+				$customerdetails = (array) $customerdetails[0];
+			}
+			$driverdetails = $this->drivers_model->get_driverdetails($tripdetails['detail']['t_driver']);
+			$data['paymentdetails'] = $this->trips_model->get_paymentdetails($tripdetails['detail']['t_id']);
+			$data['tripdetails'] = $tripdetails['detail'];
+			$data['customerdetails'] = (isset($customerdetails['c_id']))?$customerdetails:'';
+			$data['driverdetails'] =  (isset($driverdetails['detail']['d_id']))?$driverdetails['detail']:'';
 		}
 		$this->template->template_render('trips_details',$data);
 	}
@@ -213,13 +310,25 @@ class Trips extends CI_Controller {
 		$data = array();
 		$b_id = $this->uri->segment(3);
 		$tripdetails = $this->trips_model->get_tripdetails($b_id);
-		if(isset($tripdetails[0]['t_id'])) {
-			$customerdetails = $this->customer_model->get_customerdetails($tripdetails[0]['t_customer_id']);
-			$driverdetails = $this->drivers_model->get_driverdetails($tripdetails[0]['t_driver']);
-			$data['paymentdetails'] = $this->trips_model->get_paymentdetails($tripdetails[0]['t_id']);
-			$data['tripdetails'] = $tripdetails[0];
-			$data['customerdetails'] = (isset($customerdetails[0]['c_id']))?$customerdetails[0]:'';
-			$data['driverdetails'] =  (isset($driverdetails[0]['d_id']))?$driverdetails[0]:'';
+        if(isset($_GET['print']))
+        {
+            var_dump($tripdetails);
+            die();
+        }
+		if(isset($tripdetails['detail']['t_id'])) {
+			$customerdetails = $this->customer_model->get_customerdetails($tripdetails['detail']['t_customer_id']);
+			if(isset($customerdetails[0]))
+			{
+				$customerdetails = (array) $customerdetails[0];
+			}
+			$driverdetails = $this->drivers_model->get_driverdetails($tripdetails['detail']['t_driver']);
+			$data['paymentdetails'] = $this->trips_model->get_paymentdetails($tripdetails['detail']['t_id']);
+			$data['tripdetails'] = $tripdetails['detail'];	
+			$data['detail'] = $tripdetails;
+			$data['customerdetails'] = (isset($customerdetails['c_id']))?$customerdetails:'';
+
+			$data['driverdetails'] =  (isset($tripdetails['driver']))?$tripdetails['driver']:array();
+			$data['vehicle'] =  (isset($tripdetails['vehicle']))?$tripdetails['vehicle']:array();
 		}
 		if($this->config->item('theme'))
         {

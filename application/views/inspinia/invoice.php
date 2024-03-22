@@ -162,15 +162,20 @@
   <div class="inv_bdr">
     <div class="clearfix">
     <div class="label_input">
-      <span>7 Days</span>
+      <span><?php
+        $dateFrom = new DateTime(date("Y-m-d", strtotime($tripdetails['t_end_date'])));
+$dateTo = new DateTime(date("Y-m-d", strtotime($tripdetails['t_start_date'])));
+
+echo $dateFrom->diff($dateTo)->days;
+    ?> Days</span>
       <label>Period</label>
     </div>
     <div class="label_input">
-      <span>15-3-2024</span>
+      <span><?= date("Y-m-d", strtotime($tripdetails['t_end_date'])); ?></span>
       <label>Date To</label>
     </div>
     <div class="label_input">
-      <span>14-2-2024</span>
+      <span><?= date("Y-m-d", strtotime($tripdetails['t_start_date'])); ?></span>
       <label>Date From</label>
     </div>
     <div class="label_input">
@@ -189,11 +194,11 @@
       <label>2nd Driver</label>
     </div>
     <div class="label_input">
-      <span>Hassan</span>
+      <span><?= $driverdetails->d_name ?></span>
       <label>1st Driver</label>
     </div>
     <div class="label_input">
-      <span>TLP-20234</span>
+      <span><?= $vehicle->v_registration_no ?></span>
       <label>Vehicle No.</label>
     </div>
     </div>
@@ -201,73 +206,39 @@
 
 
   <div class="expense_box">
-    <div class="clearfix">
-        <div class="expense_box_input">
-          <span>Qamarmishani</span>
-          <label>From</label>
-        </div>
-        <div class="expense_box_input">
-          <span>Khushab</span>
-          <label>To</label>
-        </div>
-        <div class="expense_box_input">
-          <span>100ton</span>
-          <label>Weight</label>
-        </div>
-        <div class="expense_box_input">
-          <span>23454</span>
-          <label>Rate</label>
-        </div>
-        <div class="expense_box_input">
-          <span>54578575</span>
-          <label>Rent</label>
-        </div>
-    </div>
-    <div class="clearfix">
-        <div class="expense_box_input">
-          <span>Qamarmishani</span>
-          <label>From</label>
-        </div>
-        <div class="expense_box_input">
-          <span>Khushab</span>
-          <label>To</label>
-        </div>
-        <div class="expense_box_input">
-          <span>100ton</span>
-          <label>Weight</label>
-        </div>
-        <div class="expense_box_input">
-          <span>23454</span>
-          <label>Rate</label>
-        </div>
-        <div class="expense_box_input">
-          <span>54578575</span>
-          <label>Rent</label>
-        </div>
-    </div>
+      <?php
+      $tot_rev = 0;
+      foreach($detail['route'] as $k=> $v)
+      {
+          $srev = $v['unit_price'] * $v['weight'];
+          $tot_rev = $tot_rev + $srev;
 
+          ?>
     <div class="clearfix">
         <div class="expense_box_input">
-          <span>Qamarmishani</span>
+          <span><?= $v['route_from']; ?></span>
           <label>From</label>
         </div>
         <div class="expense_box_input">
-          <span>Khushab</span>
+          <span><?= $v['route_to'] ?></span>
           <label>To</label>
         </div>
         <div class="expense_box_input">
-          <span>100ton</span>
+          <span><?= $v['weight'] ?></span>
           <label>Weight</label>
         </div>
         <div class="expense_box_input">
-          <span>23454</span>
+          <span><?= $v['unit_price'] ?></span>
           <label>Rate</label>
         </div>
         <div class="expense_box_input">
-          <span>54578575</span>
+          <span><?= $srev ?></span>
           <label>Rent</label>
         </div>
     </div>
+          <?php
+      }
+      ?>
 
     <div class="clearfix">
       <div class="desial_report">
@@ -313,7 +284,7 @@
 
 
         <div class="list__items">
-          <label>92793</label>
+          <label><?= $tot_rev ?></label>
           <button type="button">Total Income</button>
         </div>
         <div class="list__items">

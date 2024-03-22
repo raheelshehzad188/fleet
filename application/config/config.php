@@ -23,8 +23,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+$lenv = 'local';
+// $lenv = 'live';
+if($lenv == 'local')
+{
 $config['base_url'] = "http://localhost/fleet/";
 $config['base_url'] = "http://".$_SERVER['HTTP_HOST']."/fleet/";
+}
+else
+{
+$config['base_url'] = "https://fleet.quickon.pk/";
+}
 $config['theme'] = "inspinia";
 $config['company_name'] = "Sangha";
 if(isset($_GET['old']) || $_SERVER['HTTP_HOST'] == 'localhost')

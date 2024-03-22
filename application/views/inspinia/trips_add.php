@@ -90,19 +90,56 @@
                         <tr>
                           <th scope="col">Pump Name</th>
                           <th scope="col">Deisel Quantity</th>
-                          <th scope="col">Deisel</th>
+                          <th scope="col">Rate</th>
+                          <th scope="col">Amount</th>
                           <th scope="col">Action</th>
                         </tr>
                       </thead>
                       <tbody id="petrcontent">
+                      <?php
+                      $fuelindex = 0;
+                      if(isset($tripdetails['fuel']) && $tripdetails['fuel'])
+                      {
+                          foreach($tripdetails['fuel'] as $k=> $v)
+                          {
+                              $fuelindex++;
+                              ?>
+                              <tr id="pet_<?= $fuelindex ?>" >
+                                  <td scope="col">
+                                      <select name="petrol[name][]" class="form-control">
+                                          <?php
+                                          foreach ($pumps as $key => $value) {
+                                          ?>
+                                          <option value="<?=$value['id'] ?>" <?= $v['name'] == $value['id']?'selected':''; ?> ><?=$value['name'] ?></option>
+                                      <?php
+                                      }
+                                      ?></td>
+                                  <td scope="col"><input class="form-control dqty" key="index"onkeyup="cal_distance()" id="dqty_index" placeholder="Deisel Quantity" type="text" value="<?= $v['fuel_quantity'] ?>" name="petrol[fuel_quantity][]" /></td>
+                                  <td scope="col"><input class="form-control"onkeyup="cal_distance()" id="drate_index"  key="index" placeholder="Rate" type="text" name="petrol[rate][]" value="<?= $v['rate'] ?>" /></td>
+                                  <td scope="col"><input class="form-control" readonly="true"  id="dtot_index" placeholder="Deisel" type="text" name="petrol[amount][]" value="<?= $v['amount'] ?>" /></td>
+                                  <td scope="col"><button type="button" class="btn btn-danger"  onclick="del_pet(<?= $fuelindex ?>)">-</button></td>
+                              </tr>
+                              <?php
+                          }
+                      }
+                      ?>
                       </tbody>
                       <tfoot>
                           <tr>
-                              <td colspan="12" style="text-align: right;"><button style="background: #007137;font-size: 12px;"  type="button" index="1" class="add_more btn btn-success" target="#petrcontent" content='
+                              <td colspan="12" style="text-align: right;"><button style="background: #007137;font-size: 12px;"  type="button" index="<?= $fuelindex +1 ?>" class="add_more btn btn-success" target="#petrcontent" content='
                           <tr id="pet_index" >
-                          <td scope="col"><input type="text" class="form-control" placeholder="Pump Name" name="petrol[pump name][]" /></td>
-                          <td scope="col"><input class="form-control" placeholder="Deisel Quantity" type="text" name="petrol[deisel quantity][]" /></td>
-                          <td scope="col"><input class="form-control" placeholder="Deisel" type="text" name="petrol[deisel][]" /></td>
+                          <td scope="col">
+                            <select name="petrol[name][]" class="form-control">
+                              <?php
+                                foreach ($pumps as $key => $value) {
+                                  ?>
+                                    <option value="<?=$value['id'] ?>"><?=$value['name'] ?></option>
+                                  <?php
+                                }
+                              ?></td>
+                          <td scope="col"><input class="form-control dqty" key="index"onkeyup="cal_distance()" id="dqty_index" placeholder="Deisel Quantity" type="text" name="petrol[fuel_quantity][]" /></td>
+                          <td scope="col"><input class="form-control"onkeyup="cal_distance()" id="drate_index"  key="index" placeholder="Rate" type="text" name="petrol[rate][]" /></td>
+                          <td scope="col"><input class="form-control" readonly="true"  id="dtot_index" placeholder="Deisel" type="text" name="petrol[amount][]" /></td>
                           <td scope="col"><button type="button" class="btn btn-danger"  onclick="del_pet(index)">-</button></td>
                         </tr>
                           '>  <i class="fa fa-plus"></i> Add More</button></td>
@@ -252,7 +289,7 @@
                                         <div class="col-sm-6 col-md-12">
                   <div class="form-group">
                      <label class="form-label">Total Amount<span class="form-required">*</span></label>
-                     <input type="text" id="tot_amount" readonly="true" value="<?php echo (isset($tripdetails)) ? $tripdetails['detail']['t_trip_amount']:'' ?>" name="t_trip_amount" value="" class="form-control" placeholder="Total Amount">
+                     <input type="text" id="tot_amount" readonly="true" value="<?php echo (isset($tripdetails)) ? $tripdetails['detail']['t_trip_amount']:'' ?>" name="tot_amount" value="" class="form-control" placeholder="Total Amount">
                   </div>
                </div>
                 <div class="col-sm-6 col-md-12">
@@ -264,7 +301,7 @@
                 <div class="col-sm-6 col-md-12">
                   <div class="form-group">
                      <label class="form-label">Grand Total<span class="form-required">*</span></label>
-                     <input type="text" id="grand_total" readonly="true" value="<?php echo (isset($tripdetails)) ? $tripdetails['detail']['t_trip_amount']- $tripdetails['detail']['t_exp_amount']:'' ?>" name="t_exp_amount" value="" class="form-control" placeholder="Total Expense">
+                     <input type="text" id="grand_total" readonly="true" value="<?php echo (isset($tripdetails)) ? $tripdetails['detail']['t_trip_amount']- $tripdetails['detail']['t_exp_amount']:'' ?>" value="" class="form-control" placeholder="Total Expense">
                   </div>
                </div>
                                         
