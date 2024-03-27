@@ -12,14 +12,89 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        
+      <form method="post" id="trip_add" class="card" action="" novalidate="novalidate">
+         <div class="card-body">
+            <div class="row">
+                   
+                <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label class="form-label">Serial No<span class="form-required">*</span></label>
+                     <input type="text" name="t_trackingcode" value="" class="form-control" id="t_trackingcode">
+                  </div>
+               </div>        
+               <div class="col-sm-6 col-md-3">
+                  <label class="form-label">Customer Name<span class="form-required">*</span></label>
+                  <div class="form-group">
+                     <select id="t_customer_id" class="form-control" required="true" name="t_customer_id">
+                        <option value="">Select Customer</option>
+                                                <option value="1">A company</option>
+                                                </select>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label class="form-label">Vechicle<span class="form-required">*</span></label>
+                     <select id="t_vechicle" class="form-control" name="t_vechicle">
+                        <option value="">Select Vechicle</option>
+                                                <option value="6">cdc - 1223</option>
+                                             </select>
+                  </div>
+               </div>
+               
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label class="form-label">Driver<span class="form-required">*</span></label>
+                     <select id="t_driver" class="form-control" name="t_driver">
+                       <option value="">Select Driver</option>
+                                                <option value="1">hdg update</option>
+                                             </select>
+                  </div>
+               </div>
+               
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label class="form-label">Trip Start Date<span class="form-required">*</span></label>
+                     <input type="text" id="t_start_date" value="<?php echo date('Y-m-d', strtotime('-30 days')); ?>" name="t_start_date" class="form-control datetimepicker" placeholder="Trip Start Date" autocomplete="off">
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label class="form-label">Trip End Date<span class="form-required">*</span></label>
+                     <input type="text"id="t_end_date" value="<?php echo date('Y-m-d'); ?>"  name="t_end_date" class="form-control datetimepicker" placeholder="Trip End Date" autocomplete="off">
+                  </div>
+               </div>
+                 <div class="col-sm-6 card-footer">
+               <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+            </div>
+
+            </div>
+            </div>
+            </form>
     <div class="card">
 
         <div class="card-body p-0">
           
 
          <div class="table-responsive">
-          <div class="ibox-content">
+            <div class="ibox-content">
+             <table id="item-list" class="table table-bordered table-striped table-hover">
+        		<thead>
+        			<tr>
+        				<th>ID</th>
+        				<th>Serial No</th>
+        				<th>Customer Name</th>
+        				<th>Driver Name</th>
+        				<th>Vehicle Name</th>
+        				<th>Total Amount</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        
+        
+        		</tbody>
+        	</table>
+        
+          <?php /* ?><div class="ibox-content">
                     <table id="triptbl" class="table card-table table-vcenter text-nowrap">
                       <thead>
                         <tr>
@@ -63,7 +138,8 @@
                         </tr>
                         <?php  } ?>
                       </tbody>
-                    </table>
+                      
+                    </table><?php */ ?>
                    
         </div>         
         </div>
@@ -75,5 +151,27 @@
     </section>
     <!-- /.content -->
 
+<script type="text/javascript">
+$(document).ready(function() {
+    var dataTable = $('#item-list').DataTable({
+        "ajax": {
+            url : "trips/trip_table",
+            type : 'POST',
+            data: function(d) {
+                d.start_date = $('#t_start_date').val();
+                d.end_date = $('#t_end_date').val();
+                d.t_trackingcode = $('#t_trackingcode').val();
+                d.t_customer_id = $('#t_customer_id').val();
+                d.t_vechicle = $('#t_vechicle').val();
+                d.t_driver = $('#t_driver').val();
+            }
+        },
+    });
+    $('#submit').click(function(e) {
+        e.preventDefault();
+        dataTable.ajax.reload();
+    });
+});
+</script>
 
 

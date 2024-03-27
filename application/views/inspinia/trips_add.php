@@ -44,6 +44,12 @@
                </div>
                <div class="col-sm-6 col-md-3">
                   <div class="form-group">
+                     <label class="form-label">Serial No<span class="form-required">*</span></label>
+                     <input type="text" name="t_trackingcode" value="<?php echo (isset($tripdetails)) ? $tripdetails['detail']['t_trackingcode']:'' ?>"  class="form-control t_trackingcode"  readonly="true">
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
                      <label class="form-label">Driver<span class="form-required">*</span></label>
                      <select id="t_driver"  class="form-control"  name="t_driver">
                        <option value="">Select Driver</option>
@@ -59,6 +65,19 @@
                      <input type="text" id="appp_km" readonly="true" value="<?php echo (isset($tripdetails)) ? $tripdetails['detail']['t_totaldistance']:'' ?>"  name="t_totaldistance" id="t_totaldistance" class="form-control" placeholder="Approx Total KM">
                   </div>
                </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label class="form-label">Start Meter<span class="form-required">*</span></label>
+                     <input type="text" value="<?php echo (isset($tripdetails)) ? date(datetimeformat(), strtotime($tripdetails['detail']['t_start_date'])):'' ?>" name="t_start_date" value="" class="form-control" placeholder="Start Meter">
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label class="form-label">End Meter<span class="form-required">*</span></label>
+                     <input type="text" value="<?php echo (isset($tripdetails)) ? date(datetimeformat(), strtotime($tripdetails['detail']['t_end_date'])):'' ?>" name="t_end_date" value="" class="form-control" placeholder="End Meter">
+                  </div>
+               </div>
+                
                <div class="col-sm-6 col-md-3">
                   <div class="form-group">
                      <label class="form-label">Trip Start Date<span class="form-required">*</span></label>
@@ -136,7 +155,9 @@
                                     <option value="<?=$value['id'] ?>"><?=$value['name'] ?></option>
                                   <?php
                                 }
-                              ?></td>
+                              ?>
+                              </select>
+                            </td>
                           <td scope="col"><input class="form-control dqty" key="index"onkeyup="cal_distance()" id="dqty_index" placeholder="Deisel Quantity" type="text" name="petrol[fuel_quantity][]" /></td>
                           <td scope="col"><input class="form-control"onkeyup="cal_distance()" id="drate_index"  key="index" placeholder="Rate" type="text" name="petrol[rate][]" /></td>
                           <td scope="col"><input class="form-control" readonly="true"  id="dtot_index" placeholder="Deisel" type="text" name="petrol[amount][]" /></td>
@@ -156,7 +177,6 @@
                         <tr>
                           <th scope="col">From</th>
                           <th scope="col">To</th>
-                          <th scope="col">Distance</th>
                           <th scope="col">Weight</th>
                           <th scope="col">Unit Price</th>
                           <th scope="col">Wages</th>
@@ -173,9 +193,18 @@
                                   $routeindex++;
                                   ?>
                                     <tr id="row_<?= $routeindex ?>" >
-                          <td scope="col"><input type="text" class="form-control" placeholder="From" name="route[route_from][]" value="<?= $v['route_from'] ?>" /></td>
+                          <td scope="col">
+                            <select name="route[route_from][]" class="form-control">
+                              <?php
+                                foreach ($routes as $key => $value) {
+                                  ?>
+                                    <option value="<?=$value['id'] ?>"><?=$value['name'] ?></option>
+                                  <?php
+                                }
+                              ?>
+                              </select>
+                          </td>
                           <td scope="col"><input class="form-control" placeholder="To" type="text" name="route[route_to][]" value="<?= $v['route_to'] ?>" /></td>
-                          <td scope="col"><input class="form-control route_dist" placeholder="To" type="text" name="route[distance][]"  value="<?= $v['distance'] ?>" onkeyup="cal_distance()" /></td>
                           <td scope="col"><input class="form-control weight" placeholder="Weight" type="text" name="route[weight][]"  value="<?= $v['weight'] ?>" onkeyup="cal_wages(<?=  $routeindex ?>)" /></td>
                           <td scope="col"><input class="form-control unit_price" placeholder="Unit Price" type="text" name="route[unit_price][]"  value="<?= $v['unit_price'] ?>"  onkeyup="cal_wages(<?= $routeindex ?>)" /></td>
                           <td scope="col"><input class="form-control wages" placeholder="Wages" type="text" name="route[wages][]"  value="<?= $v['total'] ?>" readonly="true"  /></td>
@@ -191,9 +220,29 @@
                               
                               <td  colspan="12" style="text-align: right;"><button style="background: #007137;font-size: 12px;"  type="button" index="<?= $routeindex+1 ?>" class="add_more btn btn-success" target="#routecontent" content='
                           <tr id="row_index" >
-                          <td scope="col"><input type="text" class="form-control" placeholder="From" name="route[route_from][]" /></td>
-                          <td scope="col"><input class="form-control" placeholder="To" type="text" name="route[route_to][]" /></td>
-                          <td scope="col"><input class="form-control route_dist" placeholder="To" type="text" name="route[distance][]" onkeyup="cal_distance()" /></td>
+                          <td scope="col">
+
+                            <select name="route[route_from][]" class="form-control">
+                              <?php
+                                foreach ($routes as $key => $value) {
+                                  ?>
+                                    <option value="<?=$value['name'] ?>"><?=$value['name'] ?></option>
+                                  <?php
+                                }
+                              ?>
+                            </select>
+                          </td>
+                          <td scope="col">
+                           <select name="route[route_to][]" class="form-control">
+                              <?php
+                                foreach ($routes as $key => $value) {
+                                  ?>
+                                    <option value="<?=$value['name'] ?>"><?=$value['name'] ?></option>
+                                  <?php
+                                }
+                              ?>
+                            </select>
+                          </td>
                           <td scope="col"><input class="form-control weight" placeholder="Weight" type="text" name="route[weight][]" onkeyup="cal_wages(index)" /></td>
                           <td scope="col"><input class="form-control unit_price" placeholder="Unit Price" type="text" name="route[unit_price][]"  onkeyup="cal_wages(index)" /></td>
                           <td scope="col"><input class="form-control wages" placeholder="Wages" type="text" name="route[wages][]" readonly="true"  /></td>
@@ -340,4 +389,24 @@ $(document).ready(function(){
 
 })
 </script>
-
+<script type="text/javascript">
+	$('#t_vechicle').on('change',function(){
+		var id = $(this).val();
+		$('.t_trackingcode').val('');
+		if(id != ''){
+		$.ajax({
+        url: '<?php echo base_url('trips/generate_serial_no')?>',
+        type: "Post",
+        async: true,
+        data: { id:id},
+        success: function (data) {
+           if(data){
+           	$('.t_trackingcode').val(data);
+           }
+        }
+    });
+	}
+		
+	})
+	 
+</script>

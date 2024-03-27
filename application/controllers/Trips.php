@@ -20,6 +20,72 @@ class Trips extends CI_Controller {
 		$data['triplist'] = $this->trips_model->getall_trips();
 		$this->template->template_render('trips_management',$data);
 	}
+      public function trip_table(){
+            
+        $draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
+        
+        $searchquery = '';
+        $start_date= $_POST['start_date'];
+        $end_date= $_POST['end_date'];
+        $tracking= $_POST['t_trackingcode'];
+        $customer = $_POST['t_customer_id'];
+        $t_vechicle= $_POST['t_vechicle'];
+        $driver= $_POST['t_driver'];
+        
+        
+        $this->db->select('t.t_id,t.t_customer_id,t.t_driver, t.t_start_date, t.t_end_date, t.t_totaldistance, t.t_trip_amount, t.t_exp_amount, t.t_trackingcode, c.c_name, d.d_name, v.v_name');
+        $this->db->from('trips as t');
+        $this->db->join('customers as c', 'c.c_id = t.t_customer_id', 'left');
+        $this->db->join('drivers as d', 'd.d_id = t.t_driver', 'left');
+        $this->db->join('vehicles as v', 'v.v_id = t.t_vechicle', 'left');
+        
+        if(isset($tracking) && !empty($tracking)){
+            $this->db->where("t.t_trackingcode = '$tracking'");
+        }else{
+        if(isset($start_date) && isset($end_date)){
+        $start_date = date('Y-m-d', strtotime($start_date));
+        $end_date = date('Y-m-d', strtotime($end_date));
+        $this->db->where("t.t_start_date >= '$start_date' AND t.t_start_date <= '$end_date'");
+        }
+        if(isset($customer) && !empty($customer)){
+        $this->db->where("t.t_customer_id = '$customer'");
+        }
+        if(isset($t_vechicle) && !empty($t_vechicle)){
+        $this->db->where("t.t_vechicle = '$t_vechicle'");
+        }
+        if(isset($driver) && !empty($driver)){
+        $this->db->where("t.t_driver = '$driver'");
+        }
+        }
+
+        $query = $this->db->get()->result(); 
+        //echo $this->db->last_query();
+        // die();
+        $data = [];
+        $sr=1;
+        foreach($query as $r) {
+            $data[] = array(
+                $sr++,
+                $r->t_trackingcode,
+                $r->c_name,
+                $r->d_name,
+                $r->v_name,
+                $r->t_trip_amount
+            );
+        }
+    
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => count($query),
+            "recordsFiltered" => count($query),
+            "data" => $data
+        );
+    
+        echo json_encode($result);
+        exit();
+    }
 
 	public function delexp($id)
 	{
@@ -51,6 +117,37 @@ class Trips extends CI_Controller {
 		$data['vehiclegroup'] = $this->db->get('exp_types')->result_array();
 		$this->template->template_render('exp_type',$data);
 	}
+	public function routes()
+	{
+		$data['routes'] = $this->db->get('routes')->result_array();
+		$this->template->template_render('routes',$data);
+	}
+	public function addroute()
+	{
+		$response = $this->db->insert('routes',$this->input->post());
+
+		if($response) {
+			$this->session->set_flashdata('successmessage', 'route added successfully..');
+		    redirect('trips/routes');
+		} else
+		{
+			$this->session->set_flashdata('warningmessage', 'Something went wrong..Try again');
+		    redirect('trips/routes');
+		}
+	}
+	public function delroute($id)
+	{
+		$response = $this->db->where('id',$id)->delete('routes');
+		if($response) {
+			$this->session->set_flashdata('successmessage', 'Expense deleted successfully..');
+		    redirect('trips/routes');
+		} else
+		{
+			$this->session->set_flashdata('warningmessage', 'Something went wrong..Try again');
+		    redirect('trips/routes');
+		}
+	}
+
 	//pumps
 
 	public function delpump($id)
@@ -88,6 +185,7 @@ class Trips extends CI_Controller {
 		$data['customerlist'] = $this->trips_model->getall_customer();
 		$data['exp_types'] = $this->db->where('is_default','1')->get('exp_types')->result_array();
 		$data['pumps'] = $this->db->get('pumps')->result_array();
+		$data['routes'] = $this->db->get('routes')->result_array();
 		$data['vechiclelist'] = $this->trips_model->getall_vechicle();
 		$data['driverlist'] = $this->trips_model->getall_driverlist();
 		$this->template->template_render('trips_add',$data);
@@ -413,5 +511,10 @@ class Trips extends CI_Controller {
 			$this->session->set_flashdata('warningmessage', 'Unexpected error..Try again');
 		}
 		redirect('trips');
+	}
+	public function generate_serial_no(){
+		$id = $_POST['id'];
+		$ser = $this->trips_model->generate_serial_no($id);
+		echo $ser;
 	}
 }

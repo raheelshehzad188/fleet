@@ -80,6 +80,27 @@
                </ul>
             </li>
             <?php } ?>
+                 <?php /*if(userpermission('lr_drivers_list') || userpermission('lr_drivers_add')) { ?>
+            <li class="<?php echo activate_menu('category');?> <?php echo activate_menu('addcategory');?><?php echo activate_menu('editrole');?>">
+                <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Category</span> <span class="fa arrow"></span></a>
+               
+               <ul class="nav nav-treeview">
+                  <?php if(userpermission('lr_drivers_list')) { ?>
+                  <li class="<?php echo activate_menu('category');?><?php echo activate_menu('editcategory');?>">
+                     <a href="<?= base_url(); ?>category" >
+                         Category List
+                     </a>
+                  </li>
+                  <?php } if(userpermission('lr_drivers_add')) { ?>
+                  <li class="<?php echo activate_menu('addcategory');?>">
+                     <a href="<?= base_url(); ?>category/addcategory">
+                        Add Category
+                     </a>
+                  </li>
+                  <?php } ?>
+               </ul>
+            </li>
+            <?php } */?>
             <?php if(userpermission('lr_cust_list') || userpermission('lr_cust_add')) { ?>
             <li class="nav-item <?=activate_menu('addcustomer') ?><?= activate_menu('editcustomer')?><?= activate_menu('customer')?>">
                <a href="index.html"><i class="fa fa-user"></i> <span class="nav-label">Customer</span> <span class="fa arrow"></span></a>
@@ -113,6 +134,16 @@
                   <li>
                       <a href="<?= base_url('trips/exp_type'); ?>">
                           Expense Types
+                      </a>
+                  </li>
+                  <li>
+                      <a href="<?= base_url('trips/routes'); ?>">
+                          Routes
+                      </a>
+                  </li>
+                  <li>
+                      <a href="<?= base_url('trips/pump'); ?>">
+                          Pumps
                       </a>
                   </li>
                   <?php } if(userpermission('lr_trips_add')) { ?>

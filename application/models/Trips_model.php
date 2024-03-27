@@ -8,11 +8,27 @@ class Trips_model extends CI_Model{
 		$insertdata = $data;
 		$insertdata['t_start_date'] = date("Y-m-d H:i:s", strtotime($data['t_start_date']));
 		$insertdata['t_end_date'] =  date("Y-m-d H:i:s", strtotime($data['t_end_date']));
-		$insertdata['t_trip_amount'] =  $insertdata['tot_amount'];
+		$insertdata['t_trackingcode'] =  $data['t_trackingcode'];
 		unset($insertdata['tot_amount']);
 		$this->db->insert('trips',$insertdata);
 		return $this->db->insert_id();
 	} 
+	public function generate_serial_no($v_id){
+		$reg_no = $this->db->select('v_registration_no')->from('vehicles')->where('v_id',$v_id)->get()->row_array();
+		$reg = $reg_no['v_registration_no'];
+		$current_month = date('m');
+		$current_year = date('Y');
+		$fetch_from_trips = $this->db->select('*')->from('trips')->where('t_vechicle', $v_id)->order_by('t_id', 'desc')->limit(1)->get()->row_array();
+		if(empty($fetch_from_trips['t_trackingcode'])){
+			return $reg.'-1';
+		}else{
+			$serial_number = $fetch_from_trips['t_trackingcode'];
+			preg_match('/(\d+)$/', $serial_number, $matches);
+			$number = $matches[1]; 
+			$serial_no = $reg.'-'.($number+1); 
+			return $serial_no;
+		}
+	}
     public function getall_customer() { 
 		return $this->db->select('*')->from('customers')->order_by('c_name','asc')->get()->result_array();
 	} 
@@ -77,8 +93,12 @@ class Trips_model extends CI_Model{
 	    $det = $this->db->select('*')->from('trips')->where('t_id',$t_id)->get()->row_array();
 	    $route = $this->db->select('*')->from('trip_routes')->where('trip_id',$t_id)->get()->result_array();
 	    $expense = $this->db->select('*')->from('vih_expense')->where('trip_id',$t_id)->get()->result_array();
-	    $fuel = $this->db->select('*')->from('tbl_fuel')->where('trip_id',$t_id)->get()->result_array();
-
+	    $fuel = $this->db->select('*')
+	    ->from('tbl_fuel')
+	    ->join('pumps', 'pumps.id = tbl_fuel.pump', 'left')
+	    ->where('trip_id', $t_id)
+	    ->get()
+	    ->result_array();
 	    $vih=  array();
 	    if($det)
             $vih =  $this->db->select('*')->from('vehicles')->where('v_id',$det['t_vechicle'])->get()->row();
