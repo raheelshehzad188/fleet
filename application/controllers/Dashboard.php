@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller {
 
-	 function __construct()
+   function __construct()
      {
           parent::__construct();
           $this->load->database();
@@ -12,9 +12,8 @@ class Dashboard extends CI_Controller {
           $this->load->model('dashboard_model');
           $this->load->model('geofence_model');
      }
-
-	public function index()
-	{
+  public function index()
+  {
           $data['iechart']= $this->dashboard_model->get_iechartdata();
           $data['todayreminder']= $this->dashboard_model->get_todayreminder();
           $data['dashboard'] = $this->dashboard_model->getdashboard_info();
@@ -34,8 +33,30 @@ class Dashboard extends CI_Controller {
           }
           $data['geofenceevents']=$returndata;
  
-		$this->template->template_render('dashboard',$data);
-	}
+    $this->template->template_render('dashboard',$data);
+  }
+  public function load()
+  {
+    if(isset($_GET['date']) && isset($_GET['vid']))
+    {
+
+      $sql = "SELECT t_trip_amount- t_exp_amount as final FROM `trips` WHERE t_vechicle = '".$_GET['vid']."' and (t_created_date >= '".$_GET['date']." 00:00:00' AND t_created_date <= '".$_GET['date']." 12:00:00');";
+      $tot = 0;
+      $all = $this->db->query($sql)->result_array();
+      foreach($all as $k=> $v)
+      {
+        $tot = $tot + $v['final'];
+      }
+      echo $tot;
+      exit();
+    }
+  }
+  public function compdash()
+  {
+          $data['vehicles']= $this->db->get('vehicles')->result_array();
+ 
+    $this->template->template_render('compdash',$data);
+  }
   public function iechart()
   {
       $data= $this->dashboard_model->get_iechartdata();

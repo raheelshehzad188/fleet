@@ -39,6 +39,9 @@ if (isset($footer))
     <link href="<?= $url ?>css/animate.css" rel="stylesheet">
     <link href="<?= $url ?>assets/dist/css/adminlte.css" rel="stylesheet">
     <link href="<?= $url ?>css/style.css" rel="stylesheet">
+    <script type="text/javascript">
+        var BASE_URL = '<?= base_url(); ?>';
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <style>
         .profile-user-img {
