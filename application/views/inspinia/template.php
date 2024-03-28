@@ -679,11 +679,24 @@ if (isset($footer))
                 $('#dtot_'+key).val(temp);
                 pet = pet + parseFloat(temp);
 });
-            var apr = 0;
-            $('.route_dist').each(function(i, obj) {
-                apr = apr + parseFloat($(this).val());
-});
-$('#appp_km').val(apr);
+                 
+    
+            var start_meter = $('input[name="t_start_date"]').val();
+             var start_meter_parsed = parseFloat(start_meter); 
+        
+    
+            var end_meter = $('input[name="t_end_date"]').val();
+            var end_meter_parsed = parseFloat(end_meter); 
+    
+        
+            if (start_meter_parsed !== undefined && end_meter_parsed !== undefined) {
+                var approx_meter = Math.abs(start_meter_parsed - end_meter_parsed); // Calculating absolute difference
+                var approx_km = (approx_meter / 1000).toFixed(2); // Converting meter value to kilometers and rounding to 2 decimal places
+                $('#appp_km').val(approx_km);
+            }
+        
+
+
 
 //wages
             var wages = 0;

@@ -1,4 +1,14 @@
- 
+ <style type="text/css">
+   .nav > li > a {
+     color: #000 !important; 
+    font-weight: 600;
+    padding: 10px 20px 10px 25px;
+}
+.tab-content{
+  display: block;
+}
+
+ </style>
       
     <div class="content-header">
       <div class="container-fluid">
@@ -59,6 +69,7 @@
                   <li class="nav-item"><a class="nav-link " href="#bookings" data-toggle="tab">Trips</a></li>
                   <li class="nav-item"><a class="nav-link" href="#vechicle_geofence" data-toggle="tab">Parts</a></li>
                 <li class="nav-item"><a class="nav-link" href="#vechicle_incomexpense" data-toggle="tab">Income & Expense</a></li>
+                <li class="nav-item"><a class="nav-link" href="#fuel" data-toggle="tab">Fuel</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
@@ -243,6 +254,64 @@
                                      <i class="fa fa-eye"></i>
                                     </a> 
                                   </td>                                 
+                              </tr>
+                          <?php } } ?>
+                          </tbody>
+                      </table>
+                  </div>
+                  <div class="tab-pane" id="fuel">
+                     <table id="incomexpenstbl" class="table table-striped projects">
+                      <?php
+                      // echo "<pre>";
+                      // print_r($fuel);
+                      ?>
+                          <thead>
+                              <tr>
+                                  <th class="percent1">
+                                      #
+                                  </th>
+                                  <th class="percent25">
+                                      Pump
+                                  </th>
+                                  <th class="percent25">
+                                      Fuel Quantity
+                                  </th>
+                                  <th class="percent25">
+                                    Amount
+                                  </th>
+                                  <th class="percent25">
+                                      Rate
+                                  </th>
+                                 <!--  <th class="percent25">
+                                    Action
+                                  </th> -->
+                              </tr>
+                          </thead>
+                          <tbody>
+                            <?php if(!empty($fuel)){ 
+                            $count=1;
+                            foreach($fuel as $fueldata){
+                            ?>
+                              <tr>
+                                  <td>
+                                     <?php echo output($count); $count++; ?>
+                                  </td>
+                                  <td>
+                                      <?php echo $fueldata->name;?>
+                                  </td>
+                                  <td>
+                                     <?php echo $fueldata->fuel_quantity;?>
+                                  </td>
+                                  <td>
+                                     <?php echo $fueldata->amount;?>
+                                  </td>
+                                  <td>
+                                     <?php echo $fueldata->rate; ?>
+                                  </td>
+                                <!--  <td> <a class="icon" href="<?php echo base_url(); ?>incomexpense">
+                                     <i class="fa fa-eye"></i>
+                                    </a> 
+                                  </td>   -->                               
                               </tr>
                           <?php } } ?>
                           </tbody>

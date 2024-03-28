@@ -40,6 +40,17 @@ class vehicle_model extends CI_Model{
 
 		
 	} 
+	public function getfueldetails($id='')
+	{
+		$data = $this->db->select('t_id')->from('trips')->where('t_vechicle',$id)->get()->result_array();
+		$t_ids = array_column($data, 't_id');
+		$this->db->select('tbl_fuel.*, pumps.name');
+		$this->db->from('tbl_fuel');
+		$this->db->join('pumps', 'pumps.id = tbl_fuel.pump', 'left');
+		$this->db->where_in('trip_id', $t_ids);
+		$query = $this->db->get();
+		return $query->result();
+	}
     public function getall_vehicle() {
       $this->db->select("*");
 	  $this->db->from('vehicles');

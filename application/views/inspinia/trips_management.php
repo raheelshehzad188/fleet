@@ -12,6 +12,11 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+          <?php
+        //   echo "<pre>";
+        //   print_r($customerlist);
+        //   var_dump($customerlist);
+                 ?>
       <form method="post" id="trip_add" class="card" action="" novalidate="novalidate">
          <div class="card-body">
             <div class="row">
@@ -27,8 +32,10 @@
                   <div class="form-group">
                      <select id="t_customer_id" class="form-control" required="true" name="t_customer_id">
                         <option value="">Select Customer</option>
-                                                <option value="1">A company</option>
-                                                </select>
+                        <?php foreach ($customerlist as $key => $customerlists) { ?>
+                        <option value="<?php echo output($customerlists['c_id']) ?>"><?php echo output($customerlists['c_name']) ?></option>
+                        <?php  } ?>
+                        </select>
                   </div>
                </div>
                <div class="col-sm-6 col-md-3">
@@ -36,8 +43,10 @@
                      <label class="form-label">Vechicle<span class="form-required">*</span></label>
                      <select id="t_vechicle" class="form-control" name="t_vechicle">
                         <option value="">Select Vechicle</option>
-                                                <option value="6">cdc - 1223</option>
-                                             </select>
+                        <?php  foreach ($vechiclelist as $key => $vechiclelists) { ?>
+                        <option value="<?php echo output($vechiclelists['v_id']) ?>"><?php echo output($vechiclelists['v_name']).' - '. output($vechiclelists['v_registration_no']); ?></option>
+                        <?php  } ?>
+                     </select>
                   </div>
                </div>
                
@@ -45,9 +54,11 @@
                   <div class="form-group">
                      <label class="form-label">Driver<span class="form-required">*</span></label>
                      <select id="t_driver" class="form-control" name="t_driver">
-                       <option value="">Select Driver</option>
-                                                <option value="1">hdg update</option>
-                                             </select>
+                      <option value="">Select Driver</option>
+                        <?php  foreach ($driverlist as $key => $driverlists) { ?>
+                        <option value="<?php echo output($driverlists['d_id']) ?>"><?php echo output($driverlists['d_name']); ?></option>
+                        <?php  } ?>
+                     </select>
                   </div>
                </div>
                
@@ -80,12 +91,13 @@
              <table id="item-list" class="table table-bordered table-striped table-hover">
         		<thead>
         			<tr>
-        				<th>ID</th>
+        				<th>Sr/No.</th>
         				<th>Serial No</th>
         				<th>Customer Name</th>
         				<th>Driver Name</th>
         				<th>Vehicle Name</th>
         				<th>Total Amount</th>
+        				<th>Action</th>
         			</tr>
         		</thead>
         		<tbody>

@@ -382,6 +382,7 @@ body {
   border: 1px solid #000;
   padding: 12px 16px 6px 8px;
   border-radius: 7px;
+
 }
 .inv_bdrd {
   border: 1px solid #000;
@@ -560,45 +561,48 @@ body {
 <div class="inv_container">
   <div class="inv_bdr">
     <div class="clearfix">
+     <div class="label_input">
+        <label>سیریل نمبر</label>
+        <span><?= $tripdetails['t_trackingcode']?></span>
+      </div>
+      
       <div class="label_input">
+        <label>تاریخ سے</label>
+        <span><?= date("Y-m-d", strtotime($tripdetails['t_start_date'])); ?></span>
+      </div>
+      <div class="label_input">
+        <label>تاریخ تک</label>
+        <span><?= date("Y-m-d", strtotime($tripdetails['t_end_date'])); ?></span>
+      </div>
+       <div class="label_input">
 
-        <label>مدت</label>
+        <label>دورانیہ</label>
         <span><?php
         $dateFrom = new DateTime(date("Y-m-d", strtotime($tripdetails['t_end_date'])));
         $dateTo = new DateTime(date("Y-m-d", strtotime($tripdetails['t_start_date'])));
 
         echo $dateFrom->diff($dateTo)->days;?></span>
       </div>
-      <div class="label_input">
-        <label>تاریخ تک</label>
-        <span><?= date("Y-m-d", strtotime($tripdetails['t_end_date'])); ?></span>
-      </div>
-      <div class="label_input">
-        <label>تاریخ سے</label>
-        <span><?= date("Y-m-d", strtotime($tripdetails['t_start_date'])); ?></span>
-      </div>
-      <div class="label_input">
-        <label>سیریل نمبر</label>
-        <span><?= $tripdetails['t_trackingcode']?></span>
-      </div>
     </div>
     <div class="clearfix">
 
-      <div class="label_input">
-        <label>مددگار</label>
-        <span>علیان</span>
+     <div class="label_input">
+        <label>گاڑی نمبر</label>
+        <span>ہ<?= $vehicle->v_registration_no ?></span>
       </div>
-      <div class="label_input">
-        <label>دوسرا ڈرائیور</label>
-        <span><?= $driverdetails->d_name ?></span>
-      </div>
+     
       <div class="label_input">
         <label>پہلا ڈرائیور</label>
         <span>ایچ ڈی جی اپ ڈیٹ</span>
       </div>
-      <div class="label_input">
-        <label>گاڑی نمبر</label>
-        <span>ہ<?= $vehicle->v_registration_no ?></span>
+       <div class="label_input">
+        <label>دوسرا ڈرائیور</label>
+        <span><?= $driverdetails->d_name ?></span>
+      </div>
+      
+       <div class="label_input">
+        <label>ہیلپر</label>
+        <span>علیان</span>
       </div>
     </div>
   </div>
@@ -615,11 +619,11 @@ body {
           ?>
     <div class="clearfix">
       <div class="expense_box_input">
-        <label>سے</label>
+        <label>از</label>
         <span><?= $v['route_from']; ?></span>
       </div>
       <div class="expense_box_input">
-        <label>تک</label>
+        <label>تا </label>
         <span><?= $v['route_to'] ?></span>
       </div>
       <div class="expense_box_input">
@@ -627,7 +631,7 @@ body {
         <span><?= $v['weight'] ?></span>
       </div>
       <div class="expense_box_input">
-        <label>شرح</label>
+        <label>ریٹ</label>
         <span><?= $v['unit_price'] ?></span>
       </div>
       <div class="expense_box_input">
@@ -667,17 +671,18 @@ body {
       {
           ?>
         <div class="inline_formbox">
-          <label>ڈیزل</label>
-          <span><?= $v['fuel_type']?></span>
+          <label>پمپ</label>
+          <span><?= $v['name']?></span>
         </div>
 
         <div class="inline_formbox">
-          <label>ڈیزل مقدار</label>
+          <label>مقدار</label>
           <span><?= $v['fuel_quantity']?></span>
         </div>
+        
         <div class="inline_formbox">
-          <label>پمپ</label>
-          <span><?= $v['name']?></span>
+          <label>ڈیزل</label>
+          <span><?= $v['fuel_type']?></span>
         </div>
         <?php
         	}
@@ -718,23 +723,7 @@ body {
           <button type="button">بقیہ</button>
         </div>
       </div>
-      <div class="pt-4">
-      <div class="inv_bdrd">
-       <div class="clearfix">
       
-      <div class="label_input">
-        <label>بینک</label>
-        <span></span>
-      </div>
-      <div class="label_input">
-        <label>پمپ </label>
-        <span></span>
-      </div>
-      <div class="label_input">
-        <label>چیف</label>
-        <span></span>
-      </div>
-    </div>
 
    
   </div>

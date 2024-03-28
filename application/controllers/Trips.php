@@ -18,6 +18,9 @@ class Trips extends CI_Controller {
 	public function index()
 	{
 		$data['triplist'] = $this->trips_model->getall_trips();
+		$data['customerlist'] = $this->trips_model->getall_customer();
+		$data['vechiclelist'] = $this->trips_model->getall_vechicle();
+		$data['driverlist'] = $this->trips_model->getall_driverlist();
 		$this->template->template_render('trips_management',$data);
 	}
       public function trip_table(){
@@ -61,18 +64,22 @@ class Trips extends CI_Controller {
         }
 
         $query = $this->db->get()->result(); 
-        //echo $this->db->last_query();
-        // die();
         $data = [];
         $sr=1;
+        
         foreach($query as $r) {
+            $action = '<a class="icon" href="trips/edittrip/'.$r->t_id.'"><i class="fa fa-edit"></i>
+                            </a> | <a class="icon" href="trips/invoice/'.$r->t_id.'">
+                              <i class="fa fa-eye"></i>
+                            </a> ';
             $data[] = array(
                 $sr++,
                 $r->t_trackingcode,
                 $r->c_name,
                 $r->d_name,
                 $r->v_name,
-                $r->t_trip_amount
+                $r->t_trip_amount,
+                $action
             );
         }
     

@@ -74,7 +74,7 @@
                <div class="col-sm-6 col-md-3">
                   <div class="form-group">
                      <label class="form-label">End Meter<span class="form-required">*</span></label>
-                     <input type="text" value="<?php echo (isset($tripdetails)) ? date(datetimeformat(), strtotime($tripdetails['detail']['t_end_date'])):'' ?>" name="t_end_date" value="" class="form-control" placeholder="End Meter">
+                     <input type="text" onkeyup="cal_distance()" value="<?php echo (isset($tripdetails)) ? date(datetimeformat(), strtotime($tripdetails['detail']['t_end_date'])):'' ?>" name="t_end_date" value="" class="form-control" placeholder="End Meter">
                   </div>
                </div>
                 

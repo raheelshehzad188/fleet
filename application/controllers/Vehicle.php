@@ -108,6 +108,7 @@ class Vehicle extends CI_Controller {
 		$vehicledetails = $this->vehicle_model->get_vehicledetails($v_id);
 		$bookings = $this->vehicle_model->getall_bookings($v_id);
 		$vgeofence = $this->geofence_model->getvechicle_geofence($v_id);
+		$fuel = $this->vehicle_model->getfueldetails($v_id);
 		$vincomexpense = $this->incomexpense_model->getvechicle_incomexpense($v_id);
 		$geofence_events = $this->geofence_model->countvehiclengeofence_events($v_id);
 		if(isset($vehicledetails[0]['v_id'])) {
@@ -116,6 +117,7 @@ class Vehicle extends CI_Controller {
 			$data['vechicle_geofence'] = $vgeofence;
 			$data['vechicle_incomexpense'] = $vincomexpense;
 			$data['geofence_events'] = $geofence_events;
+			$data['fuel'] = $fuel;
 			$this->template->template_render('vehicle_view',$data);
 		} else {
 			$this->template->template_render('pagenotfound');
