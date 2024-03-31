@@ -9,6 +9,7 @@ class Trips_model extends CI_Model{
 		$insertdata['t_start_date'] = date("Y-m-d H:i:s", strtotime($data['t_start_date']));
 		$insertdata['t_end_date'] =  date("Y-m-d H:i:s", strtotime($data['t_end_date']));
 		$insertdata['t_trackingcode'] =  $data['t_trackingcode'];
+		$insertdata['t_trip_amount'] =  $data['tot_amount'];
 		unset($insertdata['tot_amount']);
 		$this->db->insert('trips',$insertdata);
 		return $this->db->insert_id();

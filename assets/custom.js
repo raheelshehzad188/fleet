@@ -26,7 +26,7 @@ $(document).ready(function() {
         $('.datetimepicker').datetimepicker({
            format: $('#dateformat').val(),
            step:15,
-           minDate:'-1970/01/02',
+           // minDate:'1970/01/02',
         })
         $('.datetimepicker1').datetimepicker({
             format:$('#dateformat').val(),

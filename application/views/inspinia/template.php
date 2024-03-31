@@ -657,7 +657,7 @@ if (isset($footer))
             var mid = '#row_'+index;
             var weight =  $(mid+' .weight').val();
             var unit_price =  $(mid+' .unit_price').val();
-            $(mid+' .wages').val(weight * unit_price);
+            $(mid+' .wages').val((weight * unit_price).toFixed(2));
             cal_distance()
         }
         function cal_distance()
@@ -676,22 +676,30 @@ if (isset($footer))
                     qty = parseFloat($('#dqty_'+key).val());
                 }
                 var temp = rate * qty;
-                $('#dtot_'+key).val(temp);
-                pet = pet + parseFloat(temp);
+                $('#dtot_'+key).val(temp.toFixed(2));
+                pet = pet + parseFloat(temp.toFixed(2));
 });
+            $('#des_exp').val(pet.toFixed(2));
                  
     
-            var start_meter = $('input[name="t_start_date"]').val();
+            var start_meter = $('input[name="t_start_meter"]').val();
              var start_meter_parsed = parseFloat(start_meter); 
         
     
-            var end_meter = $('input[name="t_end_date"]').val();
+            var end_meter = $('input[name="t_end_meter"]').val();
             var end_meter_parsed = parseFloat(end_meter); 
+            console.log('start_meter_parsed');
+            console.log(start_meter_parsed);
+            console.log('end_meter_parsed');
+            console.log(end_meter_parsed);
     
         
             if (start_meter_parsed !== undefined && end_meter_parsed !== undefined) {
                 var approx_meter = Math.abs(start_meter_parsed - end_meter_parsed); // Calculating absolute difference
-                var approx_km = (approx_meter / 1000).toFixed(2); // Converting meter value to kilometers and rounding to 2 decimal places
+                approx_km = approx_meter;
+                // var approx_km = (approx_meter / 1000).toFixed(2); // Converting meter value to kilometers and rounding to 2 decimal places
+                if(!approx_km)
+                    approx_km = 0;
                 $('#appp_km').val(approx_km);
             }
         
@@ -703,6 +711,10 @@ if (isset($footer))
             $('.wages').each(function(i, obj) {
                 wages = wages + parseFloat($(this).val());
 });
+            if(!wages)
+            {
+                wages = 0;
+            }
 $('#tot_amount').val(wages);
 //expense
             var expen = 0;
@@ -716,6 +728,10 @@ $('#tot_amount').val(wages);
                 console.log(expen);
                 }
             });
+            if(!expen)
+            {
+                expen = 0;
+            }
 $('#tot_exp').val(expen);
 $('#grand_total').val(wages-expen);
 

@@ -68,13 +68,13 @@
                <div class="col-sm-6 col-md-3">
                   <div class="form-group">
                      <label class="form-label">Start Meter<span class="form-required">*</span></label>
-                     <input type="text" value="<?php echo (isset($tripdetails)) ? date(datetimeformat(), strtotime($tripdetails['detail']['t_start_date'])):'' ?>" name="t_start_date" value="" class="form-control" placeholder="Start Meter">
+                     <input type="text" value="<?php echo (isset($tripdetails)) ? date(datetimeformat(), strtotime($tripdetails['detail']['t_start_meter'])):'' ?>" name="t_start_meter" value="" class="form-control" placeholder="Start Meter">
                   </div>
                </div>
                <div class="col-sm-6 col-md-3">
                   <div class="form-group">
                      <label class="form-label">End Meter<span class="form-required">*</span></label>
-                     <input type="text" onkeyup="cal_distance()" value="<?php echo (isset($tripdetails)) ? date(datetimeformat(), strtotime($tripdetails['detail']['t_end_date'])):'' ?>" name="t_end_date" value="" class="form-control" placeholder="End Meter">
+                     <input type="text" onkeyup="cal_distance()" value="<?php echo (isset($tripdetails)) ? date(datetimeformat(), strtotime($tripdetails['detail']['t_end_meter'])):'' ?>" name="t_end_meter" value="" class="form-control" placeholder="End Meter">
                   </div>
                </div>
                 
@@ -198,13 +198,23 @@
                               <?php
                                 foreach ($routes as $key => $value) {
                                   ?>
-                                    <option value="<?=$value['id'] ?>"><?=$value['name'] ?></option>
+                                    <option value="<?=$value['id'] ?>" <?= ($value['id'] == $v['route_from'])?'selected':'' ?>><?=$value['name'] ?></option>
                                   <?php
                                 }
                               ?>
                               </select>
                           </td>
-                          <td scope="col"><input class="form-control" placeholder="To" type="text" name="route[route_to][]" value="<?= $v['route_to'] ?>" /></td>
+                          <td scope="col">
+                            <select name="route[route_to][]" class="form-control">
+                              <?php
+                                foreach ($routes as $key => $value) {
+                                  ?>
+                                    <option value="<?=$value['id'] ?>" <?= ($value['id'] == $v['route_to'])?'selected':'' ?>><?=$value['name'] ?></option>
+                                  <?php
+                                }
+                              ?>
+                              </select>
+                          </td>
                           <td scope="col"><input class="form-control weight" placeholder="Weight" type="text" name="route[weight][]"  value="<?= $v['weight'] ?>" onkeyup="cal_wages(<?=  $routeindex ?>)" /></td>
                           <td scope="col"><input class="form-control unit_price" placeholder="Unit Price" type="text" name="route[unit_price][]"  value="<?= $v['unit_price'] ?>"  onkeyup="cal_wages(<?= $routeindex ?>)" /></td>
                           <td scope="col"><input class="form-control wages" placeholder="Wages" type="text" name="route[wages][]"  value="<?= $v['total'] ?>" readonly="true"  /></td>
@@ -280,7 +290,7 @@
                                     <input type="hidden" class="form-control" placeholder="Expense" name="expense[expense_id][]" value="<?= $v['expense_id'] ?>" />
                                     <input type="text" class="form-control" placeholder="Expense" name="expense[exp_name][]" value="<?= $v['exp_name'] ?>" readonly="true" />
                                 </td>
-                                <td scope="col"><input class="form-control expense" onkeyup="cal_distance()" type="text" placeholder="Amount" value="<?= $v['amount'] ?>" name="expense[amount][]" onkeyup="cal_distance()" /></td>
+                                <td scope="col"><input <?= ($v['expense_id'] == 19)?'id="des_exp"':''; ?>  class="form-control expense" onkeyup="cal_distance()" type="text" placeholder="Amount" value="<?= $v['amount'] ?>" name="expense[amount][]" onkeyup="cal_distance()" /></td>
                                 <td scope="col"><button class="btn btn-danger " target="#routecontent" onclick="del_exp(<?= $exp_index ?>)">-</button></td>
                               </tr>
                                   <?php
@@ -300,7 +310,7 @@
                                     <input type="hidden" class="form-control" placeholder="Expense" name="expense[expense_id][]" value="<?= $v['id'] ?>" />
                                     <input type="text" class="form-control" placeholder="Expense" name="expense[exp_name][]" value="<?= $v['name'] ?>" readonly="true" />
                                 </td>
-                                <td scope="col"><input class="form-control expense" onkeyup="cal_distance()" type="text" placeholder="Amount" name="expense[amount][]" onkeyup="cal_distance()"  /></td>
+                                <td scope="col"><input class="form-control expense" <?= ($v['id'] == 19)?'id="des_exp"':''; ?> onkeyup="cal_distance()" type="text" placeholder="Amount" name="expense[amount][]" onkeyup="cal_distance()"  /></td>
                                 <td scope="col"><button class="btn btn-danger " target="#routecontent" onclick="del_exp(<?= $exp_index ?>)">-</button></td>
                               </tr>
                             <?php

@@ -92,7 +92,7 @@ $y = date("y");
                                 for($i = 1;$i <=$last_d ;$i++)
                                 {
                                     ?>
-                                <th><?= $i ?></th>
+                                <th class="tot_income" date="<?= $i.'-'.$m.'-'.$y ?>"><?= $i ?></th>
                                 <?php
                                 }
                                 ?>
@@ -115,6 +115,43 @@ $y = date("y");
     console.log(vid+' '+date);
     $.ajax({
         url: BASE_URL+'dashboard/load?date='+date+'&vid='+vid,
+        type: "Post",
+        async: true,
+        data: { },
+        success: function (data) {
+            old.html(data);
+            console.log(data);
+           
+        },
+        error: function (xhr, exception) {
+            var msg = "";
+            if (xhr.status === 0) {
+                msg = "Not connect.\n Verify Network." + xhr.responseText;
+            } else if (xhr.status == 404) {
+                msg = "Requested page not found. [404]" + xhr.responseText;
+            } else if (xhr.status == 500) {
+                msg = "Internal Server Error [500]." +  xhr.responseText;
+            } else if (exception === "parsererror") {
+                msg = "Requested JSON parse failed.";
+            } else if (exception === "timeout") {
+                msg = "Time out error." + xhr.responseText;
+            } else if (exception === "abort") {
+                msg = "Ajax request aborted.";
+            } else {
+                msg = "Error:" + xhr.status + " " + xhr.responseText;
+            }
+           
+        }
+    }); 
+    }); 
+        $('.tot_income').each(function(i, obj) {
+    var vid = 0;
+    var old = $(this);
+    old.html('Loading');
+    var date = $(this).attr('date');
+    console.log(vid+' '+date);
+    $.ajax({
+        url: BASE_URL+'dashboard/tot_income?date='+date+'&vid='+vid,
         type: "Post",
         async: true,
         data: { },

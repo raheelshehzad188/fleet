@@ -51,6 +51,22 @@ class Dashboard extends CI_Controller {
       exit();
     }
   }
+  public function tot_income()
+  {
+    if(isset($_GET['date']))
+    {
+
+      $sql = "SELECT t_trip_amount- t_exp_amount as final FROM `trips` WHERE  (t_created_date >= '".$_GET['date']." 00:00:00' AND t_created_date <= '".$_GET['date']." 12:00:00');";
+      $tot = 0;
+      $all = $this->db->query($sql)->result_array();
+      foreach($all as $k=> $v)
+      {
+        $tot = $tot + $v['final'];
+      }
+      echo $tot;
+      exit();
+    }
+  }
   public function compdash()
   {
           $data['vehicles']= $this->db->get('vehicles')->result_array();
