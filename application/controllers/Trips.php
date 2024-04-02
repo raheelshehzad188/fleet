@@ -50,7 +50,7 @@ class Trips extends CI_Controller {
         if(isset($start_date) && isset($end_date)){
         $start_date = date('Y-m-d', strtotime($start_date));
         $end_date = date('Y-m-d', strtotime($end_date));
-        $this->db->where("t.t_start_date >= '$start_date' AND t.t_start_date <= '$end_date'");
+        $this->db->where("t.t_start_date >= '$start_date' AND t.t_end_date <= '$end_date'");
         }
         if(isset($customer) && !empty($customer)){
         $this->db->where("t.t_customer_id = '$customer'");
@@ -62,7 +62,7 @@ class Trips extends CI_Controller {
         $this->db->where("t.t_driver = '$driver'");
         }
         }
-
+        $this->db->order_by("t.t_id","DESC");
         $query = $this->db->get()->result(); 
         $data = [];
         $sr=1;
@@ -323,10 +323,10 @@ class Trips extends CI_Controller {
 			if($route && $response)
 			{
 			    $this->db->where('trip_id',$response)->delete('trip_routes');
-			
-			
 			    for($i = 0 ; $i <= count($route)-1 ;$i++)
 			    {
+			        if(isset($route['route_from'][$i]) && $route['route_from'][$i] && isset($route['route_to'][$i]) && $route['route_to'][$i])
+			        {
 			        $in = array(
 			            'route_from' => isset($route['route_from'][$i])?$route['route_from'][$i]:'',
 			            'route_to' => (isset($route['route_to'][$i])?$route['route_to'][$i]:''),
@@ -336,6 +336,7 @@ class Trips extends CI_Controller {
 			            'trip_id' => $response,
 			            );
 			        $r = $this->db->insert('trip_routes',$in);
+			        }
 			    }
 			}
             if($petrol && $response)
@@ -429,6 +430,12 @@ class Trips extends CI_Controller {
             var_dump($tripdetails);
             die();
         }
+        $routes = $this->db->get('routes')->result_array();
+        $n = array();
+        foreach ($routes as $key => $value) {
+        	$n[$value['id']] = $value['name'];
+        }
+        $data['routes'] = $n;
 		if(isset($tripdetails['detail']['t_id'])) {
 			$customerdetails = $this->customer_model->get_customerdetails($tripdetails['detail']['t_customer_id']);
 			if(isset($customerdetails[0]))

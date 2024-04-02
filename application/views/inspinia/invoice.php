@@ -224,11 +224,11 @@ if($_GET['eng'] == 1){
     <div class="clearfix">
         <div class="expense_box_input">
           <label>From</label>
-          <span><?= $v['route_from']; ?></span>
+          <span><?= $routes[$v['route_from']]; ?></span>
         </div>
         <div class="expense_box_input">
           <label>To</label>
-          <span><?= $v['route_to'] ?></span>
+          <span><?= $routes[$v['route_to']] ?></span>
         </div>
         <div class="expense_box_input">
           <label>Weight</label>
@@ -620,11 +620,11 @@ body {
     <div class="clearfix">
       <div class="expense_box_input">
         <label>از</label>
-        <span><?= $v['route_from']; ?></span>
+        <span><?= $routes[$v['route_from']]; ?></span>
       </div>
       <div class="expense_box_input">
         <label>تا </label>
-        <span><?= $v['route_to'] ?></span>
+        <span><?= $routes[$v['route_to']]; ?></span>
       </div>
       <div class="expense_box_input">
         <label>وزن</label>
@@ -682,7 +682,7 @@ body {
         
         <div class="inline_formbox">
           <label>ڈیزل</label>
-          <span><?= $v['fuel_type']?></span>
+          <span><?= $v['amount']?></span>
         </div>
         <?php
         	}

@@ -134,13 +134,91 @@
 
                     <?php } ?>
 
+
+                    <hr>
+<!--                      <div class="col-sm-12 col-md-12">
+                    <div class="tabs_wrap">
+                        <ul class="tabs">
+                          <li class="tab-link current" data-tab="tab-1">Parts Detail</li>
+                        </ul>
+
+                <div id="tab-1" class="tab-content current">
+                  <div class="table-responsive table_design">
+                    <table class="table">
+                                
+                            <h3>Trip Expense</h3>
+                            <thead>
+                              <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody id="expcontent">
+                                <?php
+                                  $exp_index = 0;
+                                  if(isset($tripdetails['expense']) && $tripdetails['expense'])
+                                  {
+                                      foreach($tripdetails['expense'] as $k=> $v)
+                                      {
+                                          $exp_index++;
+                                          ?>
+                                            <tr id="exp_<?= $exp_index ?>" >
+                                        <td scope="col">
+                                            <input type="hidden" class="form-control" placeholder="Expense" name="expense[expense_id][]" value="<?= $v['expense_id'] ?>" />
+                                            <input type="text" class="form-control" placeholder="Expense" name="expense[exp_name][]" value="<?= $v['exp_name'] ?>" readonly="true" />
+                                        </td>
+                                        <td scope="col"><input <?= ($v['expense_id'] == 19)?'id="des_exp"':''; ?>  class="form-control expense" onkeyup="cal_distance()" type="text" placeholder="Amount" value="<?= $v['amount'] ?>" name="expense[amount][]" onkeyup="cal_distance()" /></td>
+                                        <td scope="col"><button class="btn btn-danger " target="#routecontent" onclick="del_exp(<?= $exp_index ?>)">-</button></td>
+                                      </tr>
+                                          <?php
+                                      }
+                                  }
+                                  else
+                                  {
+                                  ?>
+                                <?php
+                                
+                                foreach($exp_types as $k=> $v)
+                                {
+                                    $exp_index++;
+                                    ?>
+                                    <tr id="exp_<?= $exp_index ?>" >
+                                        <td scope="col">
+                                            <input type="hidden" class="form-control" placeholder="Expense" name="expense[expense_id][]" value="<?= $v['id'] ?>" />
+                                            <input type="text" class="form-control" placeholder="Expense" name="expense[exp_name][]" value="<?= $v['name'] ?>" readonly="true" />
+                                        </td>
+                                        <td scope="col"><input class="form-control expense" <?= ($v['id'] == 19)?'id="des_exp"':''; ?> onkeyup="cal_distance()" type="text" placeholder="Amount" name="expense[amount][]" onkeyup="cal_distance()"  /></td>
+                                        <td scope="col"><button class="btn btn-danger " target="#routecontent" onclick="del_exp(<?= $exp_index ?>)">-</button></td>
+                                      </tr>
+                                    <?php
+                                }
+                                  }
+                                ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    
+                                    <td  colspan="12" style="text-align: right;"><button style="background: #007137;font-size: 12px;"  type="button" index="<?= $exp_index ?>" class="add_more btn btn-success" target="#expcontent" content='
+                                <tr id="exp_index" >
+                                <td scope="col"><input type="hidden" class="form-control" placeholder="Expense" name="expense[expense_id][]" value="0" /><input type="text" class="form-control" placeholder="Expense" name="expense[exp_name][]" /></td>
+                                <td scope="col"><input class="form-control expense" type="text" placeholder="Amount" name="expense[amount][]" onkeyup="cal_distance()"  /></td>
+                                <td scope="col"><button class="btn btn-danger " target="#routecontent" onclick="del_exp(index)">-</button></td>
+                              </tr>
+                                '><i class="fa fa-plus"></i> Add Detail</button></td>
+                                </tr>
+                            </tfoot>
+                          </table>
+                          </div>
+                        </div>
+                              
+                    </div>
+                    </div>
                     </div>
                     
                     
 
-
-                    <hr>
-                </div>
+                </div> -->
                   <input type="hidden" id="v_created_by" name="v_created_by" value="<?php echo output($this->session->userdata['session_data']['u_id']); ?>">
                                     <input type="hidden" id="v_mileageperlitre" name="v_mileageperlitre" value="0">
 
@@ -157,4 +235,21 @@
     <!-- /.content -->
 
 
+<script type="text/javascript">
+  $('#v_group').on('change', function(){
+    var id = $(this).val();
+      $.ajax({
+        url: '<?php echo base_url('vehicle/veh_parts')?>',
+        // dataType: "json",
+        type: "Post",
+        async: true,
+        data: { 
+          gid : id
+        },
+        success: function (data) {
+           
+        }
 
+    });
+  })
+</script>

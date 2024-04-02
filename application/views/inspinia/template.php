@@ -68,7 +68,7 @@ if (isset($footer))
     border-radius: 4px;
 }
 .show{
-    display: nonefn q !important;
+    display: none !important;
 }
     </style>
 }

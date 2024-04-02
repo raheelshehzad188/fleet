@@ -167,7 +167,7 @@
 $(document).ready(function() {
     var dataTable = $('#item-list').DataTable({
         "ajax": {
-            url : "trips/trip_table",
+            url : "<?= base_url()?>trips/trip_table",
             type : 'POST',
             data: function(d) {
                 d.start_date = $('#t_start_date').val();

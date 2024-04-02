@@ -156,7 +156,7 @@
                </ul>
             </li>
            <?php } ?>
-               <li class="<?php echo activate_menu('vehicle');?> <?php echo activate_menu('addvehicle');?><?php echo activate_menu('viewvehicle');?><?php echo activate_menu('editvehicle');?><?php echo activate_menu('vehiclegroup');?>">
+               <li class="<?php echo activate_menu('vehicle');?> <?php echo activate_menu('addvehicle');?><?php echo activate_menu('viewvehicle');?><?php echo activate_menu('editvehicle');?><?php echo activate_menu('vehiclegroup');?><?php echo activate_menu('addvehiclegroup');?>">
                     <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Vehicle's</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <?php if(userpermission('lr_vech_list')) { ?>
@@ -164,7 +164,9 @@
                         <?php } if(userpermission('lr_vech_add')) { ?>
                         <li class="<?php echo activate_menu('addvehicle');?>"><a href="<?= base_url(); ?>vehicle/addvehicle">Add Vehicle</a></li>
                         <?php } if(userpermission('lr_vech_group')) { ?>
-                        <li class="<?php echo activate_menu('vehiclegroup');?>"><a href="<?= base_url(); ?>vehicle/vehiclegroup">Vehicle Group</a></li>
+                        <li class="<?php echo activate_menu('vehiclegroup');?>"><a href="<?= base_url(); ?>vehicle/vehiclegroup">Vehicle Group List</a></li>
+                      <?php } if(userpermission('lr_vech_group')) { ?>
+                        <li class="<?php echo activate_menu('addvehiclegroup');?>"><a href="<?= base_url(); ?>vehicle/addvehiclegroup">Add Vehicle Group</a></li>
                     <?php } ?>
                     </ul>
                 </li>

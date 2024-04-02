@@ -37,8 +37,8 @@ th {
 <div class="col-lg-12" style="overflow: scroll;">
     <?php
 $last_d = date("t", strtotime("next month"));
-$m = date("m");
-$y = date("y");
+$m = 3;//date("m");
+$y = date("Y");
     ?>
 
                 <div class="ibox float-e-margins">
@@ -74,7 +74,7 @@ $y = date("y");
                                 for($i = 1;$i <=$last_d ;$i++)
                                 {
                                     ?>
-                                <td class="load" date="<?= $i.'-'.$m.'-'.$y ?>" vid="<?= $v['v_id'] ?>" ></td>
+                                <td class="load" date="<?= $y.'-'.$m.'-'.$i ?>" vid="<?= $v['v_id'] ?>" ></td>
                                 <?php
                                 }
                                 ?>
@@ -92,7 +92,7 @@ $y = date("y");
                                 for($i = 1;$i <=$last_d ;$i++)
                                 {
                                     ?>
-                                <th class="tot_income" date="<?= $i.'-'.$m.'-'.$y ?>"><?= $i ?></th>
+                                <th class="tot_income" date="<?= $y.'-'.$m.'-'.$i ?>"><?= $i ?></th>
                                 <?php
                                 }
                                 ?>

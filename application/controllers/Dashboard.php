@@ -40,13 +40,10 @@ class Dashboard extends CI_Controller {
     if(isset($_GET['date']) && isset($_GET['vid']))
     {
 
-      $sql = "SELECT t_trip_amount- t_exp_amount as final FROM `trips` WHERE t_vechicle = '".$_GET['vid']."' and (t_created_date >= '".$_GET['date']." 00:00:00' AND t_created_date <= '".$_GET['date']." 12:00:00');";
-      $tot = 0;
-      $all = $this->db->query($sql)->result_array();
-      foreach($all as $k=> $v)
-      {
-        $tot = $tot + $v['final'];
-      }
+      $sql = "SELECT  sum(t_trip_amount)- sum(t_exp_amount)  as final FROM `trips` WHERE t_vechicle = '".$_GET['vid']."' and (t_created_date >= '".$_GET['date']." 00:00:00' AND t_created_date <= '".$_GET['date']." 12:00:00');";
+      
+      $all = $this->db->query($sql)->row_array();
+      $tot = (isset($all['final']))?$all['final']:0;
       echo $tot;
       exit();
     }

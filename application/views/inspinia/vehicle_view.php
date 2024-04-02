@@ -61,6 +61,7 @@
            
           </div>
           <!-- /.col -->
+          <input type="hidden" name="" value="<?php echo $v_id ?>" id="vehicle_id">
           <div class="col-md-9">
             <div class="card">
               <div class="card-header p-2">
@@ -72,36 +73,76 @@
                 <li class="nav-item"><a class="nav-link" href="#fuel" data-toggle="tab">Fuel</a></li>
                 </ul>
               </div><!-- /.card-header -->
+             
               <div class="card-body">
                 <div class="tab-content">
+                        
                   <div class="tab-pane " id="bookings">
-                     <table id="bookingstbl" class="table table-striped projects">
-                          <thead>
-                              <tr>
-                                  <th class="percent1">
-                                      #
-                                  </th>
-                                  <th class="percent25">
-                                      Driver
-                                  </th>
-                                  <th class="percent25">
-                                      Customer
-                                  </th>
-                                  <th class="percent25">
-                                    From & To
-                                  </th>
-                                  <th class="percent25">
-                                    Booking Value
-                                  </th>
-                                 
-                                  <th class="percent25">
-                                      Trip Status
-                                  </th>
-                                  <th class="percent25">
-                                    Action
-                                  </th>
-                              </tr>
-                          </thead>
+                    <form method="post" id="trip_add" class="card" action="" novalidate="novalidate">
+                         <div class="card-body">
+                            <div class="row">
+                                   
+                                <div class="col-sm-6 col-md-3">
+                                  <div class="form-group">
+                                     <label class="form-label">Serial No<span class="form-required">*</span></label>
+                                     <input type="text" name="t_trackingcode" value="" class="form-control" id="t_trackingcode">
+                                  </div>
+                               </div>        
+                               <div class="col-sm-6 col-md-3">
+                                <label class="form-label">Customer Name<span class="form-required">*</span></label>
+                                <div class="form-group">
+                                   <select id="t_customer_id" class="form-control" required="true" name="t_customer_id">
+                                      <option value="">Select Customer</option>
+                                      <?php foreach ($customerlist as $key => $customerlists) { ?>
+                                      <option value="<?php echo output($customerlists['c_id']) ?>"><?php echo output($customerlists['c_name']) ?></option>
+                                      <?php  } ?>
+                                      </select>
+                                </div>
+                             </div>
+                               
+                               <div class="col-sm-6 col-md-3">
+                                  <div class="form-group">
+                                     <label class="form-label">Trip Start Date<span class="form-required">*</span></label>
+                                     <input type="text" id="t_start_date" value="<?php echo date('Y-m-d', strtotime('-30 days')); ?>" name="t_start_date" class="form-control datetimepicker" placeholder="Trip Start Date" autocomplete="off">
+                                  </div>
+                               </div>
+                               <div class="col-sm-6 col-md-3">
+                                  <div class="form-group">
+                                     <label class="form-label">Trip End Date<span class="form-required">*</span></label>
+                                     <input type="text"id="t_end_date" value="<?php echo date('Y-m-d'); ?>"  name="t_end_date" class="form-control datetimepicker" placeholder="Trip End Date" autocomplete="off">
+                                  </div>
+                               </div>
+                                 <div class="col-sm-6 card-footer">
+                               <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                            </div>
+
+                            </div>
+                            </div>
+                            </form>
+                    <div class="table-responsive">
+            <div class="ibox-content">
+             <table id="bookingstbl2" class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Sr/No.</th>
+                <th>Driver</th>
+                <th>Customer</th>
+                <th>Serial No</th>
+                <th>Vehicle Name</th>
+                <th>Total Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+        
+        
+            </tbody>
+          </table>
+        </div>         
+        </div>
+                     <?php 
+                     /*?> <table id="" class="table table-bordered table-striped table-hover">
+                          
                           <tbody>
                             <?php if(!empty($bookings)) {
                             $count=1;
@@ -153,8 +194,11 @@
                               </tr>
                               <?php } } ?>
                           </tbody>
+                          
                       </table>
+                      <?php 
 
+                          */?>
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="vechicle_geofence">
@@ -206,7 +250,7 @@
                   </div>
 
                   <div class="tab-pane" id="vechicle_incomexpense">
-                     <table id="incomexpenstbl" class="table table-striped projects">
+                     <table id="incomexpenstbl1" class="table table-striped projects">
                           <thead>
                               <tr>
                                   <th class="percent1">
@@ -221,15 +265,12 @@
                                   <th class="percent25">
                                     Amount
                                   </th>
-                                  <th class="percent25">
-                                      Type
-                                  </th>
-                                  <th class="percent25">
-                                    Action
-                                  </th>
+                               
                               </tr>
                           </thead>
-                          <tbody>
+                       <?php
+                        /*
+                       ?>   <tbody>
                             <?php if(!empty($vechicle_incomexpense)){ 
                             $count=1;
                             foreach($vechicle_incomexpense as $incomexpensdata){
@@ -257,15 +298,14 @@
                               </tr>
                           <?php } } ?>
                           </tbody>
+                          <?php
+                            */
+                          ?>
                       </table>
                   </div>
                   <div class="tab-pane" id="fuel">
-                     <table id="incomexpenstbl" class="table table-striped projects">
-                      <?php
-                      // echo "<pre>";
-                      // print_r($fuel);
-                      ?>
-                          <thead>
+                     <table id="fueltable1" class="table table-striped projects">
+                         <thead>
                               <tr>
                                   <th class="percent1">
                                       #
@@ -282,9 +322,7 @@
                                   <th class="percent25">
                                       Rate
                                   </th>
-                                 <!--  <th class="percent25">
-                                    Action
-                                  </th> -->
+                                
                               </tr>
                           </thead>
                           <tbody>
@@ -406,3 +444,89 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+<script type="text/javascript">
+$(document).ready(function() {
+    var dataTable = $('#bookingstbl2').DataTable({
+
+        "ajax": {
+            url : "<?= base_url()?>vehicle/vehicle_trip_table",
+            type : 'POST',
+            data: function(d) {
+                d.start_date = $('#t_start_date').val();
+                d.end_date = $('#t_end_date').val();
+                d.v_id = $('#vehicle_id').val();
+                d.t_trackingcode = $('#t_trackingcode').val();
+                d.t_customer_id = $('#t_customer_id').val();
+            }
+        },
+         "footerCallback": function (row, data, start, end, display) {
+            var api = this.api();
+            $(api.column(2).footer()).html(
+                api.column(2, {page: 'current'}).data().reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+            );
+        }
+    });
+    $('#submit').click(function(e) {
+        e.preventDefault();
+        dataTable.ajax.reload();
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var dataTable = $('#fueltable1').DataTable({
+
+        "ajax": {
+            url : "<?= base_url()?>vehicle/fuel_trip_table",
+            type : 'POST',
+            data: function(d) {
+                d.start_date = $('#t_start_date_f').val();
+                d.end_date = $('#t_end_date_f').val();
+                d.v_id = $('#vehicle_id').val();
+            }
+        },
+         "footerCallback": function (row, data, start, end, display) {
+            var api = this.api();
+            $(api.column(2).footer()).html(
+                api.column(2, {page: 'current'}).data().reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+            );
+        }
+    });
+    $('#submit').click(function(e) {
+        e.preventDefault();
+        dataTable.ajax.reload();
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var dataTable = $('#incomexpenstbl1').DataTable({
+
+        "ajax": {
+            url : "<?= base_url()?>vehicle/expense_trip_table",
+            type : 'POST',
+            data: function(d) {
+                d.start_date = $('#t_start_date_f').val();
+                d.end_date = $('#t_end_date_f').val();
+                d.v_id = $('#vehicle_id').val();
+            }
+        },
+         "footerCallback": function (row, data, start, end, display) {
+            var api = this.api();
+            $(api.column(2).footer()).html(
+                api.column(2, {page: 'current'}).data().reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+            );
+        }
+    });
+    $('#submit').click(function(e) {
+        e.preventDefault();
+        dataTable.ajax.reload();
+    });
+});
+</script>
