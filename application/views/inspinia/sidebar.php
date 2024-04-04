@@ -224,7 +224,9 @@
                         }
 
                         ?>
-                        
+                         <li class="<?php echo activate_menu('type_staff');?>">
+                            <a href="<?= base_url(); ?>settings/type_staff">Type Staff</a>
+                        </li>
                     </ul>
                 </li>
 

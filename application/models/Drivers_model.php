@@ -36,10 +36,14 @@ class Drivers_model extends CI_Model{
 		}
 		$data['d_license_expdate'] = reformatDate($data['d_license_expdate']);
 		$data['d_doj'] = reformatDate($data['d_doj']);
-		return	$this->db->insert('drivers',$data);
+		$query = $this->db->insert('drivers',$data);
+		return	$query;
 	} 
     public function getall_drivers() { 
 		return $this->db->select('*')->from('drivers')->order_by('d_id','desc')->get()->result_array();
+	} 
+	public function getall_staff_types() { 
+		return $this->db->select('*')->from('type_staff')->get()->result_array();
 	} 
 	public function get_driverdetails($d_id) { 
 		return $this->db->select('*')->from('drivers')->where('d_id',$d_id)->get()->result_array();

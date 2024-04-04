@@ -13,6 +13,19 @@ class Drivers extends CI_Controller {
           $this->load->library('session');
 
      }
+     public function viewstaff()
+	{
+		$v_id = $this->uri->segment(3);
+		$vehicledetails = $this->drivers_model->get_driverdetails($v_id);
+		
+		if($vehicledetails) {
+			$data['vehicledetails'] = $vehicledetails[0];
+			
+			$this->template->template_render('staff_view',$data);
+		} else {
+			$this->template->template_render('pagenotfound');
+		}
+	}
 
 	public function index()
 	{
@@ -21,7 +34,8 @@ class Drivers extends CI_Controller {
 	}
 	public function adddrivers()
 	{
-		$this->template->template_render('drivers_add');
+		$data['staff_category'] = $this->drivers_model->getall_staff_types();
+		$this->template->template_render('drivers_add',$data);
 	}
 	public function insertdriver()
 	{
@@ -33,11 +47,12 @@ class Drivers extends CI_Controller {
 		$this->form_validation->set_rules('d_age','Age','required|trim');
 		$this->form_validation->set_rules('d_licenseno','License Number','required|trim');
 		$this->form_validation->set_rules('d_license_expdate','License Exp Date','required|trim');
-		$this->form_validation->set_rules('d_total_exp','Total Experiance','required|trim');
 		$this->form_validation->set_rules('d_doj','Date of Joining','required|trim');
 		$testxss = true;
 		if($this->form_validation->run()==TRUE && $testxss){
 			$response = $this->drivers_model->add_drivers($this->input->post());
+		// 	echo $this->db->last_query();
+		// die();
 			if($response) {
 				$this->session->set_flashdata('successmessage', 'New driver added successfully..');
 			    redirect('drivers');
