@@ -22,6 +22,7 @@
                   <thead>
                      <tr>
                         <th class="w-1">S.No</th>
+                        <th>Staff Type</th>
                         <th>Photo</th>
                         <th>Name</th>
                         <th>Mobile</th>
@@ -41,6 +42,7 @@
                         ?>
                      <tr>
                         <td> <?php echo output($count); $count++; ?></td>
+                        <td> <?php echo (isset($staff_types[$driverslists['st_cat_id']])?$staff_types[$driverslists['st_cat_id']]:''); ?></td>
                         <td><?php if($driverslists['d_file']!='') { ?>
                            <img class="img-fluid" style="width: 58px;" src="<?= base_url(); ?>assets/uploads/<?= ucwords($driverslists['d_file']); ?>">
                         <?php } ?></td>
@@ -56,11 +58,18 @@
                         <?php } else { echo '-'; } ?></td>
                         <td>  <span class="badge <?php echo ($driverslists['d_is_active']=='1') ? 'badge-success' : 'badge-danger'; ?> "><?php echo ($driverslists['d_is_active']=='1') ? 'Active' : 'Inactive'; ?></span>  </td>
                         <td>
-                           <?php if(userpermission('lr_drivers_list_edit')) { ?>
+                           <?php 
+                        //   var_dump(userpermission('lr_driver_del'));
+                           if(userpermission('lr_drivers_list_edit')) { ?>
                            <a class="icon" href="<?php echo base_url(); ?>drivers/editdriver/<?php echo output($driverslists['d_id']); ?>">
                            <i class="fa fa-edit"></i>
                            </a>
-                           <?php  } if(userpermission('lr_driver_del')) { ?> |
+                           <a class="icon" href="<?php echo base_url(); ?>drivers/viewstaff/<?php echo output($driverslists['d_id']); ?>">
+                           <i class="fa fa-eye"></i>
+                           <a class="icon text-danger" href="<?php echo base_url(); ?>drivers/deletedriver/<?php echo output($driverslists['d_id']); ?>">
+                           <i class="fa fa-trash"></i>
+                           </a>
+                           <?php  } if(userpermission('lr_driver_del') && false) { ?> |
                               <a data-toggle="modal" href="" onclick="confirmation('<?php echo base_url(); ?>drivers/deletedriver','<?= output($driverslists['d_id']); ?>')" data-target="#deleteconfirm" class="icon text-danger" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash"></i></a>
                            </a> 
                            <?php } ?>

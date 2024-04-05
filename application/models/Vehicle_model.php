@@ -81,6 +81,12 @@ class vehicle_model extends CI_Model{
 		}
 
 	} 
+	public function getDrivers(){
+		return $this->db->select('*')->from('drivers')->where("d_is_active",1)->where("st_cat_id",1)->get()->result_array();
+	}
+	public function getHelpers(){
+		return $this->db->select('*')->from('drivers')->where("d_is_active",1)->where("st_cat_id",2)->get()->result_array();
+	}
 	public function get_vehiclegroup() { 
 		return $this->db->select('*')->from('vehicle_group')->get()->result_array();
 	} 

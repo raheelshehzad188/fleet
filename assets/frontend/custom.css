@@ -738,7 +738,7 @@
      to {
          opacity: 1;
          -webkit-transform: translate(302px);
-         -moz-transform: translate(302px);
+         -moz-transform: translate(302px);      
          -o-transform: translate(302px);
          transform: translate(302px)
      }

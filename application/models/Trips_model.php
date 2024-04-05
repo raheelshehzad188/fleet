@@ -43,9 +43,9 @@ class Trips_model extends CI_Model{
 	public function getall_mybookings($c_id) { 
 		return $this->db->select('*')->from('trips')->where('t_customer_id',$c_id)->order_by('t_id','asc')->get()->result_array();
 	}
-	public function getall_driverlist() { 
-		return $this->db->select('*')->from('drivers')->get()->result_array();
-	}
+	// public function getall_driverlist() { 
+	// 	return $this->db->select('*')->from('drivers')->get()->result_array();
+	// }
 	public function getall_trips_expense($t_id) { 
 		return $this->db->select('*')->from('trips_expense')->where('e_trip_id',$t_id)->get()->result_array();
 	} 
@@ -106,7 +106,9 @@ class Trips_model extends CI_Model{
 	    $diriver =  array();
 	    if($det)
 	    $diriver =  $this->db->select('*')->from('drivers')->where('d_id',$det['t_driver'])->get()->row();
-		return array('detail'=>$det,'route'=>$route,'expense'=>$expense,'driver'=>$diriver,'vehicle'=> $vih,'fuel'=>$fuel);
+	    $t_driver_2 =  $this->db->select('*')->from('drivers')->where('d_id',$det['t_driver_2'])->get()->row();
+	    $helper =  $this->db->select('*')->from('drivers')->where('d_id',$det['helper'])->get()->row();
+		return array('detail'=>$det,'route'=>$route,'expense'=>$expense,'driver'=>$diriver,'driver2'=>$t_driver_2,'helper'=>$helper,'vehicle'=> $vih,'fuel'=>$fuel);
 	}
 	public function update_trips($data) { 
 		unset($data['bookingemail']);
@@ -142,5 +144,26 @@ class Trips_model extends CI_Model{
 		{
 			return array();
 		}
+	}
+	public function getDriver1($id = '')
+	{
+		$query = $this->db->select('driver_1')->from('vehicles')->where('v_id',$id)->get()->row_array();
+		return $query['driver_1'];
+	}
+	public function getDriver2($id = '')
+	{
+		$query = $this->db->select('driver_2')->from('vehicles')->where('v_id',$id)->get()->row_array();
+		return $query['driver_2'];
+	}
+	public function helper($id = '')
+	{
+		$query = $this->db->select('helper')->from('vehicles')->where('v_id',$id)->get()->row_array();
+		return $query['helper'];
+	}
+	public function getall_driverlist(){
+		return $this->db->select('*')->from('drivers')->where("d_is_active",1)->where("st_cat_id",1)->get()->result_array();
+	}
+	public function getHelpers(){
+		return $this->db->select('*')->from('drivers')->where("d_is_active",1)->where("st_cat_id",2)->get()->result_array();
 	}
 } 

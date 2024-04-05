@@ -34,7 +34,7 @@
                <div class="col-sm-6 col-md-3">
                   <div class="form-group">
                      <label class="form-label">Vechicle<span class="form-required">*</span></label>
-                     <select id="t_vechicle"  class="form-control"  name="t_vechicle" >
+                     <select id="t_vechicle"  class="form-control"  name="t_vechicle"  >
                         <option value="">Select Vechicle</option>
                         <?php  foreach ($vechiclelist as $key => $vechiclelists) { ?>
                         <option <?php if((isset($tripdetails)) && $tripdetails['detail']['t_vechicle'] == $vechiclelists['v_id']){ echo 'selected';} ?> value="<?php echo output($vechiclelists['v_id']) ?>"><?php echo output($vechiclelists['v_name']).' - '. output($vechiclelists['v_registration_no']); ?></option>
@@ -50,11 +50,33 @@
                </div>
                <div class="col-sm-6 col-md-3">
                   <div class="form-group">
-                     <label class="form-label">Driver<span class="form-required">*</span></label>
+                     <label class="form-label">Driver 1<span class="form-required">*</span></label>
                      <select id="t_driver"  class="form-control"  name="t_driver">
                        <option value="">Select Driver</option>
                         <?php  foreach ($driverlist as $key => $driverlists) { ?>
                         <option <?php if((isset($tripdetails)) && $tripdetails['detail']['t_driver'] == $driverlists['d_id']){ echo 'selected';} ?> value="<?php echo output($driverlists['d_id']) ?>"><?php echo output($driverlists['d_name']); ?></option>
+                        <?php  } ?>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label class="form-label">Driver 2<span class="form-required">*</span></label>
+                     <select id="t_driver2"  class="form-control"  name="t_driver_2">
+                       <option value="">Select Driver</option>
+                        <?php  foreach ($driverlist as $key => $driverlists) { ?>
+                        <option <?php if((isset($tripdetails)) && $tripdetails['detail']['t_driver_2'] == $driverlists['d_id']){ echo 'selected';} ?> value="<?php echo output($driverlists['d_id']) ?>"><?php echo output($driverlists['d_name']); ?></option>
+                        <?php  } ?>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label class="form-label">Helper<span class="form-required">*</span></label>
+                     <select id="helper"  class="form-control"  name="helper">
+                       <option value="">Select Helper</option>
+                        <?php  foreach ($helperlist as $key => $helperlists) { ?>
+                        <option <?php if((isset($tripdetails)) && $tripdetails['detail']['helper'] == $helperlists['d_id']){ echo 'selected';} ?> value="<?php echo output($helperlists['d_id']) ?>"><?php echo output($helperlists['d_name']); ?></option>
                         <?php  } ?>
                      </select>
                   </div>
@@ -406,12 +428,16 @@ $(document).ready(function(){
 		if(id != ''){
 		$.ajax({
         url: '<?php echo base_url('trips/generate_serial_no')?>',
+        dataType: "json",
         type: "Post",
         async: true,
         data: { id:id},
         success: function (data) {
            if(data){
-           	$('.t_trackingcode').val(data);
+           	$('.t_trackingcode').val(data.ser_no);
+            $('#t_driver').val(data.driver1);
+            $('#t_driver2').val(data.driver2);
+            $('#helper').val(data.helper);
            }
         }
     });

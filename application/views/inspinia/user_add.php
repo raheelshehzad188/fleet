@@ -119,7 +119,7 @@
 
                         <div class="row">
                           <div class="col-sm-2 left_box">
-                            <label>Driver</label>
+                            <label>Staff</label>
                           </div>
                           <div class="col-sm-9 right_box">
                             <div class="custom-control custom-checkbox">

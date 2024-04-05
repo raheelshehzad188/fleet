@@ -2,9 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 	function reformatDate($date, $to_format = 'Y-m-d') {
-		$from_format = dateformat();
-		$date_aux = date_create_from_format($from_format, $date);
-		return date_format($date_aux,$to_format);
+		return date($to_format, strtotime($date));
 	}
 
 	function reformatDatetime($date, $to_format = 'Y-m-d H:i') {

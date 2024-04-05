@@ -22,6 +22,8 @@ class Vehicle extends CI_Controller {
 	public function addvehicle()
 	{
 		$data['v_group'] = $this->vehicle_model->get_vehiclegroup();
+		$data['driver1'] = $this->vehicle_model->getDrivers();
+		$data['helper'] = $this->vehicle_model->getHelpers();
 		$data['traccar_list'] = json_decode(traccar_call('api/devices','','GET'),true);
 		$this->template->template_render('vehicle_add',$data);
 	}
@@ -71,6 +73,8 @@ class Vehicle extends CI_Controller {
 	public function editvehicle()
 	{
 		$v_id = $this->uri->segment(3);
+		$data['driver1'] = $this->vehicle_model->getDrivers();
+		$data['helper'] = $this->vehicle_model->getHelpers();
 		$data['v_group'] = $this->vehicle_model->get_vehiclegroup();
 		$data['vehicledetails'] = $this->vehicle_model->get_vehicledetails($v_id);
 		$data['traccar_list'] = json_decode(traccar_call('api/devices','','GET'),true);

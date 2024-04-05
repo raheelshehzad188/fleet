@@ -736,6 +736,23 @@ $('#tot_exp').val(expen);
 $('#grand_total').val(wages-expen);
 
         }
+        function getAge(dateString) 
+{
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+    {
+        age--;
+    }
+    return age;
+}
+        $('#dob').change(function() {
+    var date = $(this).val();
+    $('#d_age').val(getAge(date));
+    console.log(date, 'change')
+});
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -760,6 +777,7 @@ $('#grand_total').val(wages-expen);
    <?php if(isset($_SESSION['warningmessage'])){
             unset($_SESSION['warningmessage']);
         } } ?>
+
 </script>
 </body>
 </html>

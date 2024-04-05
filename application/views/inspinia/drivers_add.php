@@ -29,7 +29,7 @@
                              <?php
                                foreach ($staff_category as $key => $value) {
                                 ?>
-                                <option value="<?= $value['st_id']?>"><?= $value['type_name']?></option>
+                                <option value="<?= $value['st_id']?>" <?= (isset($driverdetails) && $driverdetails[0]['st_cat_id'] == $value['st_id'])?'selected':'' ?>><?= $value['type_name']?></option>
                               <?php
                                }
                               ?>
@@ -53,14 +53,8 @@
                     </div>
                     <div class="col-sm-6 col-md-3">
                       <div class="form-group">
-                        <label class="form-label">Age<span class="form-required">*</span></label>
-                        <input type="text" name="d_age" value="<?php echo (isset($driverdetails)) ? $driverdetails[0]['d_age']:'' ?>" class="form-control" placeholder="Age" >
-                      </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                      <div class="form-group">
                         <label class="form-label">Date Of Birth<span class="form-required">*</span></label>
-                        <input type="text" name="dob" value="<?php echo (isset($driverdetails)) ? $driverdetails[0]['dob']:'' ?>" class="form-control datepicker" placeholder="Date Of Birth" >
+                        <input type="date" name="dob" id="dob" value="<?php echo (isset($driverdetails)) ? $driverdetails[0]['dob']:'' ?>" class="form-control" placeholder="Date Of Birth" >
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
@@ -159,6 +153,7 @@
                       <div class="form-group">
                         <label for="d_is_active" class="form-label">Staff Status</label>
                         <select id="d_is_active" name="d_is_active" class="form-control " required="">
+                            <option value="">Choose Staff Status</option>
                           <option <?php echo (isset($driverdetails) && $driverdetails[0]['d_is_active']==0) ? 'selected':'' ?> value="0">Inactive</option> 
                           <option <?php echo (isset($driverdetails) && $driverdetails[0]['d_is_active']==1) ? 'selected':'' ?> value="1">Active</option> 
                           
@@ -170,13 +165,6 @@
                     <div class="form-group">
                       <label class="form-label">Staff Photo</label>
                       <input type="file" id="file" name="file" class="form-control"/>
-                    </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-3">
-                    <div class="form-group">
-                      <label class="form-label">Staff Document</label>
-                      <input type="file" id="file1" name="file1" class="form-control"/>
                     </div>
                     </div>
                     
@@ -255,38 +243,17 @@
                       <tbody id="routecontent">
                           <?php
                           $routeindex = 0;
-                          if(isset($tripdetails['route']) && $tripdetails['route'])
+                          if(isset($staff_exp) && $staff_exp)
                           {
-                              foreach($tripdetails['route'] as $k=> $v)
+                              foreach($staff_exp as $k=> $v)
                               {
                                   $routeindex++;
                                   ?>
                                     <tr id="row_<?= $routeindex ?>" >
-                          <td scope="col">
-                            <select name="route[route_from][]" class="form-control">
-                              <?php
-                                foreach ($routes as $key => $value) {
-                                  ?>
-                                    <option value="<?=$value['id'] ?>" <?= ($value['id'] == $v['route_from'])?'selected':'' ?>><?=$value['name'] ?></option>
-                                  <?php
-                                }
-                              ?>
-                              </select>
-                          </td>
-                          <td scope="col">
-                            <select name="route[route_to][]" class="form-control">
-                              <?php
-                                foreach ($routes as $key => $value) {
-                                  ?>
-                                    <option value="<?=$value['id'] ?>" <?= ($value['id'] == $v['route_to'])?'selected':'' ?>><?=$value['name'] ?></option>
-                                  <?php
-                                }
-                              ?>
-                              </select>
-                          </td>
-                          <td scope="col"><input class="form-control weight" placeholder="Weight" type="text" name="route[weight][]"  value="<?= $v['weight'] ?>" onkeyup="cal_wages(<?=  $routeindex ?>)" /></td>
-                          <td scope="col"><input class="form-control unit_price" placeholder="Unit Price" type="text" name="route[unit_price][]"  value="<?= $v['unit_price'] ?>"  onkeyup="cal_wages(<?= $routeindex ?>)" /></td>
-                          <td scope="col"><input class="form-control wages" placeholder="Wages" type="text" name="route[wages][]"  value="<?= $v['total'] ?>" readonly="true"  /></td>
+                          <td scope="col"><input type="hidden"  name="route[id][]"  value="<?= $v['id'] ?>" /><input class="form-control weight" placeholder="Name Of Organization" type="text" name="route[name][]"  value="<?= $v['name'] ?>"/></td>
+                          <td scope="col"><input class="form-control weight" placeholder="Address" type="text" name="route[address][]"  value="<?= $v['address'] ?>"/></td>
+                          <td scope="col"><input class="form-control" placeholder="Duration" type="text" name="route[duration][]"  value="<?= $v['duration'] ?>"  /></td>
+                          <td scope="col"><input class="form-control" placeholder="Detail" type="textarea" name="route[detail][]"  value="<?= $v['detail'] ?>" readonly="true"  /></td>
                           <td scope="col"><button class="btn btn-danger" target="#routecontent" onclick="del_row(<?= $routeindex; ?>)">-</button></td>
                         </tr>
                                   <?php
@@ -300,14 +267,14 @@
                               <td  colspan="12" style="text-align: right;"><button style="background: #007137;font-size: 12px;"  type="button" index="<?= $routeindex+1 ?>" class="add_more btn btn-success" target="#routecontent" content='
                           <tr id="row_index" >
                           <td scope="col">
-                            <input class="form-control weight" placeholder="Name Of Organization" type="text" name="route[weight][]" onkeyup="cal_wages(index)" />
+                            <input class="form-control weight" placeholder="Name Of Organization" type="text" name="route[name][]" />
                           </td>
                           <td scope="col">
-                           <input class="form-control weight" placeholder="Address" type="text" name="route[weight][]" onkeyup="cal_wages(index)" />
+                           <input class="form-control weight" placeholder="Address" type="text" name="route[address][]" />
                           </td>
 
-                          <td scope="col"><input class="form-control unit_price" placeholder="Duration" type="text" name="route[unit_price][]"  onkeyup="cal_wages(index)" /></td>
-                          <td scope="col"><input class="form-control weight" placeholder="Experience Detail" type="text" name="route[weight][]" onkeyup="cal_wages(index)" /></td>
+                          <td scope="col"><input class="form-control" placeholder="Duration" type="text" name="route[duration][]" /></td>
+                          <td scope="col"><input class="form-control" placeholder="Experience Detail" type="text" name="route[detail][]" /></td>
                           <td scope="col"><button class="btn btn-danger" target="#routecontent" onclick="del_row(index)">-</button></td>
                         </tr>
                           '><i class="fa fa-plus"></i> Add More</button></td>
@@ -347,7 +314,7 @@ $(document).ready(function(){
   $('#staff_category').on('change',function(){
     var val = $(this).val();
     $('.driverdata').css({"display":"none"});
-    if(val == 5){
+    if(val == 1){
       $('.driverdata').css({"display":"block"});
     }
   })

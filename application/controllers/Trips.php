@@ -48,8 +48,8 @@ class Trips extends CI_Controller {
             $this->db->where("t.t_trackingcode = '$tracking'");
         }else{
         if(isset($start_date) && isset($end_date)){
-        $start_date = date('Y-m-d', strtotime($start_date));
-        $end_date = date('Y-m-d', strtotime($end_date));
+        $start_date = date('Y-m-d', strtotime($start_date)).' 00:00:00' ;
+        $end_date = date('Y-m-d', strtotime($end_date)).' 23:59:59';
         $this->db->where("t.t_start_date >= '$start_date' AND t.t_end_date <= '$end_date'");
         }
         if(isset($customer) && !empty($customer)){
@@ -64,6 +64,8 @@ class Trips extends CI_Controller {
         }
         $this->db->order_by("t.t_id","DESC");
         $query = $this->db->get()->result(); 
+
+        // echo $this->db->last_query();
         $data = [];
         $sr=1;
         
@@ -106,11 +108,40 @@ class Trips extends CI_Controller {
 		    redirect('trips/exp_type');
 		}
 	}
+	  public function view_update($id) {
+    
+    $data['staff_update_data'] = $this->db->where('st_id', $id)->get('type_staff')->row_array();
+    
+    $data['staff_update_data']['staff_update_id'] = $id;
+    
+    $this->session->set_flashdata('staff_update_data', $data['staff_update_data']);
+    
+    redirect('settings/type_staff');
+}
+
 	public function del_staff_type($id)
 	{
 		$response = $this->db->where('st_id',$id)->delete('type_staff');
 		if($response) {
 			$this->session->set_flashdata('successmessage', 'Staff Type deleted successfully..');
+		    redirect('settings/type_staff');
+		} else
+		{
+			$this->session->set_flashdata('warningmessage', 'Something went wrong..Try again');
+		    redirect('settings/type_staff');
+		}
+	}
+	
+		public function update_staff_type()
+	{
+	   $data = [
+	       'type_name' => $this->input->post('type_name'),
+	       ];
+	    $id = $_POST['staff_update_id'];
+		$this->db->where('st_id', $this->input->post('staff_update_id'));
+        $response = $this->db->update('type_staff', $data);
+		if($response) {
+			$this->session->set_flashdata('successmessage', 'Staff Type Updated successfully..');
 		    redirect('settings/type_staff');
 		} else
 		{
@@ -225,6 +256,7 @@ class Trips extends CI_Controller {
 		$data['routes'] = $this->db->get('routes')->result_array();
 		$data['vechiclelist'] = $this->trips_model->getall_vechicle();
 		$data['driverlist'] = $this->trips_model->getall_driverlist();
+		$data['helperlist'] = $this->trips_model->getHelpers();
 		$this->template->template_render('trips_add',$data);
 	}
 	public function inserttrips() 
@@ -313,6 +345,7 @@ class Trips extends CI_Controller {
 			    }
 			}
 			
+
 // 			$bookingemail = $this->input->post('bookingemail');
 // 			if(isset($bookingemail)) {
 // 				$this->sendtripemail($this->input->post());
@@ -334,6 +367,7 @@ class Trips extends CI_Controller {
 		$data['vechiclelist'] = $this->trips_model->getall_vechicle();
 		$data['driverlist'] = $this->trips_model->getall_driverlist();
 		$data['routes'] = $this->db->get('routes')->result_array();
+		$data['helperlist'] = $this->trips_model->getHelpers();
         $data['pumps'] = $this->db->get('pumps')->result_array();
 		$data['exp_types'] = $this->db->where('is_default','1')->get('exp_types')->result_array();
 		$t_id = $this->uri->segment(3);
@@ -473,12 +507,15 @@ class Trips extends CI_Controller {
 				$customerdetails = (array) $customerdetails[0];
 			}
 			$driverdetails = $this->drivers_model->get_driverdetails($tripdetails['detail']['t_driver']);
+			$driverdetails2 = $this->drivers_model->get_driverdetails($tripdetails['detail']['t_driver_2']);
 			$data['paymentdetails'] = $this->trips_model->get_paymentdetails($tripdetails['detail']['t_id']);
 			$data['tripdetails'] = $tripdetails['detail'];	
 			$data['detail'] = $tripdetails;
 			$data['customerdetails'] = (isset($customerdetails['c_id']))?$customerdetails:'';
 
 			$data['driverdetails'] =  (isset($tripdetails['driver']))?$tripdetails['driver']:array();
+			$data['driverdetails2'] =  (isset($tripdetails['driver2']))?$tripdetails['driver2']:array();
+			$data['helper'] =  (isset($tripdetails['helper']))?$tripdetails['helper']:array();
 			$data['vehicle'] =  (isset($tripdetails['vehicle']))?$tripdetails['vehicle']:array();
 		}
 		if($this->config->item('theme'))
@@ -502,6 +539,20 @@ class Trips extends CI_Controller {
 			$this->session->set_flashdata('warningmessage', 'Error!. Please try again');
 			redirect('trips/details/'.$pyment['tp_trip_id']);
 		}
+	}
+	public function generate_serial_no(){
+		$id = $_POST['id'];
+		$ser = $this->trips_model->generate_serial_no($id);
+		$driver1 = $this->trips_model->getDriver1($id);
+		$driver2 = $this->trips_model->getDriver2($id);
+		$helper = $this->trips_model->helper($id);
+		$data = array(
+			'ser_no' => $ser,
+			'driver1' => $driver1,
+			'driver2' => $driver2,
+			'helper' => $helper,
+		);
+		echo json_encode($data);
 	}
 	public function trippayment_delete()
 	{

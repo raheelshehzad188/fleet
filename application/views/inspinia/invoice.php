@@ -593,16 +593,17 @@ body {
      
       <div class="label_input">
         <label>پہلا ڈرائیور</label>
-        <span>ایچ ڈی جی اپ ڈیٹ</span>
+        <span><?= $driverdetails->d_name ?></span>
+        
       </div>
        <div class="label_input">
         <label>دوسرا ڈرائیور</label>
-        <span><?= $driverdetails->d_name ?></span>
+        <span><?= $driverdetails2->d_name ?></span>
       </div>
       
        <div class="label_input">
         <label>ہیلپر</label>
-        <span>علیان</span>
+        <span><?= $helper->d_name ?></span>
       </div>
     </div>
   </div>

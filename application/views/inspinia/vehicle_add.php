@@ -13,7 +13,7 @@
         <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-content">
-                            
+
         <form method="post" id="vehicle_add" class="card" action="<?php echo base_url();?>vehicle/<?php echo (isset($vehicledetails))?'updatevehicle':'insertvehicle'; ?>" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="row">
@@ -75,6 +75,54 @@
                       <div class="form-group">
                         <label for="v_color" class="form-label">Vehicle Color<small> (To show in Map)</small></label>
                         <input id="add-device-color" name="v_color" class="jscolor {valueElement:'add-device-color', styleElement:'add-device-color', hash:true, mode:'HSV'} form-control"  value="<?php echo (isset($vehicledetails)) ? $vehicledetails[0]['v_color']:'#D6E1F3' ?>" required>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                      <div class="form-group">
+                        <label for="v_color" class="form-label">Driver 1</label>
+                        <select class="form-control select2" required="true" name ="driver_1">
+                        	<option>Select Driver</option>
+                        	<?php
+                        		foreach ($driver1 as $key => $value) {
+                        	?>
+                        	<option value="<?= $value['d_id']?>" <?php echo (isset($vehicledetails) && $vehicledetails[0]['driver_1'] == $value['d_id']) ? 'selected':'' ?>><?= $value['d_name']?></option>
+                        	<?php
+                        		}
+                        	?>
+                        	
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                      <div class="form-group">
+                        <label for="v_color" class="form-label">Driver 2</label>
+                        <select class="form-control select2" required="true" name ="driver_2">
+                        	<option>Select Driver</option>
+                        	<?php
+                        		foreach ($driver1 as $key => $value) {
+                        	?>
+                        	<option value="<?= $value['d_id']?>" <?php echo (isset($vehicledetails) && $vehicledetails[0]['driver_2'] == $value['d_id']) ? 'selected':'' ?>><?= $value['d_name']?></option>
+                        	<?php
+                        		}
+                        	?>
+                        	
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                      <div class="form-group">
+                        <label for="v_color" class="form-label">Helper</label>
+                        <select class="form-control select2" required="true" name ="helper">
+                        	<option>Select Helper</option>
+                        	<?php
+                        		foreach ($helper as $key => $value) {
+                        	?>
+                        	<option value="<?= $value['d_id']?>" <?php echo (isset($vehicledetails) && $vehicledetails[0]['helper'] == $value['d_id']) ? 'selected':'' ?>><?= $value['d_name']?></option>
+                        	<?php
+                        		}
+                        	?>
+                        	
+                        </select>
                       </div>
                     </div>
                     <?php if(isset($vehicledetails[0]['v_is_active'])) { ?>

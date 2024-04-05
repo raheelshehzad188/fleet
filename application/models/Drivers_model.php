@@ -35,9 +35,10 @@ class Drivers_model extends CI_Model{
 			} 
 		}
 		$data['d_license_expdate'] = reformatDate($data['d_license_expdate']);
+		unset($data['route']);
 		$data['d_doj'] = reformatDate($data['d_doj']);
 		$query = $this->db->insert('drivers',$data);
-		return	$query;
+		return	$this->db->insert_id();
 	} 
     public function getall_drivers() { 
 		return $this->db->select('*')->from('drivers')->order_by('d_id','desc')->get()->result_array();
@@ -81,8 +82,9 @@ class Drivers_model extends CI_Model{
 			} 
 		}
 		$_POST['d_license_expdate'] = reformatDate($_POST['d_license_expdate']);
+		unset($_POST['route']);
 		$_POST['d_doj'] = reformatDate($_POST['d_doj']);
 		$this->db->where('d_id',$this->input->post('d_id'));
-		return $this->db->update('drivers',$this->input->post());
+		return ($this->db->update('drivers',$_POST)?$this->input->post('d_id'):0);
 	}
 } 

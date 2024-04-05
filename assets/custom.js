@@ -26,7 +26,7 @@ $(document).ready(function() {
         $('.datetimepicker').datetimepicker({
            format: $('#dateformat').val(),
            step:15,
-           // minDate:'1970/01/02',
+           minDate:'-1970/01/02',
         })
         $('.datetimepicker1').datetimepicker({
             format:$('#dateformat').val(),
@@ -564,3 +564,75 @@ $(document).ready(function() {
            }
      });
     });
+    
+    // shaheer code
+
+    $('#trip_add input, #trip_add select').keydown(function(e) {
+        // Check if the key pressed is Enter
+        if (e.keyCode == 13) {
+            e.preventDefault(); // Prevent form submission
+            
+            // Find the index of the current input field
+            var currentIndex = $('#trip_add input, #trip_add select').index(this);
+            
+            // Check if the current input field at the current index is empty
+            if ($(this).val().trim() === '') {
+                $(this).css('border','1px solid red');
+            } else {
+                $(this).css('border','');
+                // Move focus to the next input field
+                var nextInput = $('#trip_add input, #trip_add select').eq(currentIndex + 1);
+                
+                // Move focus to the next input field if it exists and is not disabled
+                if (nextInput.length && !nextInput.is(':disabled')) {
+                    nextInput.focus();
+                }
+            }
+        }
+    });
+    $('.white_bg input, .white_bg select').keydown(function(e) {
+        // Check if the key pressed is Enter
+        if (e.keyCode == 13) {
+            e.preventDefault(); // Prevent form submission
+            
+            // Find the index of the current input field
+            var currentIndex = $('.white_bg input, .white_bg select').index(this);
+            
+            // Check if the current input field at the current index is empty
+            if ($(this).val().trim() === '') {
+                $(this).css('border','1px solid red');
+            } else {
+                $(this).css('border','');
+                // Move focus to the next input field
+                var nextInput = $('.white_bg input, .white_bg select').eq(currentIndex + 1);
+                
+                // Move focus to the next input field if it exists and is not disabled
+                if (nextInput.length && !nextInput.is(':disabled')) {
+                    nextInput.focus();
+                }
+            }
+        }
+    });    $('#vehicle_add input, #vehicle_add select').keydown(function(e) {
+        // Check if the key pressed is Enter
+        if (e.keyCode == 13) {
+            e.preventDefault(); // Prevent form submission
+            
+            // Find the index of the current input field
+            var currentIndex = $('#vehicle_add input, #vehicle_add select').index(this);
+            
+            // Check if the current input field at the current index is empty
+            if ($(this).val().trim() === '') {
+                $(this).css('border','1px solid red');
+            } else {
+                $(this).css('border','');
+                // Move focus to the next input field
+                var nextInput = $('#vehicle_add input, #vehicle_add select').eq(currentIndex + 1);
+                
+                // Move focus to the next input field if it exists and is not disabled
+                if (nextInput.length && !nextInput.is(':disabled')) {
+                    nextInput.focus();
+                }
+            }
+        }
+    });
+// shaheer code 

@@ -446,7 +446,7 @@
                     <tr>
                       <td>Edit Info</td>
                       <td>
-                        <a class="edit_btn" href="<?= base_url(); ?>vehicle/editvehicle/<?= $vehicledetails['d_id']; ?>">
+                        <a class="edit_btn" href="<?= base_url(); ?>drivers/editdriver/<?= $vehicledetails['d_id']; ?>">
                         Edit Info
                         </a>
                         </td>
