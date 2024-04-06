@@ -49,16 +49,6 @@
                       </p>
                    </a>
                 </li>
-            <?php if(userpermission('lr_vech_availablity')) { ?>
-            <li class="nav-item  <?php echo activate_menu('vehicleavailablity');?>">
-               <a href="<?= base_url(); ?>vehicleavailablity" class="nav-link ">
-                  <i class="nav-icon fa fa-calendar" aria-hidden="true"></i>
-                  <p>
-                  Availability
-                  </p>
-               </a>
-            </li>
-               <?php } ?>
                <?php if(userpermission('lr_drivers_list') || userpermission('lr_drivers_add')) { ?>
             <li class="<?php echo activate_menu('drivers');?> <?php echo activate_menu('adddrivers');?><?php echo activate_menu('editdriver');?>">
                 <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Staff's</span> <span class="fa arrow"></span></a>
@@ -206,37 +196,7 @@
                         </li>
                         <?php
                         }
-
                         ?>
-                        <?php
-                        if(userpermission('lr_settings'))
-                        {
-                            ?>
-                        <li class="<?php echo activate_menu('email_template');?>">
-                             <a href="<?= base_url(); ?>settings/email_template" >
-                                <i class="nav-icon fas faa-plus"></i><p>Email Template</p>
-                             </a>
-                        </li>
-                        <?php
-                        }
-
-                        ?>
-                        <?php
-                        if(userpermission('lr_settings'))
-                        {
-                            ?>
-                        <li class="<?php echo activate_menu('websitesetting_traccar');?>">
-                             <a href="<?= base_url(); ?>settings/websitesetting_traccar" >
-                                <i class="nav-icon fas faa-plus"></i><p>Traccar Config</p>
-                             </a>
-                        </li>
-                        <?php
-                        }
-
-                        ?>
-                         <li class="<?php echo activate_menu('type_staff');?>">
-                            <a href="<?= base_url(); ?>settings/type_staff">Type Staff</a>
-                        </li>
                     </ul>
                 </li>
 
