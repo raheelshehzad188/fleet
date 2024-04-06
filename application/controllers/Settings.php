@@ -136,6 +136,74 @@ class Settings extends CI_Controller {
 		$data['type_staff'] = $this->db->select('*')->from('type_staff')->get()->result_array();
 		$this->template->template_render('type_staff',$data);
 	}
+	public function crud($tbl,$act= '',$id = 0)   
+	{
+		$data = array();
+		$tables=$this->db->query("SHOW TABLES LIKE '".$tbl."'")->row();
+
+		
+		if($tables)
+		{
+			$data['detail'] = $detail = $this->db->where('tbl',$tbl)->get('crud_detail')->row_array();
+		if($act == 'add')
+		{
+			$response = $this->db->insert($tbl,$this->input->post());
+			if($response) {
+				$this->session->set_flashdata('successmessage', $detail['single'].' added successfully..');
+			    redirect('settings/crud/'.$tbl);
+			 }
+		}
+		else if($act == 'edit')
+		{
+			$data['staff_update_data'] = $this->db->where($detail['key'], $id)->get($tbl)->row_array();
+		    
+		    $data['staff_update_data']['staff_update_id'] = $id;
+		    
+		    $this->session->set_flashdata('staff_update_data', $data['staff_update_data']);
+		    
+		    redirect('settings/crud/'.$tbl);
+		}
+		else if($act == 'update')
+		{
+			$this->db->where($detail['key'], $id);
+	        $response = $this->db->update($tbl, $_POST);
+				if($response) {
+					$this->session->set_flashdata('successmessage', $detail['single'].' Updated successfully..');
+				    redirect('settings/crud/'.$tbl);
+				} 
+				else
+				{
+					$this->session->set_flashdata('warningmessage', 'Something went wrong..Try again');
+				    redirect('settings/crud/'.$tbl);
+				}
+		}
+		else if($act == 'delete')
+		{
+			$this->db->where($detail['key'], $id);
+	        $response = $this->db->delete($tbl);
+				if($response) {
+					$this->session->set_flashdata('successmessage', $detail['single'].' Deleted successfully..');
+				    redirect('settings/crud/'.$tbl);
+				} 
+				else
+				{
+					$this->session->set_flashdata('warningmessage', 'Something went wrong..Try again');
+				    redirect('settings/crud/'.$tbl);
+				}
+		}
+		else
+		{
+			$data['type_staff'] = $this->db->select('*')->from($tbl)->get()->result_array();
+			
+			$this->template->template_render($tbl,$data);
+		}
+		}
+		else
+		{
+			$this->template->template_render('404',$data);
+		}
+
+	}
 	public function traccarconfigsave()   
 	{
 		$response = $this->db->update('settings',$this->input->post());

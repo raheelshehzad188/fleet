@@ -48,7 +48,7 @@
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6 margin-left-15">
-            <h1 class="m-0 text-dark">Staff Type
+            <h1 class="m-0 text-dark"><?= (isset($detail['pul'])?$detail['pul']:'Somthing wrong'); ?>
             </h1>
          </div>
       </div>
@@ -79,16 +79,16 @@
                         <td> <?php echo output($count); $count++; ?></td>
                         <td> <?php echo $type_staff['type_name']; ?></td>
                         <td> <?php echo output($type_staff['created_at']); ?></td>
-                        <td> <span class=" <?= ($type_staff['editable'] == 0) ? 'badge badge-success' : 'badge badge-error ' ?>"><?= ($type_staff['editable'] == 0) ? 'Editable' : 'Only Delete' ?></span></td>
+                        <td> <span class=" <?= ($type_staff['editable'] == 0) ? 'badge badge-success' : 'badge badge-error ' ?>"><?= ($type_staff['editable'] == 0) ? 'Editable' : 'Only Edit' ?></span></td>
                         <td>
-                           <a class="icon mx-2 mr-2" href="<?php echo base_url(); ?>trips/del_staff_type/<?php echo $type_staff['st_id']; ?>">
-                           <i class="fa fa-trash text-danger"></i>
+                           <a class="icon" href="<?php echo base_url(); ?>settings/crud/<?= $detail['tbl']?>/edit/<?php echo $type_staff[$detail['key']]; ?>">
+                           <i class="fa fa-edit text-success"></i>
                            </a> 
                            <?php 
                             if($type_staff['editable'] == 0){
                            ?>
-                           <a class="icon" href="<?php echo base_url(); ?>trips/view_update/<?php echo $type_staff['st_id']; ?>">
-                           <i class="fa fa-edit text-success"></i>
+                            <a class="icon mx-2 mr-2" href="<?php echo base_url(); ?>settings/crud/<?= $detail['tbl']?>/delete/<?php echo $type_staff[$detail['key']]; ?>">
+                           <i class="fa fa-trash text-danger"></i>
                            </a> 
                            <?php } ?>
                         </td>
@@ -100,24 +100,37 @@
                     </div>
                 </div>
             </div>
-            <?php $staff_update_data = $this->session->flashdata('staff_update_data'); ?>
+            <?php $staff_update_data = $this->session->flashdata('staff_update_data'); 
+                unset($_SESSION['staff_update_data']);
+            ?>
    <div class="col-lg-5">
           <div class="ibox float-e-margins">
                     <div class="ibox-content box_inner border_box">
                         <div class="box_title">
-                        <h3><?= (isset($staff_update_data) ? 'Update Type' : 'Add New Make')?></h3>
+                        <h3><?= (isset($staff_update_data) ? 'Update '.(isset($detail['single'])?$detail['single']:'Somthing wrong') : 'Add New '.(isset($detail['single'])?$detail['single']:'Somthing wrong'))?></h3>
                         </div>
                         <div class="box_content">
-                            
-                    <form id="staff_type" method="post" action="<?php echo base_url(); ?>trips/<?= (isset($staff_update_data) ? 'update_staff_type' : 'add_staff_type' ) ?>">
+                            <?php
+                            $tbl = (isset($detail['tbl'])?$detail['tbl']:' ');
+                                if(isset($staff_update_data))
+                                {
+                                    ?>
+                                    <form id="staff_type" method="post" action="<?php echo base_url(); ?>settings/crud/<?= $detail['tbl'] ?>/update/<?= $staff_update_data['staff_update_id'] ?>">
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <form id="staff_type" method="post" action="<?php echo base_url(); ?>settings/crud/<?= $detail['tbl'] ?>/add">
+                                    <?php
+                                }
+                            ?>
     <div class="card-body">
         <div class="form-group">
-            <label for="geo_name">Type</label>
+            <label for="geo_name"><?= (isset($detail['single'])?$detail['single']:'Somthing wrong') ?></label>
             <?php
             
             if ($staff_update_data) {
-                $staff_update_id = $staff_update_data['staff_update_id'];
-                echo '<input type="hidden" name="staff_update_id" value="' . $staff_update_id . '">';
                 $buttonText = "Update";
             } else {
                 

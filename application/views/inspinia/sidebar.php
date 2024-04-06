@@ -61,7 +61,7 @@
                <?php } ?>
                <?php if(userpermission('lr_drivers_list') || userpermission('lr_drivers_add')) { ?>
             <li class="<?php echo activate_menu('drivers');?> <?php echo activate_menu('adddrivers');?><?php echo activate_menu('editdriver');?>">
-                <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Staff's</span> <span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Staff's</span> <span class="fa arrow"></span></a>
                
                <ul class="nav nav-treeview">
                   <?php if(userpermission('lr_drivers_list')) { ?>
@@ -103,7 +103,7 @@
             <?php } */?>
             <?php if(userpermission('lr_cust_list') || userpermission('lr_cust_add')) { ?>
             <li class="nav-item <?=activate_menu('addcustomer') ?><?= activate_menu('editcustomer')?><?= activate_menu('customer')?>">
-               <a href="index.html"><i class="fa fa-user"></i> <span class="nav-label">Customer</span> <span class="fa arrow"></span></a>
+               <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Customer</span> <span class="fa arrow"></span></a>
                <ul class="nav nav-treeview">
                 <?php  if(userpermission('lr_cust_list')) { ?>
                   <li class=" <?php echo activate_menu('customer');?><?php echo activate_menu('editcustomer');?>">
@@ -123,7 +123,7 @@
             <?php } ?>
             <?php if(userpermission('lr_trips_list') || userpermission('lr_trips_list_view')) { ?>
             <li class="<?php echo activate_menu('trips') ?> <?= activate_menu('addtrips') ?><?= activate_menu('edittrip') ?><?= activate_menu('details') ?>">
-               <a href="index.html"><i class="fa fa-road"></i> <span class="nav-label">Vouchers</span> <span class="fa arrow"></span></a>
+               <a href="#"><i class="fa fa-road"></i> <span class="nav-label">Vouchers</span> <span class="fa arrow"></span></a>
                <ul class="nav nav-treeview">
                   <?php if(userpermission('lr_trips_list')) { ?>
                   <li class="nav-item <?php echo activate_menu('trips');?><?php echo activate_menu('edittrip');?><?php echo activate_menu('details');?>">
@@ -157,7 +157,7 @@
             </li>
            <?php } ?>
                <li class="<?php echo activate_menu('vehicle');?> <?php echo activate_menu('addvehicle');?><?php echo activate_menu('viewvehicle');?><?php echo activate_menu('editvehicle');?><?php echo activate_menu('vehiclegroup');?><?php echo activate_menu('addvehiclegroup');?>">
-                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Vehicle's</span> <span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Vehicle's</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <?php if(userpermission('lr_vech_list')) { ?>
                         <li class="<?php echo activate_menu('vehicle');?><?php echo activate_menu('editvehicle');?><?php echo activate_menu('viewvehicle');?>"><a href="<?= base_url(); ?>vehicle">Vehicle List</a></li>
@@ -171,12 +171,22 @@
                     </ul>
                 </li>
                 <?php  if(userpermission('lr_settings')) { ?>
-                    <li class="<?php echo activate_menu('websitesetting');?> <?php echo activate_menu('websitesetting_traccar');?><?php echo activate_menu('smtpconfig');?><?php echo activate_menu('email_template');?><?php echo activate_menu('edit_email_template');?>">
-                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Setting's</span> <span class="fa arrow"></span></a>
+                    <li class="<?php echo activate_menu('websitesetting');?> <?php echo activate_menu('websitesetting_traccar');?><?php echo activate_menu('smtpconfig');?><?php echo activate_menu('email_template');?><?php echo activate_menu('edit_email_template');?> <?php echo (isset($detail['tbl']))?'active':'';?>">
+                    <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Setting's</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <?php
                         if(userpermission('lr_settings'))
                         {
+                            $ci =& get_instance();
+                            $crud = $ci->db->where('hide_side',0)->get('crud_detail')->result_array();
+                            foreach ($crud as $key => $value) {
+                                ?>
+                                    <li class="<?php echo (isset($detail['tbl']) && $detail['tbl'] == $value['tbl'])?'active':'';?>">
+                            <a href="<?= base_url(); ?>settings/crud/<?= $value['tbl'] ?>"><?= $value['pul'] ?></a>
+                        </li>
+                                <?php
+                            }
+
                             ?>
                         <li class="<?php echo activate_menu('websitesetting');?>">
                             <a href="<?= base_url(); ?>settings/websitesetting">General Settings</a>
@@ -231,7 +241,7 @@
                 </li>
 
                 <li class="<?php echo activate_menu('users');?> ">
-                    <a href="index.html"><i class="fa fa-user"></i> <span class="nav-label">User's</span> <span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-user"></i> <span class="nav-label">User's</span> <span class="fa arrow"></span></a>
                <ul class="nav nav-second-level">
                   <li class="<?php echo activate_menu('users');?> <?php echo activate_menu('edituser');?>">
                      <a href="<?= base_url(); ?>users">

@@ -398,6 +398,12 @@
                   <li class="nav-item">
                      <a href="<?= base_url(); ?>settings/websitesetting" class="nav-link <?php echo activate_menu('websitesetting');?>">
                         <i class="fas fa-cosg icon nav-icon"></i>
+                        <p>Crud</p>
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                     <a href="<?= base_url(); ?>settings/websitesetting" class="nav-link <?php echo activate_menu('websitesetting');?>">
+                        <i class="fas fa-cosg icon nav-icon"></i>
                         <p>General Settings</p>
                      </a>
                   </li>
