@@ -191,6 +191,7 @@
                 <ul class="tabs">
                   <li class="tab-link current" data-tab="tab-1">Reference</li>
                   <li class="tab-link" data-tab="tab-2">Experience</li>
+                  <li class="tab-link" data-tab="tab-3">Salary</li>
                 </ul>
 
                 <div id="tab-1" class="tab-content current">
@@ -282,6 +283,33 @@
                       </tfoot>
                     </table>
                     </div>
+                </div>
+                <div id="tab-3" class="tab-content">
+                  <div class="table-responsive table_design">
+                    <table class="table">
+                      <h3>Reference Detail</h3>
+                      <thead>
+                        <tr>
+                          <th scope="col">Salary</th>
+                          <th scope="col">Allowance</th>
+                        </tr>
+                      </thead>
+                      <tbody id="petrcontent">
+                     
+                              <tr id="" >
+                                 
+                                  <td scope="col">
+                                    <input class="form-control"   placeholder="Salary" type="text" value="<?php echo (isset($driverdetails)) ? $driverdetails[0]['d_ref']:'' ?>" name="d_ref" /></td>
+                                  <td scope="col">
+                                    <input class="form-control"  placeholder="Allowance" type="text" name="ref_position" value="<?php echo (isset($driverdetails)) ? $driverdetails[0]['ref_position']:'' ?>" />
+                                  </td>
+                                 
+                              </tr>
+                             
+                      </tbody>
+
+                    </table>
+                  </div>
                 </div>
                       
             </div>

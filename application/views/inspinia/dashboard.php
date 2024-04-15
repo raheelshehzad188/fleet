@@ -190,14 +190,26 @@
 
         <div class="col-lg-12">
         <div class="ibox float-e-margins">
-        <div class="ibox-title container" style="width: 100%; margin-left: 16px;">
-                        <h5>Basic Table</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link1" style="padding-right: 10px;" onclick="refresh()">
-                                <i class="fa fa-repeat"></i>
-                            </a>
-                        </div>
-                    </div>
+        <div class="ibox-title">
+            <h5>Custom responsive table </h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a href="#">Config option 1</a>
+                    </li>
+                    <li><a href="#">Config option 2</a>
+                    </li>
+                </ul>
+                <a class="close-link">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
         <div class="ibox-content">
             <div class="row">
                 <div class="col-sm-9 m-b-xs">
@@ -212,74 +224,179 @@
                                         <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
                 </div>
             </div>
-            <div class="col-lg-12" style="overflow: scroll;">
-    <?php
-$last_d = date("t", strtotime("next month"));
-$m = 3;//date("m");
-$y = date("Y");
-    ?>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
 
-                <div class="ibox float-e-margins">
-                   
-                    <div style="width: 3000px;">
-
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr style="width:2500px;">
-                                <th>Gari</th>
-                                <?php
-                                for($i = 1;$i <=$last_d ;$i++)
-                                {
-                                    ?>
-                                <th><?= $i ?></th>
-                                <?php
-                                }
-                                ?>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            
-                                <?php
-                                if(isset($vehicles) && $vehicles)
-                                {
-                                    foreach ($vehicles as $key => $v) {
-                                        // code...
-                                    
-                                    ?>
-                                    <tr style="width:2500px;">
-                                <td><?= $v['v_registration_no'] ?></td>
-                                <?php
-                                for($i = 1;$i <=$last_d ;$i++)
-                                {
-                                    ?>
-                                <td class="load" date="<?= $y.'-'.$m.'-'.$i ?>" vid="<?= $v['v_id'] ?>" ></td>
-                                <?php
-                                }
-                                ?>
-                            </tr>
-                                <?php
-                                }
-                            }
-
-                                ?>
-                            </tbody>
-                            <tfoot>
-                            <tr style="width:2500px;">
-                                <th>Total Income</th>
-                                <?php
-                                for($i = 1;$i <=$last_d ;$i++)
-                                {
-                                    ?>
-                                <th class="tot_income" date="<?= $y.'-'.$m.'-'.$i ?>"><?= $i ?></th>
-                                <?php
-                                }
-                                ?>
-                            </tr>
-                            </tfoot>
-                        </table>
-
-                    </div>
-                </div>
+                        <th>#</th>
+                        <th>Project </th>
+                        <th>Name </th>
+                        <th>Phone </th>
+                        <th>Company </th>
+                        <th>Completed </th>
+                        <th>Task</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Project <small>This is example of project</small></td>
+                        <td>Patrick Smith</td>
+                        <td>0800 051213</td>
+                        <td>Inceptos Hymenaeos Ltd</td>
+                        <td><span class="pie">0.52/1.561</span></td>
+                        <td>20%</td>
+                        <td>Jul 14, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Alpha project</td>
+                        <td>Alice Jackson</td>
+                        <td>0500 780909</td>
+                        <td>Nec Euismod In Company</td>
+                        <td><span class="pie">6,9</span></td>
+                        <td>40%</td>
+                        <td>Jul 16, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Betha project</td>
+                        <td>John Smith</td>
+                        <td>0800 1111</td>
+                        <td>Erat Volutpat</td>
+                        <td><span class="pie">3,1</span></td>
+                        <td>75%</td>
+                        <td>Jul 18, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Gamma project</td>
+                        <td>Anna Jordan</td>
+                        <td>(016977) 0648</td>
+                        <td>Tellus Ltd</td>
+                        <td><span class="pie">4,9</span></td>
+                        <td>18%</td>
+                        <td>Jul 22, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Alpha project</td>
+                        <td>Alice Jackson</td>
+                        <td>0500 780909</td>
+                        <td>Nec Euismod In Company</td>
+                        <td><span class="pie">6,9</span></td>
+                        <td>40%</td>
+                        <td>Jul 16, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Project <small>This is example of project</small></td>
+                        <td>Patrick Smith</td>
+                        <td>0800 051213</td>
+                        <td>Inceptos Hymenaeos Ltd</td>
+                        <td><span class="pie">0.52/1.561</span></td>
+                        <td>20%</td>
+                        <td>Jul 14, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Gamma project</td>
+                        <td>Anna Jordan</td>
+                        <td>(016977) 0648</td>
+                        <td>Tellus Ltd</td>
+                        <td><span class="pie">4,9</span></td>
+                        <td>18%</td>
+                        <td>Jul 22, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Project <small>This is example of project</small></td>
+                        <td>Patrick Smith</td>
+                        <td>0800 051213</td>
+                        <td>Inceptos Hymenaeos Ltd</td>
+                        <td><span class="pie">0.52/1.561</span></td>
+                        <td>20%</td>
+                        <td>Jul 14, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Alpha project</td>
+                        <td>Alice Jackson</td>
+                        <td>0500 780909</td>
+                        <td>Nec Euismod In Company</td>
+                        <td><span class="pie">6,9</span></td>
+                        <td>40%</td>
+                        <td>Jul 16, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Betha project</td>
+                        <td>John Smith</td>
+                        <td>0800 1111</td>
+                        <td>Erat Volutpat</td>
+                        <td><span class="pie">3,1</span></td>
+                        <td>75%</td>
+                        <td>Jul 18, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Gamma project</td>
+                        <td>Anna Jordan</td>
+                        <td>(016977) 0648</td>
+                        <td>Tellus Ltd</td>
+                        <td><span class="pie">4,9</span></td>
+                        <td>18%</td>
+                        <td>Jul 22, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Alpha project</td>
+                        <td>Alice Jackson</td>
+                        <td>0500 780909</td>
+                        <td>Nec Euismod In Company</td>
+                        <td><span class="pie">6,9</span></td>
+                        <td>40%</td>
+                        <td>Jul 16, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Project <small>This is example of project</small></td>
+                        <td>Patrick Smith</td>
+                        <td>0800 051213</td>
+                        <td>Inceptos Hymenaeos Ltd</td>
+                        <td><span class="pie">0.52/1.561</span></td>
+                        <td>20%</td>
+                        <td>Jul 14, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Gamma project</td>
+                        <td>Anna Jordan</td>
+                        <td>(016977) 0648</td>
+                        <td>Tellus Ltd</td>
+                        <td><span class="pie">4,9</span></td>
+                        <td>18%</td>
+                        <td>Jul 22, 2013</td>
+                        <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>
@@ -287,86 +404,3 @@ $y = date("Y");
         </div>
 
         </div>
-        <script type="text/javascript">
-    function refresh(){
-        $('.load').each(function(i, obj) {
-    var vid = $(this).attr('vid');
-    var old = $(this);
-    old.html('Loading');
-    var date = $(this).attr('date');
-    console.log(vid+' '+date);
-    $.ajax({
-        url: BASE_URL+'dashboard/load?date='+date+'&vid='+vid,
-        type: "Post",
-        async: true,
-        data: { },
-        success: function (data) {
-            old.html(data);
-            console.log(data);
-           
-        },
-        error: function (xhr, exception) {
-            var msg = "";
-            if (xhr.status === 0) {
-                msg = "Not connect.\n Verify Network." + xhr.responseText;
-            } else if (xhr.status == 404) {
-                msg = "Requested page not found. [404]" + xhr.responseText;
-            } else if (xhr.status == 500) {
-                msg = "Internal Server Error [500]." +  xhr.responseText;
-            } else if (exception === "parsererror") {
-                msg = "Requested JSON parse failed.";
-            } else if (exception === "timeout") {
-                msg = "Time out error." + xhr.responseText;
-            } else if (exception === "abort") {
-                msg = "Ajax request aborted.";
-            } else {
-                msg = "Error:" + xhr.status + " " + xhr.responseText;
-            }
-           
-        }
-    }); 
-    }); 
-        $('.tot_income').each(function(i, obj) {
-    var vid = 0;
-    var old = $(this);
-    old.html('Loading');
-    var date = $(this).attr('date');
-    console.log(vid+' '+date);
-    $.ajax({
-        url: BASE_URL+'dashboard/tot_income?date='+date+'&vid='+vid,
-        type: "Post",
-        async: true,
-        data: { },
-        success: function (data) {
-            old.html(data);
-            console.log(data);
-           
-        },
-        error: function (xhr, exception) {
-            var msg = "";
-            if (xhr.status === 0) {
-                msg = "Not connect.\n Verify Network." + xhr.responseText;
-            } else if (xhr.status == 404) {
-                msg = "Requested page not found. [404]" + xhr.responseText;
-            } else if (xhr.status == 500) {
-                msg = "Internal Server Error [500]." +  xhr.responseText;
-            } else if (exception === "parsererror") {
-                msg = "Requested JSON parse failed.";
-            } else if (exception === "timeout") {
-                msg = "Time out error." + xhr.responseText;
-            } else if (exception === "abort") {
-                msg = "Ajax request aborted.";
-            } else {
-                msg = "Error:" + xhr.status + " " + xhr.responseText;
-            }
-           
-        }
-    }); 
-    }); 
-
-
-    }
-    $(document).ready(function(){
-        refresh();
-});
-</script>

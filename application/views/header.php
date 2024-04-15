@@ -38,6 +38,7 @@
       <script src="<?= base_url(); ?>assets/plugins/toast/toast.min.js"></script>
    </head>
    <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+       
       <div class="wrapper">
       <!-- Navbar -->
       <nav class="main-header navbar navbar-expand navbar-dark theme-navbar-primary">

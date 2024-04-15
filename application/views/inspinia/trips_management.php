@@ -65,13 +65,13 @@
                <div class="col-sm-6 col-md-3">
                   <div class="form-group">
                      <label class="form-label">Trip Start Date<span class="form-required">*</span></label>
-                     <input type="text" id="t_start_date" value="<?php echo date('Y-m-d', strtotime('-30 days')); ?>" name="t_start_date" class="form-control datetimepicker" placeholder="Trip Start Date" autocomplete="off">
+                     <input type="text" id="t_start_date" value="<?php echo date('Y-m-d'); ?> 00:00:00" name="t_start_date" class="form-control datetimepicker1" placeholder="Trip Start Date" autocomplete="off">
                   </div>
                </div>
                <div class="col-sm-6 col-md-3">
                   <div class="form-group">
                      <label class="form-label">Trip End Date<span class="form-required">*</span></label>
-                     <input type="text"id="t_end_date" value="<?php echo date('Y-m-d'); ?>"  name="t_end_date" class="form-control datetimepicker" placeholder="Trip End Date" autocomplete="off">
+                     <input type="text"id="t_end_date" value="<?php echo date('Y-m-d'); ?> 23:59:00"  name="t_end_date" class="form-control datetimepicker1" placeholder="Trip End Date" autocomplete="off">
                   </div>
                </div>
                  <div class="col-sm-6 card-footer">

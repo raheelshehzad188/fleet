@@ -359,6 +359,18 @@
                         </div>
                           </div>
                         </div>
+                        
+                        <div class="row">
+                          <div class="col-sm-2 left_box">
+                            <label>Shift Manager</label>
+                          </div>
+                          <div class="col-sm-9 right_box">
+                            <div class="custom-control custom-checkbox">
+                          <input type="checkbox" value="1" <?php if(isset($userdetails[0]['lr_shift_manager'])) { echo ($userdetails[0]['lr_shift_manager']==1 ? 'checked' : ''); } ?> name="permissions[lr_shift_manager]" class="custom-control-input" id="lr_shift_manager">
+                          <label class="custom-control-label" for="lr_shift_manager">Shift Manager</label>
+                        </div>
+                          </div>
+                        </div>
 
                       </div>
                     </div>

@@ -250,6 +250,7 @@ class Trips extends CI_Controller {
 	}
 	public function addtrips()
 	{
+	    
 		$data['customerlist'] = $this->trips_model->getall_customer();
 		$data['exp_types'] = $this->db->where('is_default','1')->get('exp_types')->result_array();
 		$data['pumps'] = $this->db->get('pumps')->result_array();
@@ -258,18 +259,29 @@ class Trips extends CI_Controller {
 		$data['driverlist'] = $this->trips_model->getall_driverlist();
 		$data['helperlist'] = $this->trips_model->getHelpers();
 		$this->template->template_render('trips_add',$data);
+	
 	}
 	public function inserttrips() 
-	{
+	{   
+	
+	    
 		$testxss = $_POST;
 		if($testxss){
 		    $route = $_POST['route'];
-		    $expense = $_POST['expense'];
-		    $petrol = $_POST['petrol'];
+		    
+            if ($route == '') {
+                $this->session->set_flashdata('warningmessage', 'Route cannot be empty');
+                redirect('trips/addtrips'); // Redirect back to the previous page
+                exit;
+            }
+		     $expense = $_POST['expense'];
+		     $petrol = $_POST['petrol'];
+		  
 			$response = $this->trips_model->add_trips($this->input->post());
+
 			if($route && $response)
 			{
-			
+		    
 			
 			    for($i = 0 ; $i <= count($route) ;$i++)
 			    {
@@ -284,6 +296,9 @@ class Trips extends CI_Controller {
 					            'trip_id' => $response,
 					            );
 					        $r = $this->db->insert('trip_routes',$in);
+					        
+					        
+					        
 					   }
 			    }
 			}
@@ -303,18 +318,24 @@ class Trips extends CI_Controller {
 					            'trip_id' => $response,
 					            );
 					        $r = $this->db->insert('tbl_fuel',$in);
+					        
 					   }
 			    }
 			}
 			if($expense && $response)
 			{
+			    
 			    for($i = 0 ; $i <= count($expense['expense_id']) ;$i++)
 			    {
+			        
 			        if(isset($expense['expense_id'][$i]) && !$expense['expense_id'][$i])
 			        {
+			             
                         $already = $this->db->where(array('name'=>$expense['exp_name'][$i]))->get('exp_types')->row();
+                        
                         if($already)
                         {
+                            
                         	$expense['expense_id'][$i] = $already->id;
 
                         }
@@ -322,13 +343,16 @@ class Trips extends CI_Controller {
                         {
 
 	                        $r = $this->db->insert('exp_types',array('name'=>$expense['exp_name'][$i]));
+	                       
+					        
+					        
 	                        if($r)
 	                        {
 	                            $expense['expense_id'][$i] = $this->db->insert_id();
 	                        }
 	                        else{
 	                            var_dump($this->db->last_query());
-	                            die();
+	                            
 	                        }
 	                    }
 			        }

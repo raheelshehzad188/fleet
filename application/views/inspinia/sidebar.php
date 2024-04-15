@@ -1,4 +1,3 @@
-
 <?php  
    function activate_menu($controller) {
      $CI = get_instance();
@@ -64,6 +63,18 @@
                   <li class="<?php echo activate_menu('adddrivers');?>">
                      <a href="<?= base_url(); ?>drivers/adddrivers">
                         Add Staff
+                     </a>
+                  </li>
+                  <?php } if(userpermission('lr_drivers_add')) { ?>
+                  <li class="<?php echo activate_menu('staff_salary');?>">
+                     <a href="<?= base_url(); ?>drivers/salaries">
+                        Staff Salary
+                     </a>
+                  </li>
+                  <?php } if(userpermission('lr_drivers_add')) { ?>
+                  <li class="<?php echo activate_menu('add_salary');?>">
+                     <a href="<?= base_url(); ?>drivers/attendence">
+                        Attendence
                      </a>
                   </li>
                   <?php } ?>
@@ -158,6 +169,15 @@
                       <?php } if(userpermission('lr_vech_group')) { ?>
                         <li class="<?php echo activate_menu('addvehiclegroup');?>"><a href="<?= base_url(); ?>vehicle/addvehiclegroup">Add Vehicle Group</a></li>
                     <?php } ?>
+                    </ul>
+                </li>
+                
+                <li class="<?php echo activate_menu('shiftmanager');?> <?php echo activate_menu('add_shift_manager');?><?php echo activate_menu('view_shift_manager');?><?php echo activate_menu('edit_shift_manager');?><?php echo activate_menu('vehiclegroup');?><?php echo activate_menu('addvehiclegroup');?>">
+                    <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Shift Manager</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <?php if(userpermission('lr_shift_manager')) { ?>
+                        <li class="<?php echo activate_menu('add_shift_manager');?>"><a href="<?= base_url(); ?>shiftmanager/add_shift_manager">Add Shift Manager</a></li>
+                        <?php } ?>
                     </ul>
                 </li>
                 <?php  if(userpermission('lr_settings')) { ?>

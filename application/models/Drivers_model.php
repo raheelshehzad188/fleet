@@ -49,6 +49,14 @@ class Drivers_model extends CI_Model{
 	public function get_driverdetails($d_id) { 
 		return $this->db->select('*')->from('drivers')->where('d_id',$d_id)->get()->result_array();
 	} 
+	public function ofc_exp() { 
+		return $this->db->select('*')->from('ofc_exp')->get()->result_array();
+	} 
+	public function ofc_exp_code() { 
+		$x = $this->db->select('*')->from('ofc_exp')->order_by('id','desc')->get()->row_array();
+		echo "string";
+		return $x['ledgerCode'];
+	} 
 	public function edit_driver() { 
 		if(!empty($_FILES)) {
 			$config['upload_path'] = 'assets/uploads/';
@@ -87,4 +95,16 @@ class Drivers_model extends CI_Model{
 		$this->db->where('d_id',$this->input->post('d_id'));
 		return ($this->db->update('drivers',$_POST)?$this->input->post('d_id'):0);
 	}
+	public function add_salary($value='')
+	{
+		$insertdata = array(
+			"cust_id" => $value['cust_id'],
+			"salary" => $value['salary'],
+		);
+
+		$this->db->insert('salary',$insertdata);
+		return $this->db->insert_id();
+		
+	}
+
 } 

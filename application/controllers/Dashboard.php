@@ -19,7 +19,6 @@ class Dashboard extends CI_Controller {
           $data['dashboard'] = $this->dashboard_model->getdashboard_info();
           $data['vechicle_currentlocation'] = $this->dashboard_model->get_vechicle_currentlocation();
           $data['vechicle_status'] = $this->dashboard_model->getvechicle_status();
-          $data['vehicles']= $this->db->get('vehicles')->result_array();
           $returndata = array();
           $geofenceevents = $this->geofence_model->get_geofenceevents(20);
           if(!empty($geofenceevents)) {

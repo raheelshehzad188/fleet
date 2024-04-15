@@ -154,9 +154,9 @@ class Vehicle extends CI_Controller {
 			$this->template->template_render('pagenotfound');
 		}
 	}
-		public function vehicle_trip_table()
+	public function vehicle_trip_table()
 	{
-		    $draw = intval($this->input->get("draw"));
+		$draw = intval($this->input->get("draw"));
         $start = intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
         
