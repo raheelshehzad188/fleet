@@ -39,6 +39,7 @@ if (isset($footer))
     <link href="<?= $url ?>css/animate.css" rel="stylesheet">
     <link href="<?= $url ?>assets/dist/css/adminlte.css" rel="stylesheet">
     <link href="<?= $url ?>css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script type="text/javascript">
         var BASE_URL = '<?= base_url(); ?>';
     </script>
@@ -71,7 +72,6 @@ if (isset($footer))
     display: none !important;
 }
     </style>
-}
 
 
 </head>
@@ -779,6 +779,7 @@ $('#grand_total').val(wages-expen);
         } } ?>
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 </body>
 </html>
 <?php

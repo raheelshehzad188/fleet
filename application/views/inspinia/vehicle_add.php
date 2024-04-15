@@ -80,7 +80,7 @@
                     <div class="col-sm-6 col-md-3">
                       <div class="form-group">
                         <label for="v_color" class="form-label">Driver 1</label>
-                        <select class="form-control select2" required="true" name ="driver_1">
+                        <select class="form-control chosen-select-input" required="true" name ="driver_1">
                         	<option>Select Driver</option>
                         	<?php
                         		foreach ($driver1 as $key => $value) {
@@ -95,8 +95,8 @@
                     </div>
                     <div class="col-sm-6 col-md-3">
                       <div class="form-group">
-                        <label for="v_color" class="form-label">Driver 2</label>
-                        <select class="form-control select2" required="true" name ="driver_2">
+                        <label for="v_color" class="form-label ">Driver 2</label>
+                        <select class="form-control chosen-select-input" required="true" name ="driver_2">
                         	<option>Select Driver</option>
                         	<?php
                         		foreach ($driver1 as $key => $value) {
@@ -112,7 +112,7 @@
                     <div class="col-sm-6 col-md-3">
                       <div class="form-group">
                         <label for="v_color" class="form-label">Helper</label>
-                        <select class="form-control select2" required="true" name ="helper">
+                        <select class="form-control chosen-select-input" required="true" name ="helper">
                         	<option>Select Helper</option>
                         	<?php
                         		foreach ($helper as $key => $value) {

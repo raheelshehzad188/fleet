@@ -66,6 +66,7 @@
                         <th class="w-1">S.No</th>
                         <th>Staff Type</th>
                         <th>Created Date</th>
+                        <th>Salary Type</th>
                         <th>Editable</th>
                         <th>Action</th>
                      </tr>
@@ -79,7 +80,9 @@
                         <td> <?php echo output($count); $count++; ?></td>
                         <td> <?php echo $type_staff['type_name']; ?></td>
                         <td> <?php echo output($type_staff['created_at']); ?></td>
+                        <td> <span class=" <?= ($type_staff['sal_type'] == 0) ? 'badge badge-success' : 'badge badge-error ' ?>"><?= ($type_staff['sal_type'] == 0) ? 'Fixed' : 'Attendence' ?></span></td>
                         <td> <span class=" <?= ($type_staff['editable'] == 0) ? 'badge badge-success' : 'badge badge-error ' ?>"><?= ($type_staff['editable'] == 0) ? 'Editable' : 'Only Edit' ?></span></td>
+                        
                         <td>
                            <a class="icon" href="<?php echo base_url(); ?>settings/crud/<?= $detail['tbl']?>/edit/<?php echo $type_staff[$detail['key']]; ?>">
                            <i class="fa fa-edit text-success"></i>
@@ -138,6 +141,14 @@
             }
             ?>
             <input type="text" class="form-control" value="<?= (isset($staff_update_data) ? $staff_update_data['type_name'] : '') ?>" name="type_name" id="type_name" required="true" placeholder="Type">
+
+        </div>
+        <div class="form-group">
+            <label for="geo_name">Salary cslculation</label>
+            <select name="sal_type" class="form-control">
+                <option value="0" <?= (isset($staff_update_data) && $staff_update_data['sal_type'] == 0) ? 'selected' : ''; ?>>Fixed</option>
+                <option value="1"  <?= (isset($staff_update_data) && $staff_update_data['sal_type'] == 1) ? 'selected' : ''; ?>>Attendence</option>
+            </select>
 
         </div>
     </div>

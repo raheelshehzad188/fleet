@@ -1,5 +1,5 @@
 <?php
-if($_GET['eng'] == 1){
+if(true){
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,6 +35,7 @@ if($_GET['eng'] == 1){
 .inv_bdr {
     border: 1px solid #000;
     padding: 12px 16px 6px 8px;
+    width: 800px;
     border-radius: 7px;
 }
 .label_input {
@@ -42,7 +43,7 @@ if($_GET['eng'] == 1){
     padding-bottom: 10px;
     padding: 0 0 6px 5px;
     font-family: 'Noto Nastaliq Urdu', sans-serif;
-    direction: rtl;
+    direction: ltr;
 }
 .label_input label {
     margin: 0 4px 0 0;
@@ -55,13 +56,13 @@ if($_GET['eng'] == 1){
     font-size: 15px;
     margin: 0;
     text-align: center;
-    width: 116px;
+    width: 110px;
 }
 .expense_box_input {
     display: inline-block;
     padding: 0 7px 0 0;
     font-family: 'Noto Nastaliq Urdu', sans-serif;
-  direction: rtl;
+   direction: ltr;
 }
 .expense_box {
     padding: 15px 0 0;
@@ -73,7 +74,7 @@ if($_GET['eng'] == 1){
     font-size: 15px;
     margin: 0;
     text-align: center;
-    width: 116px;
+    width: 100px;
 }
 .desial_report {
     display: inline-block;
@@ -107,7 +108,7 @@ if($_GET['eng'] == 1){
     font-size: 15px;
     margin: 0;
     text-align: center;
-    width: 70px;
+    width: 60px;
 }
 .list__items label {
     width: 64%;
@@ -137,12 +138,12 @@ if($_GET['eng'] == 1){
     border-radius: 35px;
     padding: 2px 19px;
     display: inline-block;
-    width: 33%;
+    width: 120px;
     margin: 0 6px 0 0;
 }
 .expences__list b {
     display: inline-block;
-    width: 64%;
+    width: 155px;
     /*text-align: right;*/
     border: 1px solid #ccc;
     border-radius: 35px;
@@ -165,7 +166,7 @@ if($_GET['eng'] == 1){
   // var_dump($detail['expense']);
 ?>
 <div class="inv_container">
-  <div class="inv_bdr">
+  <div class="inv_bdr text-center">
     <div class="clearfix">
     <div class="label_input">
 
@@ -193,16 +194,17 @@ if($_GET['eng'] == 1){
     <div class="clearfix">
       
     <div class="label_input">
-      <label>Helper</label>
-      <span>Aliyan</span>
+      <label>1st Driver</label>
+      <span><?= $driverdetails->d_name ?></span>
     </div>
     <div class="label_input">
       <label>2nd Driver</label>
-      <span>Ali</span>
+      <span><?= $driverdetails2->d_name ?></span>
     </div>
+    
     <div class="label_input">
-      <label>1st Driver</label>
-      <span><?= $driverdetails->d_name ?></span>
+      <label>Helper</label>
+      <span><?= $helper->d_name ?></span>
     </div>
     <div class="label_input">
       <label>Vehicle No.</label>
@@ -212,7 +214,7 @@ if($_GET['eng'] == 1){
   </div>
 
 
-  <div class="expense_box">
+  <div class="expense_box text-center">
       <?php
       $tot_rev = 0;
       foreach($detail['route'] as $k=> $v)
@@ -258,7 +260,7 @@ if($_GET['eng'] == 1){
           ?>
         <div class="inline_formbox">
           <label>Deisel</label>
-          <span><?= $v['fuel_type']?></span>
+          <span><?= $v['amount']?></span>
         </div>
         <div class="inline_formbox">
           <label>Deisel Quantity</label>

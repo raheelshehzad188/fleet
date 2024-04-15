@@ -15,10 +15,31 @@
 <!-- Main content -->
 <section class="content">
    <div class="container-fluid">
+         <form method="post" id="trip_add" class="card" action="" novalidate="novalidate">
+         <div class="card-body">
+            <div class="row">
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label class="form-label">Staff Category<span class="form-required">*</span></label>
+                     <select id="s_category" class="form-control" name="t_driver">
+                      <option value="">Select Category</option>
+                        <?php  foreach ($staff_types as $key => $value) { ?>
+                        <option value="<?php echo output($value['st_id']) ?>"><?php echo output($value['type_name']); ?></option>
+                        <?php  } ?>
+                     </select>
+                  </div>
+               </div>
+                 <div class="col-sm-6 card-footer">
+               <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+            </div>
+
+            </div>
+            </div>
+            </form>
       <div class="card">
          <div class="card-body p-0">
             <div class="table-responsive table_design">
-               <table id="driverslisttbl" class="table card-table table-vcenter text-nowrap">
+               <table id="driverslisttbl_1" class="table card-table table-vcenter text-nowrap">
                   <thead>
                      <tr>
                         <th class="w-1">S.No</th>
@@ -28,14 +49,14 @@
                         <th>Mobile</th>
                         <th>License No</th>
                         <th>License Exp Date</th>
-                        <th>Date of Joining</th>
-                        <th>Doc</th>
+                        <th>Asignment</th>
                         <th>Is Active</th>
                         <?php if(userpermission('lr_drivers_list_edit') || userpermission('lr_driver_del')) { ?>
                         <th>Action</th>
                         <?php } ?>
                      </tr>
                   </thead>
+                  <?php /* ?>
                   <tbody>
                        <?php if(!empty($driverslist)){  $count=1;
                         foreach($driverslist as $driverslists){
@@ -76,7 +97,7 @@
                         </td>
                         <?php }  } ?>
                      </tr>
-                  </tbody>
+                  </tbody> <?php */ ?>
                </table>
               
             </div>
@@ -86,3 +107,21 @@
    </div>
 </section>
 <!-- /.content -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+    var dataTable = $('#driverslisttbl_1').DataTable({
+        "ajax": {
+            url : "<?= base_url()?>drivers/drivers_table",
+            type : 'POST',
+            data: function(d) {
+                d.s_category = $('#s_category').val();
+            }
+        },
+    });
+    $('#submit').click(function(e) {
+        e.preventDefault();
+        dataTable.ajax.reload();
+    });
+});
+</script>
