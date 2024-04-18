@@ -149,6 +149,7 @@ class Vehicle extends CI_Controller {
 			$data['geofence_events'] = $geofence_events;
 			$data['fuel'] = $fuel;
 			$data['customerlist'] = $customerlist;
+			$data['files'] = $this->db->where('sal_type',1)->get('files')->result_array();
 			$this->template->template_render('vehicle_view',$data);
 		} else {
 			$this->template->template_render('pagenotfound');

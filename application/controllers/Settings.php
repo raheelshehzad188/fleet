@@ -194,6 +194,7 @@ class Settings extends CI_Controller {
 		else
 		{
 			$data['type_staff'] = $this->db->select('*')->from($tbl)->get()->result_array();
+			$data['type_companies'] = $this->db->select('*')->from('tyre_companies')->get()->result_array();
 			
 			$this->template->template_render($tbl,$data);
 		}

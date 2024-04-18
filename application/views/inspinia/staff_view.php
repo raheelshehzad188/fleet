@@ -90,6 +90,7 @@
                   <li class="nav-item"><a class="nav-link " href="#bookings" data-toggle="tab">Trips</a></li>
                   <li class="nav-item"><a class="nav-link " href="#Salary" data-toggle="tab">Payments</a></li>
                   <li class="nav-item"><a class="nav-link " href="#Bonus" data-toggle="tab">Bonus</a></li>
+                  <li class="nav-item"><a class="nav-link " href="#Loan" data-toggle="tab">Loan</a></li>
                   <li class="nav-item"><a class="nav-link " href="#files" data-toggle="tab">Files</a></li>
                  <!--  <li class="nav-item"><a class="nav-link" href="#vechicle_geofence" data-toggle="tab">Parts</a></li>
                 <li class="nav-item"><a class="nav-link" href="#vechicle_incomexpense" data-toggle="tab">Income & Expense</a></li>
@@ -300,7 +301,7 @@
                                       </div>
                                   </div>
                                   <div class="col-sm-6 card-footer">
-                                      <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                                      <button type="submit" class="btn btn-primary" id="submit_b_t">Submit</button>
                                   </div>
                     </form>
                      <table id="bonus_data_table" class="table table-bordered table-striped table-hover">
@@ -308,6 +309,78 @@
                             <tr>
                               <th>Sr/No.</th>
                               <th>Amount</th>
+                              <th>Reason</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                      
+                      
+                          </tbody>
+                        </table>
+                      </div>         
+                    </div>
+               
+                  </div>
+
+
+                  <div class="tab-pane " id="Loan">
+                    
+                    <div class="table-responsive">
+                      <div class="ibox-content">
+                         <form method="post" id="l_form" class="card" action="" novalidate="novalidate">
+                         <div class="card-body">
+                            <div class="row">
+                                   <div class="col-sm-6 col-md-3">
+                                      <div class="form-group">
+                                         <label class="form-label">Amount IN<span class="form-required">*</span></label>
+                                         <input type="text" name="amount_in" value="" class="form-control" id="amount_in">
+                                      </div>
+                                  </div> 
+                                  <div class="col-sm-6 col-md-3">
+                                      <div class="form-group">
+                                         <label class="form-label">Amount Out<span class="form-required">*</span></label>
+                                         <input type="text" name="amount_out" value="" class="form-control" id="amount_out">
+                                      </div>
+                                  </div>        
+                                  <div class="col-sm-6 col-md-3">
+                                      <div class="form-group">
+                                         <label class="form-label">Reason<span class="form-required">*</span></label>
+                                         <textarea  class="form-control " name="Ioan_reason"></textarea>
+                                      </div>
+                                  </div>
+                                  <div class="col-sm-6 card-footer">
+                                      <button type="submit" class="btn btn-primary" id="submit_loan">Submit</button>
+                                  </div>
+
+                            </div>
+                          </div>
+                    </form>
+                    <hr>
+                    
+                    <form method="post" id="trip_add" class="card" action="" novalidate="novalidate">
+                      <div class="col-sm-6 col-md-3">
+                                      <div class="form-group">
+                                         <label class="form-label">Date From<span class="form-required">*</span></label>
+                                         <input type="text" id="l_start_date" value="<?php echo date('Y-m-d', strtotime('-30 days')); ?>" name="t_start_date" class="form-control datetimepicker1" placeholder="Trip Start Date" autocomplete="off">
+                                      </div>
+                                  </div>
+                                  <div class="col-sm-6 col-md-3">
+                                      <div class="form-group">
+                                         <label class="form-label">End To<span class="form-required">*</span></label>
+                                         <input type="text"id="l_end_date" value="<?php echo date('Y-m-d'); ?>"  name="t_end_date" class="form-control datetimepicker1" placeholder="Trip End Date" autocomplete="off">
+                                      </div>
+                                  </div>
+                                  <div class="col-sm-6 card-footer">
+                                      <button type="submit" class="btn btn-primary" id="submit_l_t">Submit</button>
+                                  </div>
+                    </form>
+                     <table id="loan_data_table" class="table table-bordered table-striped table-hover">
+                          <thead>
+                            <tr>
+                              <th>Sr/No.</th>
+                              <th>Amount In</th>
+                              <th>Amount Out</th>
                               <th>Reason</th>
                               <th>Action</th>
                             </tr>
@@ -645,8 +718,8 @@ $(document).ready(function() {
             url : "<?= base_url()?>drivers/bonus_table",
             type : 'POST',
             data: function(d) {
-                d.start_date = $('#t_start_date_f').val();
-                d.end_date = $('#t_end_date_f').val();
+                d.start_date = $('#b_start_date').val();
+                d.end_date = $('#b_end_date').val();
                 d.sid = $('#staff_id').val();
             }
         },
@@ -659,10 +732,10 @@ $(document).ready(function() {
             );
         }
     });
-    // $('#submit').click(function(e) {
-    //     e.preventDefault();
-    //     dataTable.ajax.reload();
-    // });
+    $('#submit_b_t').click(function(e) {
+        e.preventDefault();
+        dataTable.ajax.reload();
+    });
 });
 </script>
 <script type="text/javascript">
@@ -712,4 +785,57 @@ $(document).ready(function() {
         }
     }); 
   })
+</script>
+<script type="text/javascript">
+  $('#submit_loan').on('click',function(e){
+    e.preventDefault();
+    var id = $('#staff_id').val();
+     // var form = $('#p_form').serializeArray();
+     var data = $('#l_form').serializeArray().reduce(function(obj, item) {
+    obj[item.name] = item.value;
+    return obj;
+}, {});
+     $.ajax({
+        url: '<?= base_url('drivers/save_loan');?>',
+        dataType: "json",
+        type: "Post",
+        async: true,
+        data: {
+        id:id,
+        data:data },
+        success: function (data) {
+           if(data){
+            location.reload();
+           }
+        }
+    }); 
+  })
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var dataTable = $('#loan_data_table').DataTable({
+
+        "ajax": {
+            url : "<?= base_url()?>drivers/loan_table",
+            type : 'POST',
+            data: function(d) {
+                d.start_date = $('#b_start_date').val();
+                d.end_date = $('#b_end_date').val();
+                d.sid = $('#staff_id').val();
+            }
+        },
+         "footerCallback": function (row, data, start, end, display) {
+            var api = this.api();
+            $(api.column(2).footer()).html(
+                api.column(2, {page: 'current'}).data().reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+            );
+        }
+    });
+    $('#submit_l_t').click(function(e) {
+        e.preventDefault();
+        dataTable.ajax.reload();
+    });
+});
 </script>

@@ -642,14 +642,14 @@ $all = $this->db->query($sql)->row_array();
 	        
 
 	        if(isset($start_date) && isset($end_date)){
-	        $start_date = date('Y-m-d', strtotime($start_date));
-	        $end_date = date('Y-m-d', strtotime($end_date));
-	        $this->db->where("t.t_start_date >= '$start_date' AND t.t_end_date <= '$end_date'");
+	        $start_date = date('Y-m-d', strtotime($start_date)). ' 00:00:00';
+	        $end_date = date('Y-m-d', strtotime($end_date)). ' 23:59:59';
+	        $this->db->where("create_at >= '$start_date' AND create_at <= '$end_date'");
 	        }
 	        $this->db->where("sid = '$sid'");
 	        $this->db->order_by("id", "desc");
 	        $query = $this->db->get()->result(); 
-	        
+	        // echo $this->db->last_query();
 	        $data = [];
 	        $sr=1;
 	        $total_trip_amount = 0;
@@ -661,6 +661,86 @@ $all = $this->db->query($sql)->row_array();
 	            $data[] = array(
 	                $sr++,
 	                $r->amount,
+	                $r->reason,
+	                $action
+	            );
+	            $total_trip_amount += $r->amount;
+	        }
+	    	$footer = array(
+		        'Total Bonus Amount', 
+		        '',
+		        '',
+		        '',
+		        '',
+		        $total_trip_amount, 
+		        ''
+		    );
+		    array_push($data, $footer);
+	        $result = array(
+	            "draw" => $draw,
+	            "recordsTotal" => count($query),
+	            "recordsFiltered" => count($query),
+	            "data" => $data
+	        );
+	    
+	        echo json_encode($result);
+	        exit();
+		}
+		 public function save_loan($value='')
+	    {
+	    	// var_dump($_SESSION['lr_u_id']);die();
+	    	$d_id = $_POST['id'];
+	    	$amount_in = $_POST['data']['amount_in'];
+	    	$amount_out = $_POST['data']['amount_out'];
+	    	$reason = $_POST['data']['Ioan_reason'];
+	    	
+	    	$insert['reason'] = $reason;
+	    	$insert['amount_out'] = $amount_out;
+	    	$insert['amount_in'] = $amount_in;
+	    	$insert['created_by'] = $_SESSION['userroles']['lr_u_id'];
+	    	$insert['sid'] = $d_id;
+	    	$x = $this->db->insert('staff_loan',$insert);
+	    	if($x){
+	    		echo "1";
+	    	}
+
+	    }
+	    public function loan_table()
+		{
+			$draw = intval($this->input->get("draw"));
+	        $start = intval($this->input->get("start"));
+	        $length = intval($this->input->get("length"));
+	        
+	        $searchquery = '';
+	        $start_date= $_POST['start_date'];
+	        $end_date= $_POST['end_date'];
+	        $sid= $_POST['sid'];
+
+	        $this->db->select('*');
+	        $this->db->from('staff_loan');
+	        
+
+	        if(isset($start_date) && isset($end_date)){
+	        $start_date = date('Y-m-d', strtotime($start_date)). ' 00:00:00';
+	        $end_date = date('Y-m-d', strtotime($end_date)). ' 23:59:59';
+	        $this->db->where("create_at >= '$start_date' AND create_at <= '$end_date'");
+	        }
+	        $this->db->where("sid = '$sid'");
+	        $this->db->order_by("id", "desc");
+	        $query = $this->db->get()->result(); 
+	        // echo $this->db->last_query();
+	        $data = [];
+	        $sr=1;
+	        $total_trip_amount = 0;
+
+	        foreach($query as $r) {
+	            $action = '<a target="_blank" class="icon" href="'.base_url().'trips/invoice/'.$r->t_id.'">
+	                            <i class="fa fa-eye"></i>
+	                            </a> ';
+	            $data[] = array(
+	                $sr++,
+	                $r->amount_in,
+	                $r->amount_out,
 	                $r->reason,
 	                $action
 	            );

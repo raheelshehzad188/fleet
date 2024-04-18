@@ -71,6 +71,7 @@
                   <li class="nav-item"><a class="nav-link" href="#vechicle_geofence" data-toggle="tab">Parts</a></li>
                 <li class="nav-item"><a class="nav-link" href="#vechicle_incomexpense" data-toggle="tab">Income & Expense</a></li>
                 <li class="nav-item"><a class="nav-link" href="#fuel" data-toggle="tab">Fuel</a></li>
+                <li class="nav-item"><a class="nav-link " href="#files" data-toggle="tab">Files</a></li>
                 </ul>
               </div><!-- /.card-header -->
              
@@ -355,6 +356,40 @@
                           </tbody>
                       </table>
                   </div>
+                  
+                  
+                   <div class="tab-pane" id="files">
+                  <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>File</th>
+                                <th>Preview</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                              <?php
+                              foreach ($files as $key => $value) {
+                                ?>
+                                <tr>
+                                <td><?= $key+1; ?></td>
+                                <td><?= $value['type_name'] ?></td>
+                                <td>update</td>
+                            </tr>
+
+                                <?php
+                              }
+                              ?>
+                            
+                            </tbody>
+                        </table>
+                     
+                  </div>
+                  
+                  
+                  
+                  
                   <!-- /.tab-pane -->
 
                   <div class="tab-pane active" id="basicinfo">

@@ -235,6 +235,10 @@
                   </li>
                </ul>
             </li>
+            <li class="<?php echo activate_menu('backup');?> ">
+                    <a href="<?= base_url(); ?>backups"><i class="fa fa-database"></i> <span class="nav-label">Backup</span></a>
+               
+            </li>
             <?php } ?>
             
             </ul>

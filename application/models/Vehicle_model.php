@@ -49,7 +49,8 @@ class vehicle_model extends CI_Model{
 		$this->db->join('pumps', 'pumps.id = tbl_fuel.pump', 'left');
 		$this->db->where_in('trip_id', $t_ids);
 		$query = $this->db->get();
-		return $query->result();
+		
+		return ($query)?$query->result():array();
 	}
     public function getall_vehicle() {
       $this->db->select("*");
