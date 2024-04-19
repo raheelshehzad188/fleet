@@ -187,7 +187,12 @@
                                 <tr>
                                 <td><?= $key+1; ?></td>
                                 <td><?= $value['type_name'] ?></td>
-                                <td>update</td>
+                                <td>
+                                  <form action="<?= base_url('drivers/driver_file') ?>/<?= $vehicledetails['d_id'] ?>/<?= $value['st_id'] ?>" id="sfile<?= $value['st_id']; ?>">
+                                    <input type="file" name="file" />
+                                  </form>
+                                </td>
+                                <td><button onclick="update_file('sfile<?= $value['st_id']; ?>')">Update</button></td>
                             </tr>
 
                                 <?php

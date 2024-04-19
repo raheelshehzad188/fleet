@@ -736,6 +736,24 @@ $('#tot_exp').val(expen);
 $('#grand_total').val(wages-expen);
 
         }
+        function update_file(id)
+        {
+            var mid = '#'+id;
+    $.ajax({
+      url: $(mid).attr('action'),
+      type: "POST",
+      data: new FormData(document.getElementById(id)),
+      contentType: false,
+      cache: false,
+      processData: false,
+      success: function(response) {
+        $("#form").trigger("reset"); // to reset form input fields
+      },
+      error: function(e) {
+        console.log(e);
+      }
+    });
+        }
         function getAge(dateString) 
 {
     var today = new Date();

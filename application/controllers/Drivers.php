@@ -13,6 +13,38 @@
 	          $this->load->library('session');
 
 	     }
+	     public function driver_file($did, $fid)
+	     {
+	     	$config['upload_path'] = 'assets/uploads/';
+			$config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|docx'; 
+			$data = array();
+			$data['did'] = $did;
+			$data['fid'] = $fid;
+			$data['exp'] = (isset($_POST['exp']))?$_POST['exp']:'';
+			$this->load->library('upload', $config); 
+	     	if($this->upload->do_upload('file')){ 
+					$uploadData = $this->upload->data();
+					$data['file'] = $uploadData['file_name'];
+				}
+				else
+				{
+					var_dump($this->upload->display_errors());
+				}
+				$al = $this->db->where('fid',$fid)->where('did',$did)->get('driver_files')->row();
+				if($al)
+				{
+					$this->db->where('fid',$fid)->where('did',$did)->update('driver_files',$data);
+
+				}
+				else
+				{
+					$this->db->insert('driver_files',$data);
+				}
+				$al = $this->db->where('fid',$fid)->where('did',$did)->get('driver_files')->row();
+				echo json_encode($al);
+				exit();
+	     	
+	     }
 	     public function load()
 	  {
 	    if(isset($_GET['date']) && isset($_GET['vid']))
