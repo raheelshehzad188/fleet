@@ -188,12 +188,15 @@
                                 <td><?= $key+1; ?></td>
                                 <td><?= $value['type_name'] ?></td>
                                 <td>
-                                  <form action="<?= base_url('drivers/driver_file') ?>/<?= $vehicledetails['d_id'] ?>/<?= $value['st_id'] ?>" id="sfile<?= $value['st_id']; ?>">
-                                    <input type="file" name="file" />
-                                  </form>
-                                </td>
-                                <td><button onclick="update_file('sfile<?= $value['st_id']; ?>')">Update</button></td>
-                            </tr>
+                                        <form action="<?= base_url('drivers/driver_file') ?>/<?= $vehicledetails['d_id'] ?>/<?= $value['st_id'] ?>" id="sfile<?= $value['st_id']; ?>" enctype="multipart/form-data" method="post">
+                                            <input type="file" name="file" />
+                                            <input type="hidden" name="exp" id="exp_data_<?= $value['st_id']; ?>" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <input type="date" id="exp_<?= $value['st_id']; ?>" />
+                                    </td>
+                                    <td><button onclick="update_file('sfile<?= $value['st_id']; ?>')">Update</button></td>
 
                                 <?php
                               }

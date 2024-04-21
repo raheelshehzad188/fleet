@@ -66,15 +66,16 @@
                         <th class="w-1">S.No</th>
                         <th>Staff Type</th>
                         <th>Created Date</th>
-                        <th> Type</th>
+                        <th>Type</th>
                         <th>Editable</th>
+                        <th>Expirable</th>
                         <th>Action</th>
                      </tr>
                            </thead>
                            <tbody>
                      <?php if(!empty($type_staff)){  $count=1;
                         foreach($type_staff as $type_staff){
-                            
+                          
                         ?>
                      <tr>
                         <td> <?php echo output($count); $count++; ?></td>
@@ -82,6 +83,7 @@
                         <td> <?php echo output($type_staff['created_at']); ?></td>
                         <td> <span class=" <?= ($type_staff['sal_type'] == 0) ? 'badge badge-success' : 'badge badge-error ' ?>"><?= ($type_staff['sal_type'] == 0) ? 'Staff' : 'Vehicle' ?></span></td>
                         <td> <span class=" <?= ($type_staff['editable'] == 0) ? 'badge badge-success' : 'badge badge-error ' ?>"><?= ($type_staff['editable'] == 0) ? 'Editable' : 'Only Edit' ?></span></td>
+                        <td> <span class=" <?= ($type_staff['exp'] == 1) ? 'badge badge-success' : 'badge badge-error ' ?>"><?= ($type_staff['exp'] == 0) ? 'No' : 'Yes' ?></span></td>
                         
                         <td>
                            <a class="icon" href="<?php echo base_url(); ?>settings/crud/<?= $detail['tbl']?>/edit/<?php echo $type_staff[$detail['key']]; ?>">
@@ -148,6 +150,14 @@
             <select name="sal_type" class="form-control">
                 <option value="0" <?= (isset($staff_update_data) && $staff_update_data['sal_type'] == 0) ? 'selected' : ''; ?>>Staff</option>
                 <option value="1"  <?= (isset($staff_update_data) && $staff_update_data['sal_type'] == 1) ? 'selected' : ''; ?>>Vehicle</option>
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label for="geo_name">Is Expirable</label>
+            <select name="exp" class="form-control">
+                <option value="1" <?= (isset($staff_update_data) && $staff_update_data['sal_type'] == 0) ? 'selected' : ''; ?>>Yes</option>
+                <option selected value="0"  <?= (isset($staff_update_data) && $staff_update_data['sal_type'] == 1) ? 'selected' : ''; ?>>No</option>
             </select>
 
         </div>

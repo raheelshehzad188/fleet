@@ -736,24 +736,37 @@ $('#tot_exp').val(expen);
 $('#grand_total').val(wages-expen);
 
         }
-        function update_file(id)
-        {
-            var mid = '#'+id;
+function update_file(id) {
+    var mid = '#' + id;
+    console.log($('#exp_' + id).val());
+    // Get the date value
+    var expData = $('#exp_' + id).val();
+    
+    console.log(expData);
+    // Create a FormData object
+    var formData = new FormData(document.getElementById(id));
+    
+    // Append the date value to the FormData object
+    formData.append('exp', expData);
+
     $.ajax({
-      url: $(mid).attr('action'),
-      type: "POST",
-      data: new FormData(document.getElementById(id)),
-      contentType: false,
-      cache: false,
-      processData: false,
-      success: function(response) {
-        $("#form").trigger("reset"); // to reset form input fields
-      },
-      error: function(e) {
-        console.log(e);
-      }
-    });
+        url: $(mid).attr('action'),
+        type: "POST",
+        data: formData,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(response) {
+            $("#form").trigger("reset"); // to reset form input fields
+        },
+        error: function(e) {
+            console.log(e);
         }
+    });
+}
+
+
+
         function getAge(dateString) 
 {
     var today = new Date();

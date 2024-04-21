@@ -15,12 +15,14 @@
 	     }
 	     public function driver_file($did, $fid)
 	     {
+	         
 	     	$config['upload_path'] = 'assets/uploads/';
 			$config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|docx'; 
 			$data = array();
 			$data['did'] = $did;
 			$data['fid'] = $fid;
-			$data['exp'] = (isset($_POST['exp']))?$_POST['exp']:'';
+			echo $data['exp'] = (isset($_POST['exp']))?$_POST['exp']:'';
+			var_dump($data);
 			$this->load->library('upload', $config); 
 	     	if($this->upload->do_upload('file')){ 
 					$uploadData = $this->upload->data();

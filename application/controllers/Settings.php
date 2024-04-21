@@ -138,9 +138,10 @@ class Settings extends CI_Controller {
 	}
 	public function crud($tbl,$act= '',$id = 0)   
 	{
+	    
+		
 		$data = array();
 		$tables=$this->db->query("SHOW TABLES LIKE '".$tbl."'")->row();
-
 		
 		if($tables)
 		{
