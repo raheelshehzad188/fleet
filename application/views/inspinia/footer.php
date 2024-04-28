@@ -427,5 +427,8 @@
 
     <!-- Sparkline -->
     <script src="<?= $url ?>js/plugins/sparkline/jquery.sparkline.min.js"></script>
+   
+
+
 </body>
 </html>

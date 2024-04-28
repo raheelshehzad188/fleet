@@ -1,4 +1,5 @@
 <?php
+
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
@@ -16,10 +17,12 @@ class Api extends REST_Controller {
         $this->load->model('geofence_model');
 
     }
+  
     public function index_get() {
          $write_content = var_export($_GET, true);
             file_put_contents("myloggets.php", $write_content);
     }
+    
 
     public function index_post()   //Get GPS feed in device
     { 
@@ -145,5 +148,10 @@ class Api extends REST_Controller {
                 }
             }
         }
+    }
+      public function login() {
+        var_dump($_REQUEST);
+       
+         
     }
 }

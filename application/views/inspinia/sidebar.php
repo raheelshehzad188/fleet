@@ -171,6 +171,20 @@
                     <?php } ?>
                     </ul>
                 </li>
+                <li class="<?php echo activate_menu('tyres');?> <?php echo activate_menu('addtyres');?><?php echo activate_menu('viewtyres');?><?php echo activate_menu('edittyres');?><?php echo activate_menu('tyresgroup');?><?php echo activate_menu('addtyresgroup');?>">
+                    <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Tyres</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <?php if(userpermission('lr_vech_list')) { ?>
+                        <li class="<?php echo activate_menu('tyres');?><?php echo activate_menu('edittyres');?><?php echo activate_menu('viewtyres');?>"><a href="<?= base_url(); ?>tyres">Tyres List</a></li>
+                        <?php } if(userpermission('lr_vech_add')) { ?>
+                        <li class="<?php echo activate_menu('addtyres');?>"><a href="<?= base_url(); ?>tyres/addtyres">Add tyres</a></li>
+                        <?php } /*if(userpermission('lr_vech_group')) { ?>
+                        <li class="<?php echo activate_menu('tyresgroup');?>"><a href="<?= base_url(); ?>tyres/tyresgroup">tyres Group List</a></li>
+                      <?php } if(userpermission('lr_vech_group')) { ?>
+                        <li class="<?php echo activate_menu('addtyresgroup');?>"><a href="<?= base_url(); ?>tyres/addtyresgroup">Add tyres Group</a></li>
+                    <?php } */?>
+                    </ul>
+                </li>
                 
                 <li class="<?php echo activate_menu('shiftmanager');?> <?php echo activate_menu('add_shift_manager');?><?php echo activate_menu('view_shift_manager');?><?php echo activate_menu('edit_shift_manager');?><?php echo activate_menu('vehiclegroup');?><?php echo activate_menu('addvehiclegroup');?>">
                     <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Shift Manager</span> <span class="fa arrow"></span></a>

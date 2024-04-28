@@ -34,7 +34,7 @@
 | the active record class
 */
 $evn = 'local';
-// $evn = 'live';
+//$evn = 'live';
 
 // The following values will probably need to be changed.
 if($evn == 'local')
