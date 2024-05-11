@@ -97,6 +97,9 @@ class vehicle_model extends CI_Model{
 	public function get_vehiclepart($id) { 
 		return $this->db->select('*')->from('parts_types')->where('group_id',$id)->get()->result_array();
 	}
+	public function get_maintenance() { 
+		return $this->db->select('*')->from('maintenance')->get()->result_array();
+	}
 	public function vehiclegroup_delete($gr_id) { 
 		$groupinfo = $this->db->select('*')->from('vehicles')->where('v_group',$gr_id)->get()->result_array();
 		if(count($groupinfo)>0) {

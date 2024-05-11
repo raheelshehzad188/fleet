@@ -143,6 +143,7 @@ class Vehicle extends CI_Controller {
 		$vincomexpense = $this->incomexpense_model->getvechicle_incomexpense($v_id);
 		$geofence_events = $this->geofence_model->countvehiclengeofence_events($v_id);
 		$customerlist = $this->trips_model->getall_customer();
+        $maintenance = $this->vehicle_model->get_maintenance();
 		if(isset($vehicledetails[0]['v_id'])) {
 			$data['vehicledetails'] = $vehicledetails[0];
 			$data['bookings'] = $bookings;
@@ -152,6 +153,7 @@ class Vehicle extends CI_Controller {
 			$data['geofence_events'] = $geofence_events;
 			$data['fuel'] = $fuel;
 			$data['customerlist'] = $customerlist;
+            $data['maintenance'] = $maintenance;
 			$data['files'] = $this->db->where('sal_type',1)->get('files')->result_array();
 			$this->template->template_render('vehicle_view',$data);
 		} else {
@@ -375,7 +377,6 @@ public function Tyerstable()
     $this->db->where('ttpe_id', $r->id);
     $tyrecheck = $this->db->get();
     
-
     if ($tyrecheck->num_rows() > 0) {
           $assign = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal'.$r->id .'">
   Change Tyre
@@ -419,34 +420,27 @@ public function Tyerstable()
 		$draw = intval($this->input->get("draw"));
         $start = intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
-        
+        $vid = $_POST['v_id'];
         $searchquery = '';
        $this->db->select('*');
-$this->db->from('maintenance');
-$query = $this->db->get()->result_array();
-
+        $this->db->from('maintenance');
+        $this->db->where('v_id',$vid);
+        $query = $this->db->get()->result_array();
     
         $data = [];
         $sr=1;
  
 
         foreach($query as $r) {
-            
-  
-    
-
-    if ($r['tyre_type'] == 0) {
-          $type = 'By Date';  
-    } else {
-        $type = 'By Km';  
-    }
- 
-
-         
- 
-            
-        
-                     
+            $assign = '';
+            if($r['status'] == 0){
+                $assign = '<button class="btn btn-primary" onclick="update_maintanence('.$r['id'].')">Update</button>';
+            }
+            if ($r['tyre_type'] == 0) {
+                  $type = 'By Date';  
+            } else {
+                $type = 'By Km';  
+            }  
             $data[] = array(
                 $sr++,
                 $r['tyre_name'],
@@ -621,4 +615,46 @@ if($tyrecheck->num_rows() > 0){
 		}
 		redirect('vehicle');
 	}
+    public function save_maintenance(){
+        $v_id = $_POST['vehicle_id'];
+        $name = $_POST['name'];
+        $type = $_POST['type'];
+        $km = $_POST['km'];
+        $date = $_POST['date'];
+        $data = array(
+            'tyre_name' => $name,
+            'v_id' => $v_id,
+            'tyre_type' => $type,
+            'created_at' => date('Y-m-d H:i:s')
+        );
+        $this->db->insert('maintenance',$data);
+        $in_id  = $this->db->insert_id();
+        $data_update = array();
+        if($type == 0){
+            $data_update = array(
+                'date' => date('Y-m-d H:i:s',strtotime($date))
+            );
+        }else{
+            $data_update = array(
+                'km' => $km
+            );
+        }
+            $this->db->where('id',$in_id);
+            $this->db->update('maintenance',$data_update);
+        
+        if($in_id){
+            echo json_encode($data['success'] = $in_id);
+        }else{
+            echo json_encode($data['error'] = 'Error');
+        }
+    }
+    public function update_maintenance(){
+        $id = $_POST['id'];
+        $data_update = array(
+            'status' => 1
+        );
+        $this->db->where('id',$id);
+        $this->db->update('maintenance',$data_update);
+        echo 'success';
+    }
 }

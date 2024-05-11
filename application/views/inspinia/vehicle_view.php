@@ -431,6 +431,57 @@
                   
                     <div class="tab-pane" id="Maintaine">
                     <!-- The timeline -->
+                    <?php
+                    // var_dump($maintenance);
+                    ?>
+                    <form method="post" id="form_maintenance" class="card" action="" novalidate="novalidate">
+                         <div class="card-body">
+                            <div class="row">
+                                   
+                                <div class="col-sm-6 col-md-3">
+                                  <div class="form-group">
+                                     <label class="form-label">Name<span class="form-required">*</span></label>
+                                     <input type="text" class="form-control" name="m_name" id="m_name">
+                                      <!-- <select class="form-control" name="m_name" id="m_name"> -->
+                                        <?php /*
+                                          foreach ($maintenance as $key => $value) {
+                                        ?>
+                                       <option value="<?= $value['id'] ?>"><?= $value['tyre_name']?></option>
+                                       <?php
+                                        } */
+                                      ?>
+                                     <!-- </select> -->
+                                  </div>
+                               </div>       
+                               
+                               <div class="col-sm-6 col-md-3">
+                                  <div class="form-group">
+                                     <label class="form-label">Type<span class="form-required">*</span></label>
+                                     <select class="form-control" name="m_type" id="m_type">
+                                       <option value="1">By Km</option>
+                                       <option value="0">By Date</option>
+                                     </select>
+                                  </div>
+                               </div>
+                               <div class="col-sm-6 col-md-3" id="m_date" style="display: none;">
+                                  <div class="form-group">
+                                     <label class="form-label">Date<span class="form-required">*</span></label>
+                                     <input type="text"  value="2024-05-08" id="m_date1" name="m_date" class="form-control datetimepicker"  autocomplete="off">
+                                  </div>
+                               </div>
+                               <div class="col-sm-6 col-md-3" id="m_km" >
+                                  <div class="form-group">
+                                     <label class="form-label">Km<span class="form-required">*</span></label>
+                                     <input type="text" name="m_km" id="m_km1" class="form-control"  autocomplete="off">
+                                  </div>
+                               </div>
+                                 <div class="col-sm-6 card-footer">
+                               <button type="submit" class="btn btn-primary" id="save_maintenance">Submit</button>
+                            </div>
+
+                            </div>
+                            </div>
+                            </form>
                     <table id="Maintainetbl" class="table table-striped projects" style="width:100%;">
                           <thead>
                               <tr>
@@ -644,12 +695,11 @@ $(document).ready(function() {
 <script type="text/javascript">
 $(document).ready(function() {
     var dataTable = $('#Maintainetbl').DataTable({
-
         "ajax": {
             url : "<?= base_url()?>vehicle/maintance",
             type : 'POST',
             data: function(d) {
-               
+              d.v_id = $('#vehicle_id').val();
             }
         },
          "footerCallback": function (row, data, start, end, display) {
@@ -738,4 +788,65 @@ $(document).ready(function() {
         dataTable.ajax.reload();
     });
 });
+</script>
+<script type="text/javascript">
+  $('#m_type').on('change',function(){
+    var val = $(this).val();
+    // alert(val);
+    if(val == '0'){
+      $('#m_km').css({"display":"none"});
+      $('#m_date').css({"display":"block"});
+    }else{
+      $('#m_km').css({"display":"block"});
+      $('#m_date').css({"display":"none"});
+    }
+    // m_km
+  });
+
+  $('#save_maintenance').on('click',function(e){
+    e.preventDefault();
+        var vehicle_id = $('#vehicle_id').val();
+        var name = $('#m_name').val();
+        var type = $('#m_type').val();
+        var by_km = $('#m_km1').val();
+        var by_date = $('#m_date1').val();
+        $.ajax({
+        url: "<?= base_url()?>vehicle/save_maintenance",
+        dataType: "json",
+        type: "Post",
+        async: true,
+        data: {
+          vehicle_id:vehicle_id,
+          name:name,
+          type:type,
+          km:by_km,
+          date:by_date
+         },
+        success: function (data) {
+          // alert(data);
+           if(data){
+            location.reload();
+           }
+        },
+    }); 
+
+  });
+  function update_maintanence(id){
+        $.ajax({
+        url: "<?= base_url()?>vehicle/update_maintenance",
+        // dataType: "json",
+        type: "Post",
+        async: true,
+        data: {
+          id:id
+         },
+        success: function (data) {
+          // // alert(data);
+          //  if(data){
+            location.reload();
+           // }
+        },
+    }); 
+
+  }
 </script>
