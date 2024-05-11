@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <?php
-error_reporting(-1);
 
 $murl = base_url('/view29/');
 
@@ -219,6 +218,64 @@ $murl = base_url('/view29/');
     </div>
     </div>
     <!--Expense detail-->
+    <!--Expense staff-->
+    <div class="exp_detail" ng-if="ipages.exp_staff">
+         <div class="appHeader bg-primary text-light">
+        <div class="left">
+            <a href="#" class="headerButton goBack">
+                <ion-icon name="chevron-back-outline"></ion-icon>
+            </a>
+        </div>
+        <div class="pageTitle">{{exp_detail}}</div>
+        <div class="right"> 
+            <a ng-click="logout_shift()" style="cursor:pointer;color:white;">Logout</a>
+        </div>
+    </div>
+            
+            <div id="expense_details" style="margin-top: 77px;" ng-if="ipages.exp_staff">
+        
+        <<div class="col-md-3 detail_container" ng-repeat="data in detail.staff_list"> 
+                        <div class=" img_box">
+                            <img src='<?= base_url('/'); ?>{{ data.d_file }}'>
+                            </div>
+                            <div class=" img_box">
+                            <div><a ng-click="showExpense(data.st_id)">{{data.d_name}}</a></div>
+
+
+                            </div>
+                    </div>
+    </div>
+            
+       <div class="appBottomMenu">
+        <a ng-click="show_page('exp_types')" class="item">
+            <div class="col">
+                <ion-icon name="home-outline"></ion-icon>
+            </div>
+        </a>
+        <a href="app-components.html" class="item">
+            <div class="col">
+                <ion-icon name="cube-outline"></ion-icon>
+            </div>
+        </a>
+        <a href="page-chat.html" class="item">
+            <div class="col">
+                <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                <span class="badge badge-danger">5</span>
+            </div>
+        </a>
+        <a href="app-pages.html" class="item">
+            <div class="col">
+                <ion-icon name="layers-outline"></ion-icon>
+            </div>
+        </a>
+        <a href="#sidebarPanel" class="item" data-bs-toggle="offcanvas">
+            <div class="col">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+        </a>
+    </div>
+    </div>
+    <!--Expense staff-->
 <div id="exp_types" ng-if="pages.app_page">
     <!-- App Header -->
     <div class="appHeader bg-primary text-light">
@@ -241,7 +298,7 @@ $murl = base_url('/view29/');
         <div class="wide-block pt-2 pb-2">
 
                 <div class="row ">
-                    <div class="col-md-3 detail_container" ng-repeat="data in detail">
+                    <div class="col-md-3 detail_container" ng-repeat="data in detail.ofc_exp"> 
                         <div class=" img_box">
                             <img src='<?= base_url('/'); ?>{{ data.exp_img }}'>
                             </div>
@@ -338,6 +395,7 @@ app.controller('myCtrl', function($scope,$http) {
     'preloader':1,
     'login':0,
     'oblc':0,
+    'exp_staff':0,
     'exp_types':0,
     'expense_detail':0,
   };
@@ -411,7 +469,12 @@ app.controller('myCtrl', function($scope,$http) {
       
   }
    $scope.showExpense = function(st_id) {
-       alert(st_id);
+
+       if(st_id == 23)
+       {
+        $scope.show_page('exp_staff');
+        return 0;
+       }
       var url = BASE_URL + 'expense_page';
       var data = { st_id: st_id }; // Construct data object with st_id
       var config = {}; // You can configure headers or other options here if needed
@@ -490,7 +553,7 @@ if(typeof shiftUserId !== 'undefined') {
             if(response == "success");   {
                 $scope.pages.preloader = 0;
                 $scope.pages.oblc = 0;
-                $scope.pages.exp_types = 1;    
+                $scope.show_page('exp_types');
         }
         }, function (response) {
         $scope.pages.preloader = 0;

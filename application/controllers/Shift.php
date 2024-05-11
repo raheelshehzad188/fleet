@@ -137,8 +137,21 @@ public function login() {
         $data = [];
         foreach($office_exp as $value){
             $data[] = $value;
+
         }
-            echo json_encode($data);
+        $exp = $data;
+        //drivers
+        $this->db->select('*');
+        $this->db->from('drivers');
+        $query = $this->db->get();
+        $office_exp = $query->result_array();
+        $data = [];
+        foreach($office_exp as $value){
+            $data[] = $value;
+
+        }
+        $r = array('ofc_exp'=>$exp,'staff_list'=>$data);
+            echo json_encode($r);
     }
 	
 	public function shift_login(){
