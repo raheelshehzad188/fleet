@@ -88,7 +88,20 @@
                           <option <?php echo (isset($website_setting) && $website_setting[0]['s_date_format']=='d-m-Y H:i') ? 'selected':'' ?> value="d-m-Y H:i">d-m-Y H:i</option> 
                         </select>
                       </div>
-                    </div>     
+                    </div>  
+                    <div class="col-sm-6 col-md-4">
+                     <div class="form-group">
+                        <label>background color 1</label>
+                        <input type="text" class="form-control" required="true" value="<?php echo output(isset($website_setting[0]['color_1'])?$website_setting[0]['color_1']:''); ?>" id="color_1" name="color_1" placeholder="color 1">
+                     </div>
+                  </div>
+                 <div class="col-sm-6 col-md-4">
+                     <div class="form-group">
+                        <label>background color 2</label>
+                        <input type="text" class="form-control" required="true" value="<?php echo output(isset($website_setting[0]['color_2'])?$website_setting[0]['color_2']:''); ?>" id="color_2" name="color_2" placeholder="color 2">
+                     </div>
+                  </div>
+                  
                    <div style="padding-top: 13px;" class="col-md-12 btn-block text-right mt-3 border border-dark border-top">
                             <button type="submit" class="btn btn-primary  ">Submit</button>
                   </div>

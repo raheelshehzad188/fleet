@@ -21,8 +21,8 @@
 			$data = array();
 			$data['did'] = $did;
 			$data['fid'] = $fid;
-			echo $data['exp'] = (isset($_POST['exp']))?$_POST['exp']:'';
-			var_dump($data);
+			$data['exp'] = (isset($_POST['exp']))?$_POST['exp']:'';
+			// var_dump($data);
 			$this->load->library('upload', $config); 
 	     	if($this->upload->do_upload('file')){ 
 					$uploadData = $this->upload->data();
@@ -30,9 +30,14 @@
 				}
 				else
 				{
-					var_dump($this->upload->display_errors());
+					$error = array(
+						'error' => $this->upload->display_errors()
+					);
+					echo json_encode($error);
+					exit();
 				}
-				$al = $this->db->where('fid',$fid)->where('did',$did)->get('driver_files')->row();
+				$al = $this->db->select('*')->from('driver_files')->where('fid', $fid)->where('did', $did)->get()->row();
+				// echo $this->db->last_query();die();
 				if($al)
 				{
 					$this->db->where('fid',$fid)->where('did',$did)->update('driver_files',$data);

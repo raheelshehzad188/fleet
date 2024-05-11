@@ -1,5 +1,18 @@
-<!-- CSS -->
+             <?php  
+$select = "SELECT * FROM settings";
+$query = $this->db->query($select);
+$fetch = $query->row_array(); 
+$color_1 = $fetch['color_1'];
+$color_2 = $fetch['color_2'];
+      ?>
+          <style>
+        :root {
+            --yellow: <?php echo $fetch['color_1']; ?>;
+            --green: <?php echo $fetch['color_2']; ?>;
+       }
 
+
+    </style>
 <div class="row border-bottom">
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">

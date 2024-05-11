@@ -48,11 +48,11 @@ h5 {
 }
 .nav > li.active > a {
   color: #000;
-  background: #f2d900;
+  background: var(--yellow);
 }
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus {
-  background-color: #f2d900;
+  background-color: var(--yellow);
   color: #222;
 }
 .nav .open > a,
@@ -71,8 +71,8 @@ h5 {
   border: 0;
 }
 .navbar-default {
-  background-color: #007137;
-  border-color: #007137;
+  background-color: var(--green);
+  border-color: var(--green);
 }
 .navbar-top-links li {
   display: inline-block;
@@ -170,7 +170,7 @@ h5 {
 }
 .nav-header {
   padding: 33px 25px;
-  background-color: #f2d900;
+  background-color: var(--yellow);
 }
 .pace-done .nav-header {
   transition: all 0.4s;
@@ -180,7 +180,7 @@ ul.nav-second-level {
 }
 .nav > li.active {
   border-left: 4px solid #19aa8d;
-  background: #007137;
+  background: var(--green);
 }
 .nav.nav-second-level > li.active {
   border: none;
@@ -651,8 +651,8 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   color: #fff;
 }
 .btn-primary {
-  background-color: #007137;
-  border-color: #007137;
+  background-color: var(--green);
+  border-color: var(--green);
   color: #FFFFFF;
 }
 .btn-primary:hover,
@@ -1088,7 +1088,7 @@ button.dim:active:before {
 }
 .label-primary,
 .badge-primary {
-  background-color: #007137;
+  background-color: var(--green);
   color: #FFFFFF;
 }
 .label-success,
@@ -5866,7 +5866,7 @@ body.body-small .vote-icon {
 }
 .metismenu .collapse.in {
   display: block;
-  background: #f2d900;
+  background: var(--yellow);
 }
 .metismenu .collapsing {
   position: relative;
@@ -8580,7 +8580,7 @@ body.md-skin {
 }
 .formbox .btn-primary{
     color: #fff;
-    background-image: linear-gradient(#f2d900, #f2d900);
+    background-image: linear-gradient(var(--yellow), var(--yellow));
     border-radius: 35px;
     border: none;
     padding: 7px 0 10px;
@@ -8612,7 +8612,7 @@ ul.tabs li{
   cursor: pointer;
 }
 ul.tabs li.current{
-  background: #007137;
+  background: var(--green);
   color: #fff;
 }
 .tab-content{
@@ -8632,7 +8632,7 @@ ul.tabs li.current{
   padding-top: 15px;
 }
 .formbox .btn-white{
-    background: #007137;
+    background: var(--green);
     color: #fff;
     border-radius: 35px;
     padding: 12px 0;

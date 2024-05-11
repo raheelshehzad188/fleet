@@ -44,6 +44,7 @@
     }
     
 </style>
+
 <div class="content-header">
    <div class="container-fluid">
       <div class="row mb-2">
@@ -115,13 +116,13 @@
                                 if(isset($staff_update_data))
                                 {
                                     ?>
-                                    <form id="staff_type" method="post" action="<?php echo base_url(); ?>settings/crud/<?= $detail['tbl'] ?>/update/<?= $staff_update_data['staff_update_id'] ?>">
+                                    <form id="staff_type" enctype="multipart/form-data" method="post" action="<?php echo base_url(); ?>settings/crud/<?= $detail['tbl'] ?>/update/<?= $staff_update_data['staff_update_id'] ?>">
                                     <?php
                                 }
                                 else
                                 {
                                     ?>
-                                    <form id="staff_type" method="post" action="<?php echo base_url(); ?>settings/crud/<?= $detail['tbl'] ?>/add">
+                                    <form id="staff_type" method="post" enctype="multipart/form-data" action="<?php echo base_url(); ?>settings/crud/<?= $detail['tbl'] ?>/add">
                                     <?php
                                 }
                             ?>
@@ -138,8 +139,14 @@
             }
             ?>
             <input type="text" class="form-control" value="<?= (isset($staff_update_data) ? $staff_update_data['type_name'] : '') ?>" name="type_name" id="type_name" required="true" placeholder="Type">
-
+            
         </div>
+        <div class="form-group">
+            <label for="geo_name">Expense Image</label>
+            <input type="file" class="form-control" name="exp_img"  required="true">
+            
+        </div>
+        
     </div>
     <button type="submit" id="submit_type" class="btn btn-primary"><?php echo $buttonText; ?></button>
 </form>

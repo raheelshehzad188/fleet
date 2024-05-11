@@ -24,6 +24,7 @@ class Vehicle extends CI_Controller {
 		$data['v_group'] = $this->vehicle_model->get_vehiclegroup();
 		$data['driver1'] = $this->vehicle_model->getDrivers();
 		$data['helper'] = $this->vehicle_model->getHelpers();
+		$data['vih_types'] = $this->vehicle_model->vih_types();
 		$data['traccar_list'] = json_decode(traccar_call('api/devices','','GET'),true);
 		$this->template->template_render('vehicle_add',$data);
 	}
@@ -77,6 +78,8 @@ class Vehicle extends CI_Controller {
 		$data['helper'] = $this->vehicle_model->getHelpers();
 		$data['v_group'] = $this->vehicle_model->get_vehiclegroup();
 		$data['vehicledetails'] = $this->vehicle_model->get_vehicledetails($v_id);
+
+		$data['vih_types'] = $this->vehicle_model->vih_types();
 		$data['traccar_list'] = json_decode(traccar_call('api/devices','','GET'),true);
 		$this->template->template_render('vehicle_add',$data);
 	}
@@ -345,6 +348,205 @@ class Vehicle extends CI_Controller {
         echo json_encode($result);
         exit();
 	}
+public function Tyerstable()
+{
+		$draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
+        
+        $searchquery = '';
+        $t_vechicle= $_POST['v_id'];
+        $vih_type= $_POST['vih_type'];
+        $this->db->select('tyres_name.tyre_name,tyres_name.id');
+        $this->db->from('tyres_name');
+        $this->db->join('vehicles', 'tyres_name.vehicle_type  = vehicles.v_type', 'left');
+        $this->db->where("vehicles.v_id = '$t_vechicle'");
+        $query = $this->db->get()->result(); 
+       // echo $this->db->last_query();
+        $data = [];
+        $sr=1;
+ 
+
+        foreach($query as $r) {
+            
+   $this->db->select('*');
+    $this->db->from('vih_tyre');
+    $this->db->where('vid', $t_vechicle);
+    $this->db->where('ttpe_id', $r->id);
+    $tyrecheck = $this->db->get();
+    
+
+    if ($tyrecheck->num_rows() > 0) {
+          $assign = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal'.$r->id .'">
+  Change Tyre
+</button>';  
+    } else {
+        $assign = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal'.$r->id .'">
+  Assign Tyre
+</button>';  
+    }
+ 
+
+         
+ 
+            
+            $action = '<a target="_blank" class="icon" href="'.base_url().'trips/invoice/'.$r->t_id.'">
+                            <i class="fa fa-eye"></i>
+                            </a> ';
+                     
+            $data[] = array(
+                $sr++,
+                $r->tyre_name,
+                $assign
+            );
+           }
+    	
+	    
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => count($query),
+            "recordsFiltered" => count($query),
+            "data" => $data
+        );
+    
+        echo json_encode($result);
+        exit();
+	}
+	
+	
+	public function maintance()
+{
+		$draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
+        
+        $searchquery = '';
+       $this->db->select('*');
+$this->db->from('maintenance');
+$query = $this->db->get()->result_array();
+
+    
+        $data = [];
+        $sr=1;
+ 
+
+        foreach($query as $r) {
+            
+  
+    
+
+    if ($r['tyre_type'] == 0) {
+          $type = 'By Date';  
+    } else {
+        $type = 'By Km';  
+    }
+ 
+
+         
+ 
+            
+        
+                     
+            $data[] = array(
+                $sr++,
+                $r['tyre_name'],
+                $type,
+                $assign
+            );
+           }
+    	
+	    
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => count($query),
+            "recordsFiltered" => count($query),
+            "data" => $data
+        );
+    
+        echo json_encode($result);
+        exit();
+	}
+public function assign_tyres(){
+    $vid = $this->input->post('vid');
+    $assign_date = $this->input->post('assign_date');
+    $tid = $this->input->post('tid');
+    $ttpe_id = $this->input->post('ttpe_id');
+    $assifgnmeter = $this->input->post('assifgnmeter');
+    $close_date = $this->input->post('close_date');
+    $close_meter = $this->input->post('close_meter');
+    $id = $this->input->post('id');
+   
+ 
+
+    $data = array(
+        'vid' => $vid,
+        'assign_date' => $assign_date,
+        'tid' => $tid,
+        'assifgnmeter' => $assifgnmeter,
+        'ttpe_id' => $ttpe_id,
+        'close_date' => '0',
+        'close_meter' => '0'
+    );
+
+    if ($id) {
+        
+        
+        
+        $this->db->select('*');
+$this->db->from('vih_tyre');
+$this->db->where('vid', $this->input->post('vid'));
+$this->db->where('ttpe_id', $this->input->post('ttpe_id'));
+$this->db->where('close_date', '0');
+$this->db->where('close_meter', '0');
+$tyrecheck = $this->db->get();
+$tyre_data = $tyrecheck->result_array(); 
+
+
+if($tyrecheck->num_rows() > 0){
+    if ($close_date && $close_meter) {
+        
+       $this->db->where('id', $id);
+            $this->db->update('vih_tyre', array(
+                'close_date' => $close_date,
+                'close_meter' => $close_meter,
+            ));
+
+            // Insert the second query
+            $this->db->insert('vih_tyre', array(
+                'assign_date' => $close_date,
+                'assifgnmeter' => $close_meter,
+                'tid' => $tid,
+                'vid' => $this->input->post('vid'),
+                'ttpe_id' => $this->input->post('ttpe_id'),
+                 'close_date' => '0',
+                 'close_meter' => '0'
+            ));
+
+             if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('successmessage', 'Tyre Change successfully.');
+        }
+        }
+}
+
+
+
+
+        
+    } else {
+       
+        $this->db->insert('vih_tyre', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata('successmessage', 'Tyre assigned successfully.');
+        }
+    }
+
+    $redirect_url = base_url('vehicle/viewvehicle/' . $vid);
+    redirect($redirect_url);
+}
+
+
+
 	public function vehiclegroup()
 	{
 		$data['vehiclegroup'] = $this->vehicle_model->get_vehiclegroup();

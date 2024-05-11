@@ -88,6 +88,9 @@ class vehicle_model extends CI_Model{
 	public function getHelpers(){
 		return $this->db->select('*')->from('drivers')->where("d_is_active",1)->where("st_cat_id",2)->get()->result_array();
 	}
+	public function vih_types(){
+		return $this->db->select('*')->from('vih_types')->get()->result_array();
+	}
 	public function get_vehiclegroup() { 
 		return $this->db->select('*')->from('vehicle_group')->get()->result_array();
 	} 

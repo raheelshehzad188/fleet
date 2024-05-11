@@ -194,7 +194,7 @@
                                         </form>
                                     </td>
                                     <td>
-                                        <input type="date" id="exp_<?= $value['st_id']; ?>" />
+                                        <input type="date" id="exp_<?= $value['st_id']; ?>" value="<?php echo date('Y-m-d')?>"/>
                                     </td>
                                     <td><button onclick="update_file('sfile<?= $value['st_id']; ?>')">Update</button></td>
 

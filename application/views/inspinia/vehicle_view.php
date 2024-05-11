@@ -9,6 +9,8 @@
 }
 
  </style>
+   <!-- /.content-wrapper -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
       
     <div class="content-header">
       <div class="container-fluid">
@@ -72,6 +74,8 @@
                 <li class="nav-item"><a class="nav-link" href="#vechicle_incomexpense" data-toggle="tab">Income & Expense</a></li>
                 <li class="nav-item"><a class="nav-link" href="#fuel" data-toggle="tab">Fuel</a></li>
                 <li class="nav-item"><a class="nav-link " href="#files" data-toggle="tab">Files</a></li>
+                <li class="nav-item"><a class="nav-link " href="#Tyers" data-toggle="tab">Tyers</a></li>
+                <li class="nav-item"><a class="nav-link " href="#Maintaine" data-toggle="tab">Maintenance</a></li>
                 </ul>
               </div><!-- /.card-header -->
              
@@ -141,65 +145,7 @@
           </table>
         </div>         
         </div>
-                     <?php 
-                     /*?> <table id="" class="table table-bordered table-striped table-hover">
-                          
-                          <tbody>
-                            <?php if(!empty($bookings)) {
-                            $count=1;
-                            foreach($bookings as $bookingsdata){
-                            ?>
-                              <tr>
-                                  <td>
-                                     <?php echo output($count); $count++; ?>
-                                  </td>
-                                   <td><?= (isset($bookingsdata['t_driver_details']->d_name))?$bookingsdata['t_driver_details']->d_name:'<span class="badge badge-danger">Yet to Assign</span>'; ?></td>
-                                  <td>
-                                     <?php echo output($bookingsdata['t_customer_details']->c_name);?>
-                                  </td>
-                                  <td>
-                                     <?php echo '<small>'.output($bookingsdata['t_trip_fromlocation']).'</small>'; echo '<br><span class="badge badge-success">to</span><br>';?>
-                                     <?php echo '<small>'.output($bookingsdata['t_trip_tolocation']).'</small>';?>
-                                  </td>
-                                  <td>
-                                     <?php echo output($bookingsdata['t_trip_amount']);?>
-                                  </td>
-                                  
-                                   <td>
-                                   <?php 
-                                     switch($bookingsdata['t_trip_status']){
-                                        case 'ongoing':
-                                            $status = '<span class="badge badge-info">Ongoing</span>';
-                                            break;
-                                        case 'completed':
-                                            $status = '<span class="badge badge-success">Completed</span>';
-                                             break;
-                                        case 'yettostart':
-                                            $status = '<span class="badge badge-warning">Yet to start</span>';
-                                             break;
-                                        case 'cancelled':
-                                            $status = '<span class="badge badge-danger">Cancelled</span>'; 
-                                             break; 
-                                        case 'yettoconfirm':
-                                            $status = '<span class="badge badge-danger">Yet to Confirm</span>'; 
-                                             break;    
-                                      }
-
-                                      ?>
-                                     <?=  $status ?>  
-                                  </td>
-                                  <td> <a class="icon" target="_blank" href="<?php echo base_url(); ?>trips/details/<?php echo output($bookingsdata['t_id']); ?>">
-                                     <i class="fa fa-eye"></i>
-                                    </a> 
-                                  </td>
-                              </tr>
-                              <?php } } ?>
-                          </tbody>
-                          
-                      </table>
-                      <?php 
-
-                          */?>
+                  
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="vechicle_geofence">
@@ -269,39 +215,7 @@
                                
                               </tr>
                           </thead>
-                       <?php
-                        /*
-                       ?>   <tbody>
-                            <?php if(!empty($vechicle_incomexpense)){ 
-                            $count=1;
-                            foreach($vechicle_incomexpense as $incomexpensdata){
-                            ?>
-                              <tr>
-                                  <td>
-                                     <?php echo output($count); $count++; ?>
-                                  </td>
-                                  <td>
-                                      <?php echo output($incomexpensdata['ie_date']);?>
-                                  </td>
-                                  <td>
-                                     <?php echo output($incomexpensdata['ie_description']);?>
-                                  </td>
-                                  <td>
-                                     <?php echo output($incomexpensdata['ie_amount']);?>
-                                  </td>
-                                  <td>
-                                     <?php echo ($incomexpensdata['ie_type']=='income')?'<span class="right badge badge-success">Income</span>':'<span class="right badge badge-danger">Expense</span>'; ?>
-                                  </td>
-                                 <td> <a class="icon" href="<?php echo base_url(); ?>incomexpense">
-                                     <i class="fa fa-eye"></i>
-                                    </a> 
-                                  </td>                                 
-                              </tr>
-                          <?php } } ?>
-                          </tbody>
-                          <?php
-                            */
-                          ?>
+                      
                       </table>
                   </div>
                   <div class="tab-pane" id="fuel">
@@ -357,6 +271,191 @@
                       </table>
                   </div>
                   
+                    <div class="tab-pane" id="Tyers">
+                     <table id="tyerstable1" class="table table-striped projects" style="width:100% !important;">
+                      <input type="hidden" value="<?php echo $vehicledetails['v_type'] ;?>" name="" id="vih_type">
+                         <thead>
+                              <tr>
+                                  <th class="percent1">
+                                      #
+                                  </th>
+                                  <th class="percent25">
+                                      Name
+                                  </th>
+                                  
+                                  <th class="percent25">
+                                      Actions
+                                  </th>
+                                  
+                                </tr>
+                          </thead>
+                        </table>
+                        <?php
+                       $query = $this->db->select('id')->get('tyres_name');
+                        $result = $query->result();
+                         $data = $this->db->get('tyre_types');
+                       $ret = $data->result_array();
+                       
+                   
+                           foreach ($result as $row) {
+
+                               ?>
+                                <div class="modal fade" id="myModal<?php echo $row->id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                 <div class="modal-dialog" role="document">
+                                                   <div class="modal-content">
+                                                     <div class="modal-header">
+                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                       <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                                     </div>
+                                                     <div class="modal-body">
+                                                      <form method="post"  action="<?= base_url()?>vehicle/assign_tyres" >
+                                                          
+                                                          <?php
+                                                          $this->db->select('*');
+                                                          $this->db->from('vih_tyre');
+                                                          $this->db->where('vid', $v_id);
+                                                          $this->db->where('ttpe_id', $row->id);
+                                                          $this->db->where('close_date','0');
+                                                          $this->db->where('close_meter','0');
+                                                          $tyrecheck = $this->db->get();
+                                                          $tyre_data = $tyrecheck->result_array();
+                                                          
+                                                          
+                                                     
+                                                          ?>
+                                                          
+                                                         
+                                                          
+                                                           <input type="hidden" name="vid" value="<?php echo $v_id ?>" >
+                                                           <input type="hidden" name="ttpe_id" value="<?php echo $row->id ?>" >
+                                                          
+                                                         
+                                                         <?php
+                                                         
+                                                         if($tyrecheck->num_rows() > 0){
+                                                             ?>
+                                                              <input type="hidden" name="id" value="<?php echo $tyre_data[0]['id'] ?>" >
+                                                             <div class="">
+                                                           <div class="form-group">
+                                                             <label class="form-label">Close date</label>
+                                                             <input type="date" name="close_date" value="" class="form-control" placeholder="Chassis No">
+                                                           </div>
+                                                         </div>
+                                                         
+                                                          <div class="">
+                      <div class="form-group">
+                        <label for="v_color" class="form-label">Vehicle Tyre</label>
+                        <select class="form-control  " required="true" name="tid">
+                        	<option>Select Tyres</option>
+                        	<?php
+                        		foreach ($ret as $v) {
+                        		    
+                        	?>
+                        	<option  value="<?= $v['id']?>" ><?= $v['tyre_name']?></option>
+                        	<?php
+                        		}
+                        	?>
+                        	
+                        </select>
+                      </div>
+                    </div>
+                                                             <div class="">
+                                                           <div class="form-group">
+                                                             <label class="form-label">Close Meter</label>
+                                                             <input type="text" name="close_meter" value="" class="form-control" placeholder="Close Meter">
+                                                           </div>
+                                                         </div>
+                                                         
+                                                           <button type="submit" class="btn btn-primary">Change Tyre</button>
+                                                             <?php
+                                                         }else{
+                                                             ?>
+                                                              <div class="">
+                                                           <div class="form-group">
+                                                             <label class="form-label">Assign date</label>
+                                                             <input type="date" name="assign_date" value="<?php echo (isset($tyre_data) && $tyre_data[0]['assign_date'] != 0) ?  date("Y-m-d", strtotime($tyre_data[0]['assign_date'])):'' ?>" class="form-control" placeholder="Chassis No">
+                                                           </div>
+                                                         </div>
+                                                            <div class="">
+                      <div class="form-group">
+                        <label for="v_color" class="form-label">Vehicle Tyre</label>
+                        <select class="form-control  " required="true" name="tid">
+                        	<option>Select Tyres</option>
+                        	<?php
+                        		foreach ($ret as $v) {
+                        		    
+                        	?>
+                        	<option value="<?= $v['id']?>"><?= $v['tyre_name']?></option>
+                        	<?php
+                        		}
+                        	?>
+                        	
+                        </select>
+                      </div>
+                    </div>
+                                                          
+                                                          <div class="">
+                                                           <div class="form-group">
+                                                             <label class="form-label">Assign meter</label>
+                                                             <input type="text" name="assifgnmeter" value="<?php echo (isset($tyre_data)) ? $tyre_data[0]['assifgnmeter']:'' ?>" class="form-control" placeholder="Assign meter">
+                                                           </div>
+                                                         </div>
+                                                         
+                                                           <button type="submit" class="btn btn-primary">Assign Tyre</button>
+                                                             
+                                                             <?php
+                                                         }
+                                                         
+                                                         
+                                                         ?>
+                                                          
+                                                          
+                                                        
+                                                          
+                                                      </form>
+                                                     </div>
+                                                     
+                                                   </div>
+                                                 </div>
+                                  </div>
+                               
+                               <?php
+                           }
+                        ?>
+                        
+                          
+                  </div>
+                  
+                  
+                  
+                  
+                    <div class="tab-pane" id="Maintaine">
+                    <!-- The timeline -->
+                    <table id="Maintainetbl" class="table table-striped projects" style="width:100%;">
+                          <thead>
+                              <tr>
+                                  <th class="percent1">
+                                      #
+                                  </th>
+                                  <th class="percent25">
+                                      Name 
+                                  </th>
+                                  <th class="percent25">
+                                      Type
+                                  </th>
+                                  
+                                 <th class="percent25">
+                                    Action
+                                </th>
+                                  
+                              </tr>
+                          </thead>
+                          <tbody>
+                           
+                          </tbody>
+                      </table>
+                  </div>
+                  
                   
                    <div class="tab-pane" id="files">
                   <table class="table">
@@ -375,6 +474,8 @@
                                 <tr>
                                 <td><?= $key+1; ?></td>
                                 <td><?= $value['type_name'] ?></td>
+                                <td> <input type="file" name="file" />
+                                   <input type="hidden" name="exp"  /></td>
                                 <td>update</td>
                             </tr>
 
@@ -478,7 +579,37 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<script>
+    // Initialize Select2
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+    
+    
+    $(document).ready(function() {
+    $('.assign_tyres').on('submit', function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: '<?= base_url()?>vehicle/assign_tyres', 
+            data: formData,
+            success: function(response) {
+                
+                console.log(response);
+             
+            },
+            error: function(xhr, status, error) {
+               
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+</script>
 <script type="text/javascript">
 $(document).ready(function() {
     var dataTable = $('#bookingstbl2').DataTable({
@@ -492,6 +623,33 @@ $(document).ready(function() {
                 d.v_id = $('#vehicle_id').val();
                 d.t_trackingcode = $('#t_trackingcode').val();
                 d.t_customer_id = $('#t_customer_id').val();
+            }
+        },
+         "footerCallback": function (row, data, start, end, display) {
+            var api = this.api();
+            $(api.column(2).footer()).html(
+                api.column(2, {page: 'current'}).data().reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+            );
+        }
+    });
+    $('#submit').click(function(e) {
+        e.preventDefault();
+        dataTable.ajax.reload();
+    });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    var dataTable = $('#Maintainetbl').DataTable({
+
+        "ajax": {
+            url : "<?= base_url()?>vehicle/maintance",
+            type : 'POST',
+            data: function(d) {
+               
             }
         },
          "footerCallback": function (row, data, start, end, display) {
@@ -535,6 +693,22 @@ $(document).ready(function() {
         e.preventDefault();
         dataTable.ajax.reload();
     });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var dataTable = $('#tyerstable1').DataTable({
+      
+        "ajax": {
+            url : "<?= base_url()?>vehicle/Tyerstable",
+            type : 'POST',
+            data: function(d) {
+                d.vih_type = $('#vih_type').val();
+                d.v_id = $('#vehicle_id').val();
+            }
+        },
+        });
+  
 });
 </script>
 <script type="text/javascript">

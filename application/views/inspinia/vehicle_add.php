@@ -56,17 +56,19 @@
                         <input type="text" name="v_manufactured_by" value="<?php echo (isset($vehicledetails)) ? $vehicledetails[0]['v_manufactured_by']:'' ?>" class="form-control" placeholder="Manufactured By">
                       </div>
                     </div>
+                    
                      <div class="col-sm-6 col-md-3">
                       <div class="form-group">
                         <label class="form-label">Vehicle Type</label>
                         <select id="v_type" name="v_type" class="form-control " required="">
                          <option value="">Select Vehicle Type</option> 
-                          <option <?php echo (isset($vehicledetails) && $vehicledetails[0]['v_type']=='CAR') ? 'selected':'' ?> value="CAR">CAR</option> 
-                          <option <?php echo (isset($vehicledetails) && $vehicledetails[0]['v_type']=='MOTORCYCLE') ? 'selected':'' ?> value="MOTORCYCLE">MOTORCYCLE</option> 
-                          <option <?php echo (isset($vehicledetails) && $vehicledetails[0]['v_type']=='TRUCK') ? 'selected':'' ?> value="TRUCK">TRUCK</option> 
-                          <option <?php echo (isset($vehicledetails) && $vehicledetails[0]['v_type']=='BUS') ? 'selected':'' ?> value="BUS">BUS</option> 
-                           <option <?php echo (isset($vehicledetails) && $vehicledetails[0]['v_type']=='TAXI') ? 'selected':'' ?> value="TAXI">TAXI</option> 
-                           <option <?php echo (isset($vehicledetails) && $vehicledetails[0]['v_type']=='BICYCLE') ? 'selected':'' ?> value="BICYCLE">BICYCLE</option> 
+                         <?php
+                          foreach($vih_types as $k => $v){
+                         ?>
+                          <option <?php echo (isset($vehicledetails) && $vehicledetails[0]['v_type']== $v['name']) ? 'selected':'' ?> value="<?= $v['id']?>"><?= $v['name']?></option> 
+                          <?php
+                            }
+                          ?>
                         </select>
 
                       </div>

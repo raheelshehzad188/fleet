@@ -36,6 +36,7 @@
       <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
       <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/toast/toast.min.css" />
       <script src="<?= base_url(); ?>assets/plugins/toast/toast.min.js"></script>
+
    </head>
    <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
        

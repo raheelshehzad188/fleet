@@ -146,14 +146,45 @@ class Settings extends CI_Controller {
 		if($tables)
 		{
 			$data['detail'] = $detail = $this->db->where('tbl',$tbl)->get('crud_detail')->row_array();
-		if($act == 'add')
-		{
-			$response = $this->db->insert($tbl,$this->input->post());
-			if($response) {
-				$this->session->set_flashdata('successmessage', $detail['single'].' added successfully..');
-			    redirect('settings/crud/'.$tbl);
-			 }
-		}
+        	if ($act == 'add') {
+    // Check if the form has an image input field
+    if(isset($_FILES['exp_img']) && $_FILES['exp_img']['error'] !== UPLOAD_ERR_NO_FILE) {
+        $config['upload_path'] = "./assets/exp_type"; // Directory path to upload images
+        $config['allowed_types'] = 'gif|jpg|png'; // Allowed file types
+        $config['max_size'] = 1024; // Maximum size in kilobytes (1MB)
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('exp_img')) {
+            // File uploaded successfully
+            $upload_data = $this->upload->data();
+            $image_path = 'assets/exp_type/' . $upload_data['file_name'];
+            $form_data = $this->input->post();
+            $form_data['exp_img'] = $image_path;
+        } else {
+            // File upload failed
+            $image_path = ''; // Set image path to empty string
+        }
+    } else {
+            $form_data = $this->input->post();
+    }
+
+
+    // Perform database insertion
+    $response = $this->db->insert($tbl, $form_data);
+
+    if ($response) {
+        // Success message and redirection
+        $this->session->set_flashdata('successmessage', $detail['single'] . ' added successfully.');
+        redirect('settings/crud/' . $tbl);
+    } else {
+        // Handle database insertion failure
+        $this->session->set_flashdata('warningmessage', 'Something went wrong. Please try again.');
+        redirect('settings/crud/' . $tbl);
+    }
+}
+
+
+
 		else if($act == 'edit')
 		{
 			$data['staff_update_data'] = $this->db->where($detail['key'], $id)->get($tbl)->row_array();
