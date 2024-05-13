@@ -32,22 +32,33 @@ $murl = base_url('/view29/');
     <!-- ProgressBar js -->
     <script src="assets/js/plugins/progressbar-js/progressbar.min.js"></script>
     <!-- Base Js File -->
+    
     <style>
-        .detail_container{
-                  background: #f6f6f6;
+    .bg-primary{
+        background:brown !important;
+    }
+    .my_class{
+        
+    width: 24.5%;
+    }
+.detail_container {
     padding: 20px;
+    background:mintcream;
     display: flex;
+    border-radius: 10px;
     align-items: center;
-    border: 1px solid #1e74fd;
+    border: 1px solid #ebebeb;
     justify-content: start;
     gap: 15px;
-    margin-bottom: 6px;
-        }
+    box-shadow: 0px 0px 5px #9e9e9e0a;
+    margin-bottom: 3px;
+}
         .img_box a {
             cursor:pointer;
+            font-size:16px;
+            color:#000 !important;
         }
         .details_section{
-                    /* gap: 8px; */
     justify-content: center;
         }
         .detail_container img{
@@ -56,6 +67,42 @@ $murl = base_url('/view29/');
             object-fit:cover;
             border-radius:50%;
         }
+        @media (max-width:768px){
+            .my_class{
+                width:24.5% !important;
+            }
+              .img_box a {
+            cursor:pointer;
+            font-size:13px;
+        }
+        }
+        @media (max-width:576px){
+            .my_class{
+                width:33% !important;
+            }
+        }
+        @media (max-width:597px){
+            .my_class{
+                padding:10px;
+            }
+        }
+        @media (max-width:386px){
+            .my_class{
+                padding:10px 0px;
+            }
+        }
+          .detail_container img{
+            width:50px;
+            height:50px;
+            object-fit:cover;
+            border-radius:50%;
+        }
+        }
+     
+             
+          
+        
+        
     </style>
 <body>
 
@@ -151,8 +198,7 @@ $murl = base_url('/view29/');
 
 
     </div>
-    <!-- * App Capsule -->
-    <!--Expense detail-->
+
     <div class="exp_detail" ng-if="ipages.expense_detail">
          <div class="appHeader bg-primary text-light">
         <div class="left">
@@ -217,8 +263,6 @@ $murl = base_url('/view29/');
         </a>
     </div>
     </div>
-    <!--Expense detail-->
-    <!--Expense staff-->
     <div class="exp_detail" ng-if="ipages.exp_staff">
          <div class="appHeader bg-primary text-light">
         <div class="left">
@@ -231,12 +275,12 @@ $murl = base_url('/view29/');
             <a ng-click="logout_shift()" style="cursor:pointer;color:white;">Logout</a>
         </div>
     </div>
-            
-            <div id="expense_details" style="margin-top: 77px;" ng-if="ipages.exp_staff">
+            <div class="container-fluid">
+            <div id="expense_details d-flex flex-wrap" style="margin-top: 77px;" ng-if="ipages.exp_staff">
         
-        <<div class="col-md-3 detail_container" ng-repeat="data in detail.staff_list"> 
+        <div class="col-lg-3 col-md-6 col-sm-12 col-12 detail_container" ng-repeat="data in detail.staff_list"> 
                         <div class=" img_box">
-                            <img src='<?= base_url('/'); ?>{{ data.d_file }}'>
+                            <img src='<?= base_url('/'); ?>/assets/uploads/{{ data.d_file }}'>
                             </div>
                             <div class=" img_box">
                             <div><a ng-click="showExpense(data.st_id)">{{data.d_name}}</a></div>
@@ -245,7 +289,7 @@ $murl = base_url('/view29/');
                             </div>
                     </div>
     </div>
-            
+           </div> 
        <div class="appBottomMenu">
         <a ng-click="show_page('exp_types')" class="item">
             <div class="col">
@@ -297,13 +341,13 @@ $murl = base_url('/view29/');
         
         <div class="wide-block pt-2 pb-2">
 
-                <div class="row ">
-                    <div class="col-md-3 detail_container" ng-repeat="data in detail.ofc_exp"> 
+                <div class="row justify-content-between">
+                    <div class=" flex-sm-column flex-column my_class detail_container" ng-repeat="data in detail.ofc_exp"> 
                         <div class=" img_box">
                             <img src='<?= base_url('/'); ?>{{ data.exp_img }}'>
                             </div>
                             <div class=" img_box">
-                            <div><a ng-click="showExpense(data.st_id)">{{data.type_name}}</a></div>
+                            <div class="text-center"><a ng-click="showExpense(data.st_id)">{{data.type_name}}</a></div>
 
 
                             </div>
@@ -482,7 +526,7 @@ app.controller('myCtrl', function($scope,$http) {
       $http.get(url, { params: data }, config).then(function(response) {
         if(response.data){
             
-                $sciope.show_page('expense_detail');
+                $scope.show_page('expense_detail');
         }
         
       }).catch(function(error) {
@@ -611,7 +655,7 @@ if(typeof shiftUserId !== 'undefined') {
                         $scope.pages.login = 1;
                         break;
                 }
-                $scope.pages.preloader = 0;
+                $scope.pages.preloader = 0; 
             }
         })
         .catch(function(response) {
