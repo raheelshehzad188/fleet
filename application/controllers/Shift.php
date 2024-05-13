@@ -110,17 +110,22 @@ public function login() {
      
     $track = (isset($_SESSION['track']) ? $_SESSION['track'] : 'null' );
     $data = json_decode($entityBody,true);
-    
-    $amount = $data['params']['amount'];
-    $detail = $data['params']['detail'];
-    $date = date('Y-m-d H.i.s');
-    $exp_data = [
-        'amount' => $amount,
-        'detail' => $detail,
-        'created_at' => $date,
-        'track'  => $track
-        ];
-        $query = $this->db->insert('exp_detail' , $exp_data);
+    $data['track'] = $track;
+    if($data['exp_id'] == 23)
+    {
+        $shift = $this->db->where('track',$track)->get('shift_log')->row();
+        //insert in loan table
+        $in = array(
+            'sid'=> $data['staff_id'],
+            'amount_out'=> $data['amount'],
+            'amount_in'=> 0,
+            'reason'=> $data['reason'],
+            'created_by'=> (isset($shift->uid)?$shift->uid:0),
+        );
+        $r = $this->db->insert('staff_loan',$in);
+        var_dump($r);
+    }
+        $query = $this->db->insert('exp_detail' , $data);
         if($query){
             echo "success";
         }

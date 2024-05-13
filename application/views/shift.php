@@ -219,13 +219,13 @@ $murl = base_url('/view29/');
             <div class="row">
                 <form method="post">
                     <div class="form-group">
-                        <input type="text" ng-model="add_expense.amount" placeholder="Expense Amount" class="form-control">
+                        <input type="text"  placeholder="Expense Amount" ng-model="add_exp.amount"  class="form-control">
                     </div>
                     <div class="form-group">
-                        <textarea ng-model="add_expense.detail" placeholder="Expese Details" class="form-control"></textarea>
+                        <textarea  placeholder="Expese Details" class="form-control" ng-model="add_exp.reason"></textarea>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary" ng-click="send_expense()">Add</button>
+                        <button class="btn btn-primary" ng-disabled="!add_exp.amount" ng-click="send_expense()">Add</button>
                     </div>
                     
                 </form>
@@ -278,7 +278,7 @@ $murl = base_url('/view29/');
             <div class="container-fluid">
             <div id="expense_details d-flex flex-wrap" style="margin-top: 77px;" ng-if="ipages.exp_staff">
         
-        <div class="col-lg-3 col-md-6 col-sm-12 col-12 detail_container" ng-repeat="data in detail.staff_list"> 
+        <div class="col-lg-3 col-md-6 col-sm-12 col-12 detail_container" ng-repeat="data in detail.staff_list" ng-click="add_exp.staff_id= data.d_id;show_page('expense_detail')"> 
                         <div class=" img_box">
                             <img src='<?= base_url('/'); ?>/assets/uploads/{{ data.d_file }}'>
                             </div>
@@ -342,12 +342,12 @@ $murl = base_url('/view29/');
         <div class="wide-block pt-2 pb-2">
 
                 <div class="row justify-content-between">
-                    <div class=" flex-sm-column flex-column my_class detail_container" ng-repeat="data in detail.ofc_exp"> 
+                    <div class=" flex-sm-column flex-column my_class detail_container" ng-repeat="data in detail.ofc_exp" ng-click="showExpense(data.st_id)"> 
                         <div class=" img_box">
                             <img src='<?= base_url('/'); ?>{{ data.exp_img }}'>
                             </div>
                             <div class=" img_box">
-                            <div class="text-center"><a ng-click="showExpense(data.st_id)">{{data.type_name}}</a></div>
+                            <div class="text-center"><a >{{data.type_name}}</a></div>
 
 
                             </div>
@@ -493,18 +493,22 @@ app.controller('myCtrl', function($scope,$http) {
   };
     $scope.add_expense = {};  
   $scope.send_expense = function(){
+    $scope.ipages.preloader = 1;
       
       var url = BASE_URL + 'expense_detail';
-      var data =  $scope.add_expense ; 
+      var data =  $scope.add_exp ; 
+      console.log(data);
+      alert(data);
       var config = {}; // You can configure headers or other options here if needed
       
-      $http.post(url, { params: data }, config).then(function(response) {
+      $http.post(url, data, config).then(function(response) {
         if(response.data){
             
-                $scope.pages.exp_detail = 1;
-                $scope.pages.preloader = 0;
-                $scope.pages.app_page = 1;
-                $scope.pages.expense_detail = 0;
+                $scope.ipages.preloader = 0;
+                $scope.add_exp.exp_id = 0;
+                $scope.add_exp.reason = '';
+                $scope.add_exp.staff_id = 0;
+                $scope.show_page('exp_types');
         }
         
       }).catch(function(error) {
@@ -512,8 +516,14 @@ app.controller('myCtrl', function($scope,$http) {
       });
       
   }
+  $scope.add_exp = {
+    'exp_id' : 0,
+    'reason' : '',
+    'staff_id': 0,
+    'amount': 0,
+  };
    $scope.showExpense = function(st_id) {
-
+    $scope.add_exp.exp_id = st_id;
        if(st_id == 23)
        {
         $scope.show_page('exp_staff');
@@ -525,6 +535,7 @@ app.controller('myCtrl', function($scope,$http) {
       
       $http.get(url, { params: data }, config).then(function(response) {
         if(response.data){
+
             
                 $scope.show_page('expense_detail');
         }
