@@ -8,6 +8,7 @@ $murl = base_url('/view29/');
 
 ?>
 <html>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -34,6 +35,138 @@ $murl = base_url('/view29/');
     <!-- Base Js File -->
     
     <style>
+      .tabset>input[type="radio"] {
+        position: absolute;
+        left: -200vw;
+      }
+
+      .tabset .tab-panel {
+        display: none;
+      }
+      .tabset{
+          margin-top: 80px;
+      }
+
+      .tabset>input:first-child:checked~.tab-panels>.tab-panel:first-child,
+      .tabset>input:nth-child(3):checked~.tab-panels>.tab-panel:nth-child(2),
+      .tabset>input:nth-child(5):checked~.tab-panels>.tab-panel:nth-child(3),
+      .tabset>input:nth-child(7):checked~.tab-panels>.tab-panel:nth-child(4),
+      .tabset>input:nth-child(9):checked~.tab-panels>.tab-panel:nth-child(5),
+      .tabset>input:nth-child(11):checked~.tab-panels>.tab-panel:nth-child(6) {
+        display: block;
+      }
+
+      .card_1 {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 10px 10px;
+        border-bottom: 1px solid #ebebeb;
+        border-top: 1px solid #ebebeb
+      }
+
+      .tabset>label {
+        position: relative;
+        display: inline-block;
+        padding: 12px 12px 12px;
+        border: 1px solid transparent;
+        border-bottom: 0;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      input:focus-visible+label {
+        outline: 2px solid rgba(0, 102, 204, 1);
+        border-radius: 3px;
+      }
+
+      .tabset>label:hover,
+      .tabset>input:focus+label,
+      .tabset>input:checked+label {
+        color: #fff;
+        background: #a52a2a;
+      }
+
+      .tabset>label:hover::after,
+      .tabset>input:focus+label::after,
+      .tabset>input:checked+label::after {
+        background: #06c;
+      }
+
+      .tabset>input:checked+label {
+        border-color: #000;
+        border-bottom: 1px solid #fff;
+        margin-bottom: -1px;
+      }
+
+      .tab-panel {
+        padding: 30px 0;
+        border-top: 1px solid #ccc;
+      }
+
+      .w_30 {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      .tab-panel p {
+        font-size: 14px;
+        padding-top: 4px;
+      }
+p{
+    margin:0;
+}
+b{
+      	font-weight: 700;
+      	font-size:20px;
+      }
+
+      .my_btn {
+        padding: 6px 16px;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 23PX;
+      }
+
+      .w_20 .fa-arrow-right {
+        rotate: -44deg;
+        font-size: 20px;
+        font-weight: 300;
+        color: #c83f3f;
+      }
+
+      .myy_arrow1 {
+        rotate: -44deg;
+        font-size: 20px;
+        font-weight: 300;
+        color: #c83f3f;
+      }
+
+      .myy_arrow {
+        rotate: 44deg !important;
+        font-size: 20px;
+        font-weight: 300;
+        color: green !important;
+      }
+
+      .tabset label {
+        width: 31% !important;
+      }
+    
+    #cashInOut{
+            text-align: center;
+            height: 100vh;
+    display: flex;
+    justify-content: center;
+    }
     .bg-primary{
         background:brown !important;
     }
@@ -359,22 +492,143 @@ $murl = base_url('/view29/');
     </div>
     <!-- * App Capsule -->
 
+    <!-- cashin out -->
+    
+    <div id="cashInOut" ng-if="ipages.cashio">
+        
+    <div ng-if="!cash_form.type">
+        
+        
+        <p>Choose Cash Type</p>
+        <button ng-click="setCashType(1)" class="btn btn-success cash_btn">Cash IN</button>
+        <button ng-click="setCashType(2)" class="btn btn-success cash_btn">Cash OUT</button>
+    </div>
+    <div ng-if="cash_form.type">
+        <div class="form-group">
+            <input type="text" placeholder="Enter Amount" class="form-control cashIn_filed" ng-model="cash_form.amount"/>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control cashIn_filed" placeholder="Add Reason" ng-model="cash_form.reason"></textarea>
+        </div>
+        <button class="btn btn-primary" ng-click="sendCash()">Submit</button>
+    </div>
+</div>
+
+
+    <!-- * Cash in out -->
+
+    <!-- Ledger -->
+    
+    <div id="cashInOut" ng-if="ipages.ledger">
+        <!--<h1 class="cblc">{{ detail.cblc}}</h1>-->
+        <!--<div>-->
+        <!--    Detail-->
+        <!--    <ul>-->
+        <!--        <li ng-repeat="records in detail.ledger ">-->
+        <!--            <span>{{records.name}}-{{records.type}}</span>{{records.amount}}-->
+        <!--        </li>-->
+        <!--    </ul>-->
+        <!--</div>-->
+        <div class="container-fluid">
+      <div class="tabset">
+        <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
+        <label for="tab1">All</label>
+        <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier">
+        <label for="tab2">
+          <i class="fa-solid fa-arrow-right myy_arrow1" style="margin-right:5px;"></i>Send </label>
+        <input type="radio" name="tabset" id="tab3" aria-controls="dunkles">
+        <label for="tab3">
+          <i class="fa-solid fa-arrow-right myy_arrow" style="margin-right:5px;"></i>Received </label>
+        <div class="tab-panels">
+          <section id="marzen" class="tab-panel">
+              
+              
+              
+            <div class="card_1" ng-repeat="records in detail.ledger ">
+              <div class="w_20">
+                  
+                        <i ng-if="records.type == 'minus'" class="fa-solid fa-arrow-right myy_arrow1" style="margin-right:5px;"></i>
+                        <i ng-if="records.type == 'add'" class="fa-solid fa-arrow-right myy_arrow" style="margin-right:5px;"></i>
+                  
+                
+              </div>
+              <div class="w_50 text-left">
+                <b>Rs {{ detail.cblc}}</b>
+                <p>{{records.name}}</p>
+                <p><span ng-if="records.type == 'minus'">-</span><span ng-if="records.type == 'add'">+</span> {{records.amount}} Rs</p>
+               
+              </div>
+              <div class="w_30">
+                <button class="my_btn">
+                  <i class="fa-solid fa-receipt"></i> Receipt </button>
+               
+              </div>
+            </div>
+            
+            
+            
+            
+          </section>
+          <section id="rauchbier" class="tab-panel">
+            <div class="card_1" ng-if="records.type == 'minus'" ng-repeat="records in detail.ledger ">
+              <div class="w_20">
+                  <i ng-if="records.type == 'minus'" class="fa-solid fa-arrow-right myy_arrow1" style="margin-right:5px;"></i>
+               
+              </div>
+        <div class="w_50 text-left">
+                <b>Rs {{ detail.cblc}}</b>
+                <p>{{records.name}}</p>
+                <p> <span ng-if="records.type == 'minus'">-</span>{{records.amount}} Rs</p>
+               
+              </div>
+              <div class="w_30">
+                <button class="my_btn">
+                  <i class="fa-solid fa-receipt"></i> Receipt </button>
+                
+              </div>
+            </div>
+          </section>
+          <section id="dunkles" class="tab-panel">
+            <div class="card_1"  ng-if="records.type == 'add'" ng-repeat="records in detail.ledger ">
+              <div class="w_20">
+                <i ng-if="records.type == 'add'" class="fa-solid fa-arrow-right myy_arrow" style="margin-right:5px;"></i>
+              </div>
+             <div class="w_50 text-left">
+                <b>Rs {{ detail.cblc}}</b>
+                <p>{{records.name}}</p>
+                <p> <span ng-if="records.type == 'add'">+</span>{{records.amount}} Rs</p>
+               
+              </div>
+              <div class="w_30">
+                <button class="my_btn">
+                  <i class="fa-solid fa-receipt"></i> Receipt </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    
+    </div>
+
+
+    <!-- * Cash in out -->
+
     <!-- App Bottom Menu -->
     <div class="appBottomMenu">
-        <a click="show_page('exp_types')" class="item">
+        <a ng-click="show_page('exp_types')" class="item">
             <div class="col">
                 <ion-icon name="home-outline"></ion-icon>
             </div>
         </a>
-        <a href="app-components.html" class="item">
+        <a ng-click="show_page('cashio')" class="item">
             <div class="col">
                 <ion-icon name="cube-outline"></ion-icon>
             </div>
         </a>
-        <a href="page-chat.html" class="item">
+        <a ng-click="get_detail();show_page('ledger')" class="item">
             <div class="col">
-                <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-                <span class="badge badge-danger">5</span>
+                <ion-icon name="layers-outline"></ion-icon>
             </div>
         </a>
         <a href="app-pages.html" class="item">
@@ -407,7 +661,7 @@ if(isset($_SESSION['track'])){
     echo "<script>var shiftUserId = $shift_user_id </script>";
 }
 ?>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" integrity="sha512-u3fPA7V8qQmhBPNT5quvaXVa1mnnLSXUep5PS1qo5NRzHwG19aHmNJnj1Q8hpA/nBWZtZD4r4AX6YOt5ynLN2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
   var BASE_URL = '<?= base_url('shift/'); ?>';
 var app = angular.module('myApp', []);
@@ -430,6 +684,31 @@ app.controller('myCtrl', function($scope,$http) {
     'app_page':0,
     
   };
+  $scope.cash_form = {
+    'type': '',
+    'amount': '',
+    'reason': '',
+  };
+  $scope.send_cash= function()
+  {
+    $scope.ipages.preloader = 1;
+    var url = BASE_URL + 'cashio';
+      var data =  $scope.cash_form ; 
+      console.log(data);
+      alert(data);
+      var config = {}; // You can configure headers or other options here if needed
+      
+      $http.post(url, data, config).then(function(response) {
+        if(response.data){
+            
+                $scope.ipages.preloader = 0;
+                $scope.cash_form.type = '';
+                $scope.cash_form.reason = '';
+                $scope.cash_form.amount = 0;
+                $scope.show_page('exp_types');
+        }
+  });
+  }
   
      
     
@@ -439,6 +718,8 @@ app.controller('myCtrl', function($scope,$http) {
     'preloader':1,
     'login':0,
     'oblc':0,
+    'cashio':0,
+    'ledger':0,
     'exp_staff':0,
     'exp_types':0,
     'expense_detail':0,
@@ -522,6 +803,37 @@ app.controller('myCtrl', function($scope,$http) {
     'staff_id': 0,
     'amount': 0,
   };
+  
+  
+  // Initialize cash_form object
+    $scope.cash_form = {};
+
+    // Function to set cash type
+    $scope.setCashType = function(type) {
+        $scope.cash_form.type = type;
+    };
+    
+    // Function to send cash
+    $scope.sendCash = function() {
+        // Send AJAX request
+        $http.post(BASE_URL + 'manage_cash', $scope.cash_form)
+            .then(function(response) {
+                
+                if(response.data == 'success'){
+                    
+                    $('.cashIn_filed').val('');
+                }
+                
+            }, function(error) {
+                // Error callback
+                console.error(error); // Log error
+                // Handle error or show error message to user
+            });
+    };
+  
+  
+  
+  
    $scope.showExpense = function(st_id) {
     $scope.add_exp.exp_id = st_id;
        if(st_id == 23)
@@ -608,6 +920,7 @@ if(typeof shiftUserId !== 'undefined') {
             if(response == "success");   {
                 $scope.pages.preloader = 0;
                 $scope.pages.oblc = 0;
+                $scope.get_detail();
                 $scope.show_page('exp_types');
         }
         }, function (response) {

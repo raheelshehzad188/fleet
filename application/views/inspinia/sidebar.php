@@ -186,9 +186,10 @@
                     </ul>
                 </li>
                 
-                <li class="<?php echo activate_menu('shiftmanager');?> <?php echo activate_menu('add_shift_manager');?><?php echo activate_menu('view_shift_manager');?><?php echo activate_menu('edit_shift_manager');?><?php echo activate_menu('vehiclegroup');?><?php echo activate_menu('addvehiclegroup');?>">
+                <li class="<?php echo activate_menu('shiftmanager');?> <?php echo activate_menu('add_shift_manager');?><?php echo activate_menu('view_shift_manager');?><?php echo activate_menu('edit_shift_manager');?><?php echo activate_menu('shift_log');?><?php echo activate_menu('vehiclegroup');?><?php echo activate_menu('addvehiclegroup');?>">
                     <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Shift Manager</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
+                        <li class="<?php echo activate_menu('tyres');?><?php echo activate_menu('shift_log');?>"><a href="<?= base_url(); ?>shift/shift_log">Shift Log</a></li>
                         <?php if(userpermission('lr_shift_manager')) { ?>
                         <li class="<?php echo activate_menu('add_shift_manager');?>"><a href="<?= base_url(); ?>shiftmanager/add_shift_manager">Add Shift Manager</a></li>
                         <?php } ?>

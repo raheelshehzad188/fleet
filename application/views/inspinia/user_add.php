@@ -17,7 +17,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <form method="post" id="vehicle_add" class="card basicvalidation" action="<?php echo base_url();?>users/<?php echo (isset($userdetails))?'updateuser':'insertuser'; ?>">
+        <form method="post" id="vehicle_add" enctype="multipart/form-data" class="card basicvalidation" action="<?php echo base_url();?>users/<?php echo (isset($userdetails))?'updateuser':'insertuser'; ?>">
                 <div class="card-body">
 
 
@@ -42,6 +42,13 @@
                       <div class="form-group">
                         <input type="text" name="basic[u_username]" id="u_username" required="true" class="form-control" placeholder="User Name" value="<?php echo (isset($userdetails)) ? $userdetails[0]['u_username']:'' ?>">
                       </div>
+                    </div>
+                    
+                    <div class="col-sm-4 col-md-3">
+                    <div class="form-group">
+                      <label class="form-label">User Photo</label>
+                      <input type="file" id="file" name="file" class="form-control"/>
+                    </div>
                     </div>
                      <?php if(!isset($userdetails[0]['u_password'])) { ?>
                     <div class="col-sm-4 col-md-3">

@@ -20,8 +20,9 @@
                   <thead>
                      <tr>
                         <th class="w-1">S.No</th>
+                        <th>Photo</th>
                         <th>Name</th>
-                        <th>Mobile</th>
+                        <th>Username</th>
                         <th>Email</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -33,6 +34,9 @@
                         ?>
                      <tr>
                         <td> <?php echo output($count); $count++; ?></td>
+                          <td><?php if($userlists['file']!='') { ?>
+                           <img class="img-fluid" style="width: 58px;" src="<?= base_url(); ?>assets/uploads/<?= $userlists['file']; ?>">
+                        <?php } ?></td>
                         <td> <?php echo output($userlists['u_name']); ?></td>
                         <td> <?php echo output($userlists['u_username']); ?></td>
                         <td><?php echo output($userlists['u_email']); ?></td>

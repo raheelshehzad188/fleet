@@ -5,6 +5,7 @@ class User_model extends CI_Model{
 	public function add_user($data) { 
 		$userins = $data['basic'];
 		$userins['u_password'] = md5($data['basic']['u_password']);
+		$userins['file'] = $data['basic']['file'];
 		$this->db->insert('login',$userins);
 		$uid = $this->db->insert_id(); 
 		$role = $data['permissions'];
@@ -22,22 +23,31 @@ class User_model extends CI_Model{
 	   $query = $this->db->get();
 	   return $query->result_array();
 	} 
-	public function update_user($data) { 
-		$userup = $data['basic'];
-		if(isset($data['basic']['u_password'])) {
-			$userup['u_password'] = md5($data['basic']['u_password']);
-		} 
-		$this->db->where('u_id',$data['basic']['u_id']);
-		$this->db->update('login',$userup);
-		$role = $data['permissions'];
-		$fields = $this->db->list_fields('login_roles');
-		foreach ($fields as $field)
-		{
-			$up[$field] = isset($role[$field]) ? 1:0;
-		}
-		unset($up['lr_u_id']); unset($up['lr_id']);
+public function update_user($data) { 
+    $userup = $data['basic'];
 
-		$this->db->where('lr_u_id',$data['basic']['u_id']);
-		return $this->db->update('login_roles',$up);
-	}
+    if(isset($data['basic']['file'])) {
+        $userup['file'] = $data['basic']['file'];
+    }
+
+    if(isset($data['basic']['u_password'])) {
+        $userup['u_password'] = md5($data['basic']['u_password']);
+    } 
+
+    $this->db->where('u_id',$data['basic']['u_id']);
+    $this->db->update('login',$userup);
+
+    // Update user roles
+    $role = $data['permissions'];
+    $fields = $this->db->list_fields('login_roles');
+    foreach ($fields as $field)
+    {
+        $up[$field] = isset($role[$field]) ? 1 : 0;
+    }
+    unset($up['lr_u_id']); unset($up['lr_id']);
+
+    $this->db->where('lr_u_id',$data['basic']['u_id']);
+    return $this->db->update('login_roles',$up);
+}
+
 } 
