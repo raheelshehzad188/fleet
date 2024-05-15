@@ -79,7 +79,27 @@ $(document).ready(function() {
         e.preventDefault();
         dataTable.ajax.reload();
     });
+    $(document).on("click", '.closeShift', function(){
+      var id = $(this).attr('track');
+    alert(id);
+
+    $.ajax({
+        url: BASE_URL+'shift/closeShift/'+id,
+        type: "GET",
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(response) {
+            dataTable.ajax.reload();
+        },
+        error: function(e) {
+            console.log(e);
+        }
+    });
 });
+
+});
+
 </script>
 
 

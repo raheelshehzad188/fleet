@@ -255,7 +255,91 @@ if(isset($cot->amount) && $cot->amount)
         $r = array('cblc'=>$cblc,'ledger'=>$ledger,'ofc_exp'=>$exp,'staff_list'=>$data);
             echo json_encode($r);
     }
-	public function shift_log(){
+	public function closeShift($track){
+        $shift_log = $this->db->where('track',$track)->get('shift_log')->row();
+
+        $ledger = array();
+        $cblc = 0;
+        if($shift_log->open_blc)
+        {
+            $cblc = $shift_log->open_blc;
+            $ledger[] = array(
+                'name'=> 'Opening balence',
+                'type'=> 'add',
+                'amount'=> $shift_log->open_blc,
+            );
+        }
+        //cashin 
+        $this->db->select_sum('amount');
+$this->db->from('shift_cash');
+$this->db->where('type',1);
+$this->db->where('track',$track);
+$cin = $this->db->get()->row();
+if(isset($cin->amount) && $cin->amount)
+{
+    $cblc = $cblc + $cin->amount;
+    $ledger[] = array(
+                'name'=> 'CASH IN',
+                'type'=> 'add',
+                'amount'=> $cin->amount,
+            );
+}
+
+        //cashout
+        $this->db->select_sum('amount');
+$this->db->from('shift_cash');
+$this->db->where('type',2);
+$this->db->where('track',$track);
+$cot = $this->db->get()->row();
+
+if(isset($cot->amount) && $cot->amount)
+{
+    $cblc = $cblc - $cot->amount;
+    $ledger[] = array(
+                'name'=> 'CASH OUT',
+                'type'=> 'minus',
+                'amount'=> $cot->amount,
+            );
+}
+
+        $this->db->select('*');
+        $this->db->from('drivers');
+        $query = $this->db->get();
+        $office_exp = $query->result_array();
+        $data = [];
+        foreach($office_exp as $value){
+            $data[] = $value;
+
+        }
+        $this->db->select('*');
+        $this->db->from('ofc_exp');
+        $query = $this->db->get();
+        $office_exp = $query->result_array();
+        $data = [];
+        foreach($office_exp as $value){
+            $data[] = $value;
+            $this->db->select_sum('amount');
+$this->db->from('exp_detail');
+$this->db->where('exp_id',$value['st_id']);
+$this->db->where('track',$track);
+$cot = $this->db->get()->row();
+if(isset($cot->amount) && $cot->amount)
+{
+    $cblc = $cblc - $cot->amount;
+    $ledger[] = array(
+                'name'=> $value['type_name'],
+                'type'=> 'minus',
+                'amount'=> $cot->amount,
+            );
+}
+
+        }
+        $exp = $data;
+        //$cblc
+        $up = array('close_blc'=>$cblc,'logout_time'=>date('Y-m-d H:i:s'));
+        $this->db->where('track',$track)->update('shift_log',$up);
+    }
+    public function shift_log(){
         // $data['tyreCompany'] = $this->tyre_model->getTyreCompany();
         $data = array();
         $this->template->template_render('shift_management',$data);
@@ -293,7 +377,7 @@ if(isset($cot->amount) && $cot->amount)
         foreach($query as $r) {
             $action = '';
             if(empty($r->logout_time)){
-                $action = '<button class="btn btn-primary" onclick="closeShift('.$r->id.')">Logout</button>';
+                $action = '<button class="btn btn-primary closeShift" track="'.$r->track.'">Logout</button>';
             }
             $data[] = array(
                 $sr++,
