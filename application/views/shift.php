@@ -529,6 +529,7 @@ b{
         <!--        </li>-->
         <!--    </ul>-->
         <!--</div>-->
+
         <div class="container-fluid">
       <div class="tabset">
         <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
@@ -540,7 +541,10 @@ b{
         <label for="tab3">
           <i class="fa-solid fa-arrow-right myy_arrow" style="margin-right:5px;"></i>Received </label>
         <div class="tab-panels">
+
           <section id="marzen" class="tab-panel">
+            <h1>{{ detail.cblc}}</h1>
+            
               
               
               
@@ -552,15 +556,10 @@ b{
                   
                 
               </div>
-              <div class="w_50 text-left">
-                <b>Rs {{ detail.cblc}}</b>
+              <div class="w_100 text-left">
+                <b>Rs {{records.amount}}</b>
                 <p>{{records.name}}</p>
-                <p><span ng-if="records.type == 'minus'">-</span><span ng-if="records.type == 'add'">+</span> {{records.amount}} Rs</p>
-               
-              </div>
-              <div class="w_30">
-                <button class="my_btn">
-                  <i class="fa-solid fa-receipt"></i> Receipt </button>
+                <p><span ng-if="records.type == 'minus'">-</span><span ng-if="records.type == 'add'">+</span> {</p>
                
               </div>
             </div>
@@ -570,15 +569,16 @@ b{
             
           </section>
           <section id="rauchbier" class="tab-panel">
+            <h1>{{ detail.cblc}}</h1>
             <div class="card_1" ng-if="records.type == 'minus'" ng-repeat="records in detail.ledger ">
               <div class="w_20">
                   <i ng-if="records.type == 'minus'" class="fa-solid fa-arrow-right myy_arrow1" style="margin-right:5px;"></i>
                
               </div>
         <div class="w_50 text-left">
-                <b>Rs {{ detail.cblc}}</b>
+                <b>Rs {{records.amount}}</b>
                 <p>{{records.name}}</p>
-                <p> <span ng-if="records.type == 'minus'">-</span>{{records.amount}} Rs</p>
+                <p> <span ng-if="records.type == 'minus'">-</span></p>
                
               </div>
               <div class="w_30">
@@ -589,19 +589,16 @@ b{
             </div>
           </section>
           <section id="dunkles" class="tab-panel">
+            <h1>{{ detail.cblc}}</h1>
             <div class="card_1"  ng-if="records.type == 'add'" ng-repeat="records in detail.ledger ">
               <div class="w_20">
                 <i ng-if="records.type == 'add'" class="fa-solid fa-arrow-right myy_arrow" style="margin-right:5px;"></i>
               </div>
-             <div class="w_50 text-left">
-                <b>Rs {{ detail.cblc}}</b>
+             <div class="w_100 text-left">
+                <b>Rs {{records.amount}}</b>
                 <p>{{records.name}}</p>
-                <p> <span ng-if="records.type == 'add'">+</span>{{records.amount}} Rs</p>
+                <p> <span ng-if="records.type == 'add'">+</span></p>
                
-              </div>
-              <div class="w_30">
-                <button class="my_btn">
-                  <i class="fa-solid fa-receipt"></i> Receipt </button>
               </div>
             </div>
           </section>

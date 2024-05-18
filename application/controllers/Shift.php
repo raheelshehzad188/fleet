@@ -195,10 +195,16 @@ $cin = $this->db->get()->row();
 if(isset($cin->amount) && $cin->amount)
 {
     $cblc = $cblc + $cin->amount;
+}
+$this->db->from('shift_cash');
+$this->db->where('type',1);
+$this->db->where('track',$track);
+$all = $this->db->get()->result();
+foreach ($all as $key => $value) {
     $ledger[] = array(
-                'name'=> 'CASH IN',
+                'name'=> $value->reason,
                 'type'=> 'add',
-                'amount'=> $cin->amount,
+                'amount'=> $value->amount,
             );
 }
 
@@ -212,10 +218,16 @@ $cot = $this->db->get()->row();
 if(isset($cot->amount) && $cot->amount)
 {
     $cblc = $cblc - $cot->amount;
+}
+$this->db->from('shift_cash');
+$this->db->where('type',2);
+$this->db->where('track',$track);
+$all = $this->db->get()->result();
+foreach ($all as $key => $value) {
     $ledger[] = array(
-                'name'=> 'CASH OUT',
-                'type'=> 'minus',
-                'amount'=> $cot->amount,
+                'name'=> $value->reason,
+                'type'=> 'add',
+                'amount'=> $value->amount,
             );
 }
 
