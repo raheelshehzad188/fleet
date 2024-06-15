@@ -1,8 +1,18 @@
+<?php
+    
+    $default_start_date = date('Y-m-d', strtotime('-10 days'));
+    
+    $default_end_date = date('Y-m-d');
+
+   
+    $start_date = isset($tripdetails) ? date('Y-m-d', strtotime($tripdetails['detail']['t_start_date'])) : $default_start_date;
+    $end_date = isset($tripdetails) ? date('Y-m-d', strtotime($tripdetails['detail']['t_end_date'])) : $default_end_date;
+?>
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Bookings
+            <h1 class="m-0 text-dark">Vouchers
             </h1>
           </div><!-- /.col -->
           <!-- /.col -->
@@ -62,18 +72,18 @@
                   </div>
                </div>
                
-               <div class="col-sm-6 col-md-3">
-                  <div class="form-group">
-                     <label class="form-label">Trip Start Date<span class="form-required">*</span></label>
-                     <input type="text" id="t_start_date" value="<?php echo date('Y-m-d'); ?> 00:00:00" name="t_start_date" class="form-control datetimepicker1" placeholder="Trip Start Date" autocomplete="off">
-                  </div>
-               </div>
-               <div class="col-sm-6 col-md-3">
-                  <div class="form-group">
-                     <label class="form-label">Trip End Date<span class="form-required">*</span></label>
-                     <input type="text"id="t_end_date" value="<?php echo date('Y-m-d'); ?> 23:59:00"  name="t_end_date" class="form-control datetimepicker1" placeholder="Trip End Date" autocomplete="off">
-                  </div>
-               </div>
+             <div class="col-sm-6 col-md-3">
+    <div class="form-group">
+        <label class="form-label">Trip Start Date<span class="form-required">*</span></label>
+        <input type="date" value="<?php echo $start_date; ?>" name="t_start_date" id="t_start_date" onchange="cal_days()" class="form-control" placeholder="Trip Start Date">
+    </div>
+</div>
+<div class="col-sm-6 col-md-3">
+    <div class="form-group">
+        <label class="form-label">Trip End Date<span class="form-required">*</span></label>
+        <input type="date" value="<?php echo $end_date; ?>" name="t_end_date" id="t_end_date" class="form-control" placeholder="Trip End Date">
+    </div>
+</div>
                  <div class="col-sm-6 card-footer">
                <button type="submit" class="btn btn-primary" id="submit">Submit</button>
             </div>
@@ -88,7 +98,7 @@
 
          <div class="table-responsive">
             <div class="ibox-content">
-             <table id="item-list" class="table table-bordered table-striped table-hover">
+             <table id="item-list" class="table table-bordered table-striped table-hover w-100">
         		<thead>
         			<tr>
         				<th>Sr/No.</th>

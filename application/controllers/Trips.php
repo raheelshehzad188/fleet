@@ -118,7 +118,9 @@ class Trips extends CI_Controller {
     
     redirect('settings/type_staff');
 }
-
+        
+   
+    
 	public function del_staff_type($id)
 	{
 		$response = $this->db->where('st_id',$id)->delete('type_staff');
@@ -255,6 +257,8 @@ class Trips extends CI_Controller {
 		$data['exp_types'] = $this->db->where('is_default','1')->get('exp_types')->result_array();
 		$data['pumps'] = $this->db->get('pumps')->result_array();
 		$data['routes'] = $this->db->get('routes')->result_array();
+		$data['vendors'] = $this->db->get('vendors')->result_array();
+		$data['material_type'] = $this->db->get('material_type')->result_array();
 		$data['vechiclelist'] = $this->trips_model->getall_vechicle();
 		$data['driverlist'] = $this->trips_model->getall_driverlist();
 		$data['helperlist'] = $this->trips_model->getHelpers();
@@ -263,12 +267,12 @@ class Trips extends CI_Controller {
 	}
 	public function inserttrips() 
 	{   
-	
+	    
 	    
 		$testxss = $_POST;
 		if($testxss){
 		    $route = $_POST['route'];
-		    
+		    $data['vendors'];    
             if ($route == '') {
                 $this->session->set_flashdata('warningmessage', 'Route cannot be empty');
                 redirect('trips/addtrips'); // Redirect back to the previous page
@@ -290,6 +294,9 @@ class Trips extends CI_Controller {
 					        $in = array(
 					            'route_from' => $route['route_from'][$i],
 					            'route_to' => $route['route_to'][$i],
+					            'material_type' => $route['material_type'][$i],
+					            'vendors' => $route['vendors'][$i],
+					            'is_paid' => isset($route['is_paid'][$i])?$route['is_paid'][$i]:0,
 					            'weight' => $route['weight'][$i],
 					            'unit_price' => $route['unit_price'][$i],
 					            'total' => $route['wages'][$i],
@@ -391,6 +398,8 @@ class Trips extends CI_Controller {
 		$data['vechiclelist'] = $this->trips_model->getall_vechicle();
 		$data['driverlist'] = $this->trips_model->getall_driverlist();
 		$data['routes'] = $this->db->get('routes')->result_array();
+		$data['material_type'] = $this->db->get('material_type')->result_array();
+		$data['vendors'] = $this->db->get('vendors')->result_array();
 		$data['helperlist'] = $this->trips_model->getHelpers();
         $data['pumps'] = $this->db->get('pumps')->result_array();
 		$data['exp_types'] = $this->db->where('is_default','1')->get('exp_types')->result_array();
@@ -418,6 +427,9 @@ class Trips extends CI_Controller {
 			        $in = array(
 			            'route_from' => isset($route['route_from'][$i])?$route['route_from'][$i]:'',
 			            'route_to' => (isset($route['route_to'][$i])?$route['route_to'][$i]:''),
+			            'material_type' => $route['material_type'][$i],
+			            'vendors' => $route['vendors'][$i],
+					    'is_paid' => isset($route['is_paid'][$i])?$route['is_paid'][$i]:0,
 			            'weight' => (isset($route['weight'][$i])?$route['weight'][$i]:0),
 			            'unit_price' => (isset($route['unit_price'][$i])?$route['unit_price'][$i]:0),
 			            'total' => isset($route['wages'][$i])?$route['wages'][$i]:0,

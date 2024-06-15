@@ -1,3 +1,8 @@
+<style>
+    .footer{
+        display:none;
+    }
+</style>
 <div class="content-header">
    <div class="container-fluid">
       <div class="row mb-2">

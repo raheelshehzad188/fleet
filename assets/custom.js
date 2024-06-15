@@ -636,3 +636,9 @@ $(document).ready(function() {
         }
     });
 // shaheer code 
+
+
+
+    $(document).ready(function() {
+        $('.chosen-select-input').select2();
+    });

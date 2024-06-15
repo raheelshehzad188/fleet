@@ -226,11 +226,11 @@ if(true){
     <div class="clearfix">
         <div class="expense_box_input">
           <label>From</label>
-          <span><?= $routes[$v['route_from']]; ?></span>
+          <span><?= $v['route_from']; ?></span>
         </div>
         <div class="expense_box_input">
           <label>To</label>
-          <span><?= $routes[$v['route_to']] ?></span>
+          <span><?= $v['route_to'] ?></span>
         </div>
         <div class="expense_box_input">
           <label>Weight</label>

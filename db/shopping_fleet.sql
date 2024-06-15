@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 11, 2024 at 02:26 PM
--- Server version: 10.3.39-MariaDB-cll-lve
--- PHP Version: 8.1.27
+-- Generation Time: Jun 15, 2024 at 05:28 AM
+-- Server version: 10.6.18-MariaDB-cll-lve
+-- PHP Version: 8.1.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,7 +40,34 @@ CREATE TABLE `backup` (
 INSERT INTO `backup` (`id`, `backup`, `created_at`) VALUES
 (1, 'backup-on-2024-04-16-23-47-28.zip', '2024-04-16 18:47:28'),
 (2, 'backup-on-2024-04-18-00-00-19.zip', '2024-04-17 19:00:19'),
-(3, 'backup-on-2024-04-24-05-10-41.zip', '2024-04-24 00:10:41');
+(3, 'backup-on-2024-04-24-05-10-41.zip', '2024-04-24 00:10:41'),
+(4, 'backup-on-2024-05-14-02-56-56.zip', '2024-05-13 21:56:56'),
+(5, 'backup-on-2024-05-26-21-06-48.zip', '2024-05-26 12:06:48'),
+(6, 'backup-on-2024-05-28-11-52-24.zip', '2024-05-28 02:52:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cashflow`
+--
+
+CREATE TABLE `cashflow` (
+  `id` int(11) NOT NULL,
+  `vc_name` varchar(250) DEFAULT NULL,
+  `price` varchar(255) DEFAULT NULL,
+  `details` text DEFAULT NULL,
+  `cash_in_out` varchar(250) DEFAULT NULL,
+  `vc_type` varchar(250) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cashflow`
+--
+
+INSERT INTO `cashflow` (`id`, `vc_name`, `price`, `details`, `cash_in_out`, `vc_type`, `created_at`) VALUES
+(7, '1', '500', 'bvcvb', '0', 'customer', '2024-06-10 16:36:49'),
+(8, '3', '2300', 'testing', '1', 'customer', '2024-06-11 13:43:02');
 
 -- --------------------------------------------------------
 
@@ -63,6 +90,27 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `name`, `created_by`, `created_date`, `status`) VALUES
 (1, 'suppIier', '1', '2024-03-25 06:35:55.000000', 0),
 (2, 'test7', '1', '2024-03-25 06:33:56.000000', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `classification`
+--
+
+CREATE TABLE `classification` (
+  `id` int(11) NOT NULL,
+  `class` varchar(255) DEFAULT NULL,
+  `from_amount` varchar(255) DEFAULT NULL,
+  `to_amount` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `classification`
+--
+
+INSERT INTO `classification` (`id`, `class`, `from_amount`, `to_amount`, `created_at`) VALUES
+(1, 'A', '800', '2000', '2024-05-14 17:37:47');
 
 -- --------------------------------------------------------
 
@@ -94,7 +142,10 @@ INSERT INTO `crud_detail` (`id`, `key`, `tbl`, `single`, `pul`, `hide_side`, `cr
 (8, 'id', 'tyre_companies', 'Vehicle Tyre Companies', 'Vehicle Tyre Companies', 0, '2024-04-17 20:41:14'),
 (9, 'id', 'vih_types', 'Vehicle Type', 'Vehicle Types', 0, '2024-04-06 04:36:58'),
 (10, 'id', 'tyres_name', 'Tyre Position', 'Tyres Positions', 0, '2024-04-06 04:36:58'),
-(11, 'id', 'maintenance', 'Maintenance', 'Maintenance', 0, '2024-04-06 04:36:58');
+(11, 'id', 'maintenance', 'Maintenance', 'Maintenance', 0, '2024-04-06 04:36:58'),
+(12, 'id', 'classification', 'Classification', 'classification', 0, '2024-04-06 04:36:58'),
+(13, 'id', 'pumps', 'Pump', 'Pumps', 0, '2024-04-06 04:36:58'),
+(14, 'mt_id', 'material_type', 'Material Type', 'Material Types', 0, '2024-04-06 04:36:58');
 
 -- --------------------------------------------------------
 
@@ -112,7 +163,7 @@ CREATE TABLE `customers` (
   `c_pwd` varchar(100) DEFAULT NULL,
   `c_isactive` varchar(11) NOT NULL DEFAULT '1',
   `c_modified_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Dumping data for table `customers`
@@ -123,7 +174,8 @@ INSERT INTO `customers` (`c_id`, `c_name`, `c_mobile`, `c_email`, `c_address`, `
 (2, 'ٹیسٹ', '012345678', 'nk7162390@gmail.com', 'خوشاب', '2024-03-24 09:50:03', NULL, '1', '2024-03-24 09:59:21'),
 (3, 'Nimra Younas', '012345678', 'nk716267390@gmail.com', 'Khushab, Punjab, Pakistan\r\nabc', '2024-03-24 10:09:32', NULL, '1', '2024-03-24 10:09:39'),
 (4, 'abdullah', '03017102424', 'abdullahasim78920@gmail.com', 'Mohalla Sardar Bahadur Khan Khushab\r\nMohalla Sardar Bahadur Khan Khushab', '2024-03-31 06:40:41', NULL, '1', '2024-03-31 18:40:55'),
-(5, 'Test customer ', '03017102424', 'b6949135@gmail.com', 'Mohalla Sardar Bahadur Khan Khushab\r\nMohalla Sardar Bahadur Khan Khushab', '2024-04-08 12:14:05', NULL, '1', '2024-04-08 07:15:03');
+(5, 'Test customer ', '03017102424', 'b6949135@gmail.com', 'Mohalla Sardar Bahadur Khan Khushab\r\nMohalla Sardar Bahadur Khan Khushab', '2024-04-08 12:14:05', NULL, '1', '2024-04-08 07:15:03'),
+(7, 'TARIQ GLASS', '03004210607', 'RAHEEL@test.com', 'EDDADDA', '2024-05-28 11:31:59', NULL, '1', '2024-05-28 06:32:40');
 
 -- --------------------------------------------------------
 
@@ -154,6 +206,7 @@ CREATE TABLE `drivers` (
   `blood_grp` varchar(255) DEFAULT NULL,
   `designation` varchar(255) DEFAULT NULL,
   `cast` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
   `cnic_no` varchar(255) DEFAULT NULL,
   `family_detail` varchar(255) DEFAULT NULL,
   `e_c_no` varchar(255) DEFAULT NULL,
@@ -170,51 +223,52 @@ CREATE TABLE `drivers` (
 -- Dumping data for table `drivers`
 --
 
-INSERT INTO `drivers` (`d_id`, `d_name`, `d_mobile`, `d_address`, `r_address`, `d_licenseno`, `d_license_expdate`, `d_total_exp`, `d_doj`, `d_ref`, `d_is_active`, `d_file`, `d_file1`, `d_created_by`, `d_created_date`, `d_modified_date`, `st_cat_id`, `dob`, `education`, `blood_grp`, `designation`, `cast`, `cnic_no`, `family_detail`, `e_c_no`, `alt_e_c_no`, `con_expiry`, `ref_position`, `ref_company`, `ref_phone`, `op_blc`, `d_salary`) VALUES
-(1, 'RAFI ULLAH', '03034027193', 'POST OFFICE BAJAR DISTRICT KHUSHAB', 'POST OFFICE BAJAR DISTRICT KHUSHAB', 'KB-18-1920', '1970-01-01', '', '2021-01-01', 'EMPTY ', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM5.jpeg', NULL, '2', '2024-04-04 07:10:33', '2024-04-04 18:38:07', 2, '1991-08-20', 'MATRIC', 'A+', 'BAJAR', 'TIWANA', '3820137898093', '2', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', 'EMPTY', 'SANGHA BROTHERS LOGISTICS ', 'EMPTY', '', '0'),
-(2, 'SHAHZAD AKHTAR', '03023306454', 'SAKHI HAYAT ALMEER ,MITHA TIWANA DISTRICT KHUSHAB', 'SAKHI HAYAT ALMEER ,MITHA TIWANA DISTRICT KHUSHAB', 'KB-18-953', '1970-01-01', '', '2024-04-04', 'EMPTY', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM4.jpeg', NULL, '2', '2024-04-04 07:10:15', '2024-04-04 18:49:07', 1, '1992-08-05', 'MATRIC', 'B+', 'MITHA TIWANA', 'KHAN', '3820180969739', '2', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', 'EMPTY', 'EMPTY', 'EMPTY', '', '0'),
-(3, 'M NADEEM AZAM', '777777777', 'MOHALLAH MITHA TIWANA STATION DISTRICT KHUSHAB', 'MOHALLAH MITHA TIWANA STATION DISTRICT KHUSHAB', 'KB-21-2683', '2026-07-09', '', '2024-04-04', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM3.jpeg', NULL, '2', '2024-04-04 07:09:58', '2024-04-04 18:59:38', 1, '1997-01-02', 'MIDDLE', 'B+', 'MITHA TIWANA', 'KHAN', '3820172584793', '2', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(4, 'SHER AFZAL', '777777777777', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM2.jpeg', NULL, '2', '2024-04-04 07:09:39', '2024-04-04 19:02:29', 1, '1990-01-01', 'PRIMARY', 'B+', 'MIANWALI', 'KHAN', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(5, 'MUMTAZ', '77777777777', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM1.jpeg', NULL, '2', '2024-04-04 07:09:11', '2024-04-04 19:05:16', 1, '2020-01-01', 'MATRIC', 'A+', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(6, 'KHALID', '888888888', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM.jpeg', NULL, '2', '2024-04-04 07:07:34', '2024-04-04 19:09:00', 1, '1990-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(7, 'MUHAMMAD IQBAL', '03012135786', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM6.jpeg', NULL, '2', '2024-04-04 07:10:51', '2024-04-04 19:12:35', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(8, 'WARIS', '03005996497', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM7.jpeg', NULL, '2', '2024-04-04 07:12:50', '2024-04-04 19:17:10', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(9, 'M RIZWAN', '03009825176', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM8.jpeg', NULL, '2', '2024-04-04 07:20:18', '2024-04-04 19:21:56', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(10, 'AKBAR', '03006054663', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM9.jpeg', NULL, '2', '2024-04-04 07:22:04', '2024-04-04 19:23:29', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(11, 'IQBAL', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM10.jpeg', NULL, '2', '2024-04-04 07:24:11', '2024-04-04 19:25:28', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '2024-07-05 00:24:00.000000', '', '', '', '', '0'),
-(12, 'SHAHID ABBAS', '03016701413', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM11.jpeg', NULL, '2', '2024-04-04 07:26:49', '2024-04-04 19:29:49', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(13, 'ABDULLAH', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM12.jpeg', NULL, '2', '2024-04-04 07:29:59', '2024-04-04 19:31:16', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(14, 'IMRAN ABBAS', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM13.jpeg', NULL, '2', '2024-04-04 07:32:58', '2024-04-04 19:35:42', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(15, 'GHULAM ABBAS', '03044411870', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM14.jpeg', NULL, '2', '2024-04-04 07:35:51', '2024-04-04 19:37:20', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(16, 'HAMAD', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM15.jpeg', NULL, '2', '2024-04-04 07:38:24', '2024-04-04 19:40:29', 1, '2020-01-12', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(17, 'MUHAMMAD SULEMAM', '03003091496', 'MOHALLAH TRAIR WALA POST OFFICE GUNJIYALTEHSIL QAIDABAD DISTRICT KHUSHAB', 'MOHALLAH TRAIR WALA POST OFFICE GUNJIYALTEHSIL QAIDABAD DISTRICT KHUSHAB', 'EMPTY', '1970-01-01', '', '1970-01-01', 'SHAHZAD', 1, 'WhatsApp_Image_2024-04-05_at_2_16_29_PM.jpeg', NULL, '2', '2024-04-05 09:07:44', '2024-04-04 19:44:09', 1, '1999-09-19', 'MATRIC', 'O+', 'DRIVER', 'TRAIR', '3820173956217', 'FOUR', '03016859214', 'EMPTY', '2024-05-05 14:10:00.000000', 'DRIVER', 'SANGHA BROTHER LOGISTICS', '03023306454', '', '0'),
-(18, 'NASEER', '03045385483', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM17.jpeg', NULL, '2', '2024-04-04 07:44:15', '2024-04-04 19:46:16', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(19, 'MUHAMMAD ALI', '03243255565', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM18.jpeg', NULL, '2', '2024-04-04 07:46:48', '2024-04-04 19:48:33', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(20, 'SATTAR', '03036651015', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM19.jpeg', NULL, '2', '2024-04-04 07:48:39', '2024-04-04 19:50:04', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(21, 'TARIQ', '0000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM20.jpeg', NULL, '2', '2024-04-04 07:50:09', '2024-04-04 19:51:39', 1, '1990-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(22, 'SHAHJAHAN', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM21.jpeg', NULL, '2', '2024-04-04 07:51:45', '2024-04-04 19:52:41', 1, '1990-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(23, 'MOHSIN', '0000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM22.jpeg', NULL, '2', '2024-04-04 07:52:45', '2024-04-04 19:53:41', 1, '0001-01-10', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(24, 'GHAFFAR', '03458008337', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM23.jpeg', NULL, '2', '2024-04-04 07:53:47', '2024-04-04 19:55:14', 1, '1990-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '25000'),
-(25, 'HAMEED GUL', '03017145594', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM24.jpeg', NULL, '2', '2024-04-04 07:55:21', '2024-04-04 19:57:15', 1, '1991-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(26, 'SAJJAD ULLAH', '03059327364', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM25.jpeg', NULL, '2', '2024-04-04 07:57:27', '2024-04-04 19:58:55', 1, '1991-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(27, 'MUHAMMAD RAFIQ', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM26.jpeg', NULL, '2', '2024-04-04 07:59:13', '2024-04-04 20:00:47', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(28, 'IMRAN', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '2024-03-05', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM27.jpeg', NULL, '2', '2024-04-04 08:00:52', '2024-04-04 20:02:11', 1, '0001-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(29, 'MUHAMMAD AKRAM', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM28.jpeg', NULL, '2', '2024-04-04 08:02:20', '2024-04-04 20:06:58', 1, '2021-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(30, 'WAQAR SHAH', '03063959365', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM29.jpeg', NULL, '2', '2024-04-04 08:07:29', '2024-04-04 20:09:45', 1, '1001-01-10', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(31, 'SAMI ULLAH', '03073783986', 'CHIDROKHEL TEHSIL DISTRICT MIANWALI', 'EMPTYCHIDROKHEL TEHSIL DISTRICT MIANWALI', 'EMPTY', '1970-01-01', '', '1970-01-01', 'IQBAL', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM35.jpeg', NULL, '2', '2024-04-04 08:57:06', '2024-04-04 20:40:27', 1, '1991-01-01', 'PRIMARY', 'AB+', 'DRIVER', 'NIAZI KHAN', '3830231301151', '11', '03057387674', 'EMPTY', '0000-00-00 00:00:00.000000', 'IST DRIVER', 'SANGHA LOGISTICS', '03012135786', '', '0'),
-(32, 'MUHAMMAD KAMRAN', '03098940129', 'WADHLANWALA HADALI DISTRICT KHUSHAB', 'WADHLANWALA HADALI DISTRICT KHUSHAB', 'KB-20-1716', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_1_46_43_AM.jpeg', NULL, '2', '2024-04-04 08:40:54', '2024-04-04 20:48:12', 1, '1990-08-03', 'PRIMARY', 'B+', 'DRIVER', 'KALERA', '3820144682747', '6', '03015641781', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(33, 'ASIM', '00000000000', 'EMPTY', 'EMPTY', '', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM31.jpeg', NULL, '2', '2024-04-04 08:49:07', '2024-04-04 20:50:23', 2, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(34, 'MUHAMMAD ADNAN', '00000000000', 'EMPTY', 'EMPTY', '', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM32.jpeg', NULL, '2', '2024-04-04 08:51:02', '2024-04-04 20:52:26', 2, '1999-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(35, 'RAHEEL', '000000000', 'EMPTY', 'EMPTY', '', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM33.jpeg', NULL, '2', '2024-04-04 08:53:17', '2024-04-04 20:54:52', 2, '1990-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(36, 'ADNAN BUDHAIL', '000000000', 'EMPTY', 'EMPTY', '', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM34.jpeg', NULL, '2', '2024-04-04 08:55:40', '2024-04-04 20:56:57', 2, '2000-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '2024-05-05 01:56:00.000000', '', '', '', '', '0'),
-(37, 'RIZWAN', '00000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM36.jpeg', NULL, '2', '2024-04-04 09:06:51', '2024-04-04 21:08:10', 1, '1980-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(38, 'SHAHJAHAN 165', '03044823165', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM37.jpeg', NULL, '2', '2024-04-04 09:08:42', '2024-04-04 21:10:36', 1, '2000-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(39, 'FIDA HUSSAIN', '03096855514', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM38.jpeg', NULL, '2', '2024-04-04 09:10:45', '2024-04-04 21:12:08', 1, '2021-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(40, 'OMER HAYAT', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM39.jpeg', NULL, '2', '2024-04-07 09:57:33', '2024-04-07 09:57:24', 1, '1999-01-10', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '2024-09-07 14:57:00.000000', '', '', '', '', '0'),
-(41, 'SADIQ KHAN', '0000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM40.jpeg', NULL, '2', '2024-04-07 10:26:56', '2024-04-07 10:24:53', 1, '1999-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(42, 'TANVEER', '00000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM41.jpeg', NULL, '2', '2024-04-07 10:25:00', '2024-04-07 10:26:48', 1, '1999-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
-(43, 'HARIS ALI', '00000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM42.jpeg', NULL, '2', '2024-04-07 10:27:15', '2024-04-07 10:28:10', 1, '1999-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '2024-05-07 15:27:00.000000', '', '', '', '', '0'),
-(44, 'ANWAR', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '50000', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM43.jpeg', NULL, '1', '2024-04-10 02:18:33', '2024-04-07 10:56:07', 1, '1999-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0');
+INSERT INTO `drivers` (`d_id`, `d_name`, `d_mobile`, `d_address`, `r_address`, `d_licenseno`, `d_license_expdate`, `d_total_exp`, `d_doj`, `d_ref`, `d_is_active`, `d_file`, `d_file1`, `d_created_by`, `d_created_date`, `d_modified_date`, `st_cat_id`, `dob`, `education`, `blood_grp`, `designation`, `cast`, `city`, `cnic_no`, `family_detail`, `e_c_no`, `alt_e_c_no`, `con_expiry`, `ref_position`, `ref_company`, `ref_phone`, `op_blc`, `d_salary`) VALUES
+(1, 'RAFI ULLAH', '03034027193', 'POST OFFICE BAJAR DISTRICT KHUSHAB', 'POST OFFICE BAJAR DISTRICT KHUSHAB', 'KB-18-1920', '1970-01-01', '', '2021-01-01', 'EMPTY ', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM5.jpeg', NULL, '2', '2024-04-04 07:10:33', '2024-04-04 18:38:07', 2, '1991-08-20', 'MATRIC', 'A+', 'BAJAR', 'TIWANA', NULL, '3820137898093', '2', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', 'EMPTY', 'SANGHA BROTHERS LOGISTICS ', 'EMPTY', '', '0'),
+(2, 'SHAHZAD AKHTAR', '03023306454', 'SAKHI HAYAT ALMEER ,MITHA TIWANA DISTRICT KHUSHAB', 'SAKHI HAYAT ALMEER ,MITHA TIWANA DISTRICT KHUSHAB', 'KB-18-953', '1970-01-01', '', '2024-04-04', 'EMPTY', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM4.jpeg', NULL, '2', '2024-04-04 07:10:15', '2024-04-04 18:49:07', 1, '1992-08-05', 'MATRIC', 'B+', 'MITHA TIWANA', 'KHAN', NULL, '3820180969739', '2', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', 'EMPTY', 'EMPTY', 'EMPTY', '', '0'),
+(3, 'M NADEEM AZAM', '777777777', 'MOHALLAH MITHA TIWANA STATION DISTRICT KHUSHAB', 'MOHALLAH MITHA TIWANA STATION DISTRICT KHUSHAB', 'KB-21-2683', '2026-07-09', '', '2024-04-04', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM3.jpeg', NULL, '2', '2024-04-04 07:09:58', '2024-04-04 18:59:38', 1, '1997-01-02', 'MIDDLE', 'B+', 'MITHA TIWANA', 'KHAN', NULL, '3820172584793', '2', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(4, 'SHER AFZAL', '777777777777', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM2.jpeg', NULL, '2', '2024-04-04 07:09:39', '2024-04-04 19:02:29', 1, '1990-01-01', 'PRIMARY', 'B+', 'MIANWALI', 'KHAN', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(5, 'MUMTAZ', '77777777777', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM1.jpeg', NULL, '2', '2024-04-04 07:09:11', '2024-04-04 19:05:16', 1, '2020-01-01', 'MATRIC', 'A+', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(6, 'KHALID', '888888888', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM.jpeg', NULL, '2', '2024-04-04 07:07:34', '2024-04-04 19:09:00', 1, '1990-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(7, 'MUHAMMAD IQBAL', '03012135786', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM6.jpeg', NULL, '2', '2024-04-04 07:10:51', '2024-04-04 19:12:35', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(8, 'WARIS', '03005996497', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM7.jpeg', NULL, '2', '2024-04-04 07:12:50', '2024-04-04 19:17:10', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(9, 'M RIZWAN', '03009825176', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM8.jpeg', NULL, '2', '2024-04-04 07:20:18', '2024-04-04 19:21:56', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(10, 'AKBAR', '03006054663', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM9.jpeg', NULL, '2', '2024-04-04 07:22:04', '2024-04-04 19:23:29', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(11, 'IQBAL', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM10.jpeg', NULL, '2', '2024-04-04 07:24:11', '2024-04-04 19:25:28', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '2024-07-05 00:24:00.000000', '', '', '', '', '0'),
+(12, 'SHAHID ABBAS', '03016701413', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM11.jpeg', NULL, '2', '2024-04-04 07:26:49', '2024-04-04 19:29:49', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(13, 'ABDULLAH', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM12.jpeg', NULL, '2', '2024-04-04 07:29:59', '2024-04-04 19:31:16', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(14, 'IMRAN ABBAS', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM13.jpeg', NULL, '2', '2024-04-04 07:32:58', '2024-04-04 19:35:42', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(15, 'GHULAM ABBAS', '03044411870', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM14.jpeg', NULL, '2', '2024-04-04 07:35:51', '2024-04-04 19:37:20', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(16, 'HAMAD', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM15.jpeg', NULL, '2', '2024-04-04 07:38:24', '2024-04-04 19:40:29', 1, '2020-01-12', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(17, 'MUHAMMAD SULEMAM', '03003091496', 'MOHALLAH TRAIR WALA POST OFFICE GUNJIYALTEHSIL QAIDABAD DISTRICT KHUSHAB', 'MOHALLAH TRAIR WALA POST OFFICE GUNJIYALTEHSIL QAIDABAD DISTRICT KHUSHAB', 'EMPTY', '1970-01-01', '', '1970-01-01', 'SHAHZAD', 1, 'WhatsApp_Image_2024-04-05_at_2_16_29_PM.jpeg', NULL, '2', '2024-04-05 09:07:44', '2024-04-04 19:44:09', 1, '1999-09-19', 'MATRIC', 'O+', 'DRIVER', 'TRAIR', NULL, '3820173956217', 'FOUR', '03016859214', 'EMPTY', '2024-05-05 14:10:00.000000', 'DRIVER', 'SANGHA BROTHER LOGISTICS', '03023306454', '', '0'),
+(18, 'NASEER', '03045385483', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM17.jpeg', NULL, '2', '2024-04-04 07:44:15', '2024-04-04 19:46:16', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(19, 'MUHAMMAD ALI', '03243255565', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM18.jpeg', NULL, '2', '2024-04-04 07:46:48', '2024-04-04 19:48:33', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(20, 'SATTAR', '03036651015', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM19.jpeg', NULL, '2', '2024-04-04 07:48:39', '2024-04-04 19:50:04', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(21, 'TARIQ', '0000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM20.jpeg', NULL, '2', '2024-04-04 07:50:09', '2024-04-04 19:51:39', 1, '1990-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(22, 'SHAHJAHAN', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM21.jpeg', NULL, '2', '2024-04-04 07:51:45', '2024-04-04 19:52:41', 1, '1990-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(23, 'MOHSIN', '0000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM22.jpeg', NULL, '2', '2024-04-04 07:52:45', '2024-04-04 19:53:41', 1, '0001-01-10', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(24, 'GHAFFAR', '03458008337', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM23.jpeg', NULL, '2', '2024-04-04 07:53:47', '2024-04-04 19:55:14', 1, '1990-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '25000'),
+(25, 'HAMEED GUL', '03017145594', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM24.jpeg', NULL, '2', '2024-04-04 07:55:21', '2024-04-04 19:57:15', 1, '1991-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(26, 'SAJJAD ULLAH', '03059327364', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM25.jpeg', NULL, '2', '2024-04-04 07:57:27', '2024-04-04 19:58:55', 1, '1991-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(27, 'MUHAMMAD RAFIQ', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM26.jpeg', NULL, '2', '2024-04-04 07:59:13', '2024-04-04 20:00:47', 1, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(28, 'IMRAN', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '2024-03-05', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM27.jpeg', NULL, '2', '2024-04-04 08:00:52', '2024-04-04 20:02:11', 1, '0001-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(29, 'MUHAMMAD AKRAM', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM28.jpeg', NULL, '2', '2024-04-04 08:02:20', '2024-04-04 20:06:58', 1, '2021-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(30, 'WAQAR SHAH', '03063959365', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM29.jpeg', NULL, '2', '2024-04-04 08:07:29', '2024-04-04 20:09:45', 1, '1001-01-10', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(31, 'SAMI ULLAH', '03073783986', 'CHIDROKHEL TEHSIL DISTRICT MIANWALI', 'EMPTYCHIDROKHEL TEHSIL DISTRICT MIANWALI', 'EMPTY', '1970-01-01', '', '1970-01-01', 'IQBAL', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM35.jpeg', NULL, '2', '2024-04-04 08:57:06', '2024-04-04 20:40:27', 1, '1991-01-01', 'PRIMARY', 'AB+', 'DRIVER', 'NIAZI KHAN', NULL, '3830231301151', '11', '03057387674', 'EMPTY', '0000-00-00 00:00:00.000000', 'IST DRIVER', 'SANGHA LOGISTICS', '03012135786', '', '0'),
+(32, 'MUHAMMAD KAMRAN', '03098940129', 'WADHLANWALA HADALI DISTRICT KHUSHAB', 'WADHLANWALA HADALI DISTRICT KHUSHAB', 'KB-20-1716', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_1_46_43_AM.jpeg', NULL, '2', '2024-04-04 08:40:54', '2024-04-04 20:48:12', 1, '1990-08-03', 'PRIMARY', 'B+', 'DRIVER', 'KALERA', NULL, '3820144682747', '6', '03015641781', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(33, 'ASIM', '00000000000', 'EMPTY', 'EMPTY', '', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM31.jpeg', NULL, '2', '2024-04-04 08:49:07', '2024-04-04 20:50:23', 2, '2020-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(34, 'MUHAMMAD ADNAN', '00000000000', 'EMPTY', 'EMPTY', '', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM32.jpeg', NULL, '2', '2024-04-04 08:51:02', '2024-04-04 20:52:26', 2, '1999-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(35, 'RAHEEL', '000000000', 'EMPTY', 'EMPTY', '', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM33.jpeg', NULL, '2', '2024-04-04 08:53:17', '2024-04-04 20:54:52', 2, '1990-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(36, 'ADNAN BUDHAIL', '000000000', 'EMPTY', 'EMPTY', '', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM34.jpeg', NULL, '2', '2024-04-04 08:55:40', '2024-04-04 20:56:57', 2, '2000-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '2024-05-05 01:56:00.000000', '', '', '', '', '0'),
+(37, 'RIZWAN', '00000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM36.jpeg', NULL, '2', '2024-04-04 09:06:51', '2024-04-04 21:08:10', 1, '1980-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(38, 'SHAHJAHAN 165', '03044823165', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM37.jpeg', NULL, '2', '2024-04-04 09:08:42', '2024-04-04 21:10:36', 1, '2000-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(39, 'FIDA HUSSAIN', '03096855514', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM38.jpeg', NULL, '2', '2024-04-04 09:10:45', '2024-04-04 21:12:08', 1, '2021-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(40, 'OMER HAYAT', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM39.jpeg', NULL, '2', '2024-04-07 09:57:33', '2024-04-07 09:57:24', 1, '1999-01-10', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '2024-09-07 14:57:00.000000', '', '', '', '', '0'),
+(41, 'SADIQ KHAN', '0000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM40.jpeg', NULL, '2', '2024-04-07 10:26:56', '2024-04-07 10:24:53', 1, '1999-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(42, 'TANVEER', '00000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM41.jpeg', NULL, '2', '2024-04-07 10:25:00', '2024-04-07 10:26:48', 1, '1999-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(43, 'HARIS ALI', '00000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM42.jpeg', NULL, '2', '2024-04-07 10:27:15', '2024-04-07 10:28:10', 1, '1999-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '2024-05-07 15:27:00.000000', '', '', '', '', '0'),
+(44, 'ANWAR', '000000000', 'EMPTY', 'EMPTY', 'EMPTY', '1970-01-01', '', '1970-01-01', '50000', 1, 'WhatsApp_Image_2024-04-05_at_12_07_06_AM43.jpeg', NULL, '1', '2024-04-10 02:18:33', '2024-04-07 10:56:07', 1, '1999-01-01', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', NULL, 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', '0000-00-00 00:00:00.000000', '', '', '', '', '0'),
+(45, 'Zoya', '03491754611', 'street # 9 Nawab Colony Sargodha', 'street # 9 Nawab Colony Sargodha', 'sdkj', '1970-01-01', '', '2024-05-15', '', 1, 'bhg3.png', NULL, '1', '2024-05-26 10:30:57', '2024-05-26 17:30:12', 1, '2004-10-10', 'nsd', 'nb', 'ndjsk', 'sdbn', 'Paki', 'nsdjl', 'nsd', 'jnsd', 'jnsd', '2024-05-15 22:29:00.000000', '', '', '', NULL, '0');
 
 -- --------------------------------------------------------
 
@@ -234,7 +288,7 @@ CREATE TABLE `driver_files` (
 --
 
 INSERT INTO `driver_files` (`fid`, `did`, `exp`, `file`) VALUES
-(4, 44, 'undefined', 'Untitled_design9.png');
+(4, 44, 'undefined', 'faqs-img-023.png');
 
 -- --------------------------------------------------------
 
@@ -267,31 +321,58 @@ INSERT INTO `email_template` (`et_id`, `et_name`, `et_subject`, `et_body`, `et_c
 CREATE TABLE `exp_detail` (
   `id` int(11) NOT NULL,
   `amount` varchar(200) DEFAULT NULL,
-  `detail` varchar(255) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
   `track` varchar(255) DEFAULT NULL,
-  `created_at` varchar(255) DEFAULT NULL
+  `created_at` datetime DEFAULT current_timestamp(),
+  `staff_id` int(11) NOT NULL DEFAULT 0,
+  `exp_id` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `exp_detail`
 --
 
-INSERT INTO `exp_detail` (`id`, `amount`, `detail`, `track`, `created_at`) VALUES
-(1, '499', 'shaheer', '1714290868', '2024-05-02 22.38.40'),
-(2, '500', 'Raheel 500', '1714290868', '2024-05-03 17.14.53'),
-(3, '65', ',m', '1714290868', '2024-05-03 19.50.42'),
-(4, 'ajsd', 'alkds', '1714290868', '2024-05-03 19.53.39'),
-(5, '334', 'as', '1714290868', '2024-05-03 19.54.10'),
-(6, 'a2', '23as', '1714290868', '2024-05-03 19.57.55'),
-(7, '400', 'cheeni,patti', '1714929759', '2024-05-05 23.32.54'),
-(8, '500', 'jb', '1714929759', '2024-05-06 19.52.16'),
-(9, '1122', '1122', '1715052390', '2024-05-07 08.28.05'),
-(10, '1122', '1122', '1715052390', '2024-05-07 08.28.06'),
-(11, '1122', '1122', '1715052390', '2024-05-07 08.28.08'),
-(12, '1122', '1122', '1715052390', '2024-05-07 08.28.08'),
-(13, '1122', '1122', '1715052390', '2024-05-07 08.28.08'),
-(14, '1122', '1122', '1715052390', '2024-05-07 08.28.08'),
-(15, '1122', '1122', '1715052390', '2024-05-07 08.28.08');
+INSERT INTO `exp_detail` (`id`, `amount`, `reason`, `track`, `created_at`, `staff_id`, `exp_id`) VALUES
+(1, '499', 'shaheer', '1714290868', '2024-05-02 22:38:40', 0, 0),
+(2, '500', 'Raheel 500', '1714290868', '2024-05-03 17:14:53', 0, 0),
+(3, '65', ',m', '1714290868', '2024-05-03 19:50:42', 0, 0),
+(4, 'ajsd', 'alkds', '1714290868', '2024-05-03 19:53:39', 0, 0),
+(5, '334', 'as', '1714290868', '2024-05-03 19:54:10', 0, 0),
+(6, 'a2', '23as', '1714290868', '2024-05-03 19:57:55', 0, 0),
+(7, '400', 'cheeni,patti', '1714929759', '2024-05-05 23:32:54', 0, 0),
+(8, '500', 'jb', '1714929759', '2024-05-06 19:52:16', 0, 0),
+(9, '1122', '1122', '1715052390', '2024-05-07 08:28:05', 0, 0),
+(10, '1122', '1122', '1715052390', '2024-05-07 08:28:06', 0, 0),
+(11, '1122', '1122', '1715052390', '2024-05-07 08:28:08', 0, 0),
+(12, '1122', '1122', '1715052390', '2024-05-07 08:28:08', 0, 0),
+(13, '1122', '1122', '1715052390', '2024-05-07 08:28:08', 0, 0),
+(14, '1122', '1122', '1715052390', '2024-05-07 08:28:08', 0, 0),
+(15, '1122', '1122', '1715052390', '2024-05-07 08:28:08', 0, 0),
+(16, '0', NULL, '1715442483', '2024-05-14 02:14:53', 0, 0),
+(17, '0', NULL, '1715442483', '2024-05-14 02:16:25', 0, 0),
+(18, '0', NULL, '1715442483', '2024-05-14 02:17:25', 0, 0),
+(19, '500', NULL, '1715442483', '2024-05-14 02:19:32', 0, 0),
+(20, '500', NULL, '1715442483', '2024-05-14 02:21:16', 0, 0),
+(21, '500', NULL, '1715442483', '2024-05-14 02:22:30', 0, 0),
+(22, NULL, NULL, '1715442483', '2024-05-14 02:22:38', 0, 0),
+(23, '500', '0rtyry', 'null', '2024-05-14 02:30:57', 1, 23),
+(24, '500', '0fhggh', '1715442483', '2024-05-14 02:32:55', 1, 23),
+(25, '500', '0fhggh', '1715442483', '2024-05-14 02:33:04', 1, 23),
+(26, '500', 'detail', '1715442483', '2024-05-14 02:36:07', 0, 18),
+(27, '500', 'test 500 staff id 1', '1715442483', '2024-05-14 02:41:16', 1, 23),
+(28, '500', 'cgb', 'null', '2024-05-14 02:45:40', 1, 23),
+(29, '500', 'test loan', '1715454410', '2024-05-13 22:41:54', 1, 23),
+(30, '50', 'food test', '1715454410', '2024-05-13 22:42:24', 0, 13),
+(31, '50000', 'fzol mn', '1715702138', '2024-05-14 15:56:20', 3, 23),
+(32, '500', 'Machi', '1715702138', '2024-05-15 13:12:07', 0, 13),
+(33, '1000', '490000 remaining', '1715779541', '2024-05-15 13:26:17', 0, 13),
+(34, '500', '', '1715779541', '2024-05-15 14:21:54', 0, 23),
+(35, '50', '450 baqi', '1715815475', '2024-05-15 23:25:53', 0, 23),
+(36, '1000', '', '1715880077', '2024-05-16 17:21:47', 0, 13),
+(37, '500', 'Test', '1715880980', '2024-05-17 11:46:08', 1, 23),
+(38, '500', 'Vjj', '1715880980', '2024-05-17 11:46:38', 0, 13),
+(39, '1000', 'Test', '1716879269', '2024-06-08 10:12:42', 0, 13),
+(40, '1000', 'Again', '1716879269', '2024-06-08 10:13:25', 0, 13);
 
 -- --------------------------------------------------------
 
@@ -327,7 +408,10 @@ INSERT INTO `exp_types` (`id`, `name`, `is_default`, `create_at`, `editable`) VA
 (32, 'Khairat', 1, '2024-03-22 17:54:20', 0),
 (33, 'Wash Service', 1, '2024-03-22 17:54:45', 0),
 (35, 'ٹول خرچہ', 1, '2024-03-24 10:22:05', 0),
-(38, 'No default', 0, '2024-04-08 16:22:56', 0);
+(38, 'No default', 0, '2024-04-08 16:22:56', 0),
+(39, 'kanta', 0, '2024-05-28 02:41:17', 0),
+(40, 'hawa check', 0, '2024-05-28 02:41:17', 0),
+(41, '', 0, '2024-05-28 02:41:17', 0);
 
 -- --------------------------------------------------------
 
@@ -369,7 +453,7 @@ CREATE TABLE `fuel` (
   `v_fueladdedby` varchar(100) NOT NULL,
   `v_fuelcomments` varchar(256) NOT NULL,
   `v_created_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- --------------------------------------------------------
 
@@ -433,6 +517,7 @@ CREATE TABLE `login` (
   `u_type` varchar(255) DEFAULT NULL,
   `u_isactive` varchar(100) NOT NULL DEFAULT '1',
   `u_email` varchar(256) NOT NULL,
+  `file` varchar(255) DEFAULT NULL,
   `u_created_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -440,14 +525,15 @@ CREATE TABLE `login` (
 -- Dumping data for table `login`
 --
 
-INSERT INTO `login` (`u_id`, `u_name`, `u_username`, `u_password`, `u_type`, `u_isactive`, `u_email`, `u_created_date`) VALUES
-(1, 'Raheel', 'raheelshehzad188@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '0', '1', 'raheelshehzad188@gmail.com', '2024-04-23 07:31:15'),
-(2, 'Haroon Awan', 'haroonmalikh80@gmail.com', '21232f297a57a5a743894a0e4a801fc3', NULL, '1', 'haroonmalikh80@gmail.com', '2024-03-11 13:18:33'),
-(7, 'shaheer ', 'shaheer@gmail.com', '3b712de48137572f3849aabd5666a4e3', '1', '1', 'shaheerumer5668704@gmail.com', '2024-04-23 05:23:05'),
-(8, 'shaheer', 'shaheer1@gmail.com', '3b712de48137572f3849aabd5666a4e3', NULL, '1', 'shaheerumer1387@gmail.com', '2024-05-09 17:37:52'),
-(9, 'shaheer', 'shaheer ', '3b712de48137572f3849aabd5666a4e3', NULL, '1', 'shaheerumer387@gmail.com', '2024-04-06 17:40:25'),
-(10, 'shaheer', 'shaheerumer5668704@gmail.com', '21232f297a57a5a743894a0e4a801fc3', NULL, '1', 'shaheerumer5668704@gmail.com', '2024-04-06 17:51:38'),
-(11, 'Nimra', 'nimra', '3b712de48137572f3849aabd5666a4e3', '1', '1', 'nk7162390@gmail.com', '2024-05-09 05:09:37');
+INSERT INTO `login` (`u_id`, `u_name`, `u_username`, `u_password`, `u_type`, `u_isactive`, `u_email`, `file`, `u_created_date`) VALUES
+(1, 'Raheel', 'raheelshehzad188@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '0', '1', 'raheelshehzad188@gmail.com', NULL, '2024-04-23 07:31:15'),
+(2, 'Haroon Awan', 'haroonmalikh80@gmail.com', '21232f297a57a5a743894a0e4a801fc3', NULL, '1', 'haroonmalikh80@gmail.com', NULL, '2024-03-11 13:18:33'),
+(7, 'shaheer ', 'shaheer@gmail.com', '3b712de48137572f3849aabd5666a4e3', '1', '1', 'shaheer@gmail.com', 'faqs-img-02.png', '2024-05-16 18:29:33'),
+(8, 'shaheer', 'shaheer1@gmail.com', '3b712de48137572f3849aabd5666a4e3', NULL, '1', 'shaheerumer1387@gmail.com', NULL, '2024-05-09 17:37:52'),
+(9, 'shaheer', 'shaheer ', '3b712de48137572f3849aabd5666a4e3', NULL, '1', 'shaheerumer387@gmail.com', NULL, '2024-04-06 17:40:25'),
+(10, 'shaheer', 'shaheerumer5668704@gmail.com', '21232f297a57a5a743894a0e4a801fc3', NULL, '1', 'shaheerumer5668704@gmail.com', NULL, '2024-04-06 17:51:38'),
+(11, 'Nimra', 'nimra', '3b712de48137572f3849aabd5666a4e3', '1', '1', 'nk7162390@gmail.com', NULL, '2024-05-09 05:09:37'),
+(14, 'Zoya', 'Zoya', '3b712de48137572f3849aabd5666a4e3', NULL, '1', 'zf1754611@gmail.com', 'testimonials-5.jpg', '2024-05-14 16:56:43');
 
 -- --------------------------------------------------------
 
@@ -517,10 +603,13 @@ INSERT INTO `login_roles` (`lr_id`, `lr_u_id`, `lr_vech_list`, `lr_vech_list_vie
 (5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0),
 (6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0),
 (7, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0),
-(8, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0),
+(8, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (9, 9, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
 (10, 10, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
-(11, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1);
+(11, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1),
+(12, 12, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0),
+(13, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0),
+(14, 14, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -549,7 +638,30 @@ INSERT INTO `maintenance` (`id`, `tyre_name`, `v_id`, `tyre_type`, `expiray_date
 (9, 'Oil Change', 32, '1', '', '2024-05-08 13:13:18', '100', NULL, 1),
 (10, 'test', 32, '0', '', '2024-05-08 13:14:28', NULL, '2024-05-12 13:14:00.000000', 1),
 (11, 'test', 32, '0', '', '2024-05-08 13:15:57', NULL, '2024-05-10 13:15:00.000000', 1),
-(12, 'test', 32, '0', '', '2024-05-08 21:38:52', NULL, '2024-05-08 00:00:00.000000', 0);
+(12, 'test', 32, '0', '', '2024-05-08 21:38:52', NULL, '2024-05-08 00:00:00.000000', 0),
+(14, 'hgjh', 32, '1', '', '2024-05-18 23:10:12', '60', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `material_type`
+--
+
+CREATE TABLE `material_type` (
+  `mt_id` int(11) NOT NULL,
+  `material_name` varchar(500) DEFAULT NULL,
+  `is_paid` int(11) DEFAULT 0,
+  `editable` varchar(255) DEFAULT '0',
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `material_type`
+--
+
+INSERT INTO `material_type` (`mt_id`, `material_name`, `is_paid`, `editable`, `created_at`) VALUES
+(1, 'Coila', 0, NULL, '2024-05-31 15:30:34'),
+(3, 'Patrol', 1, '0', '2024-05-31 15:58:30');
 
 -- --------------------------------------------------------
 
@@ -659,7 +771,7 @@ CREATE TABLE `positions` (
   `battery_level` varchar(100) DEFAULT NULL,
   `motion` varchar(256) DEFAULT NULL,
   `address` varchar(256) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- --------------------------------------------------------
 
@@ -717,7 +829,9 @@ CREATE TABLE `routes` (
 
 INSERT INTO `routes` (`id`, `name`, `is_default`, `create_at`, `editable`) VALUES
 (5, 'khushab', 0, '2024-04-08 02:45:48', 0),
-(6, 'Joharabad', 0, '2024-04-08 02:45:57', 0);
+(6, 'Joharabad', 0, '2024-04-08 02:45:57', 0),
+(7, 'Qamar Mashani', 0, '2024-05-26 11:25:01', 0),
+(8, 'Tariq Glass, Sheikhupura', 0, '2024-05-26 11:25:20', 0);
 
 -- --------------------------------------------------------
 
@@ -794,6 +908,37 @@ CREATE TABLE `settings_smtp` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `shift_cash`
+--
+
+CREATE TABLE `shift_cash` (
+  `id` int(11) NOT NULL,
+  `type` varchar(500) NOT NULL,
+  `amount` varchar(200) DEFAULT NULL,
+  `reason` text DEFAULT NULL,
+  `track` varchar(200) DEFAULT NULL,
+  `create_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `shift_cash`
+--
+
+INSERT INTO `shift_cash` (`id`, `type`, `amount`, `reason`, `track`, `create_at`) VALUES
+(1, '1', '500', 'i need home loan', '1715702138', '2024-05-14 18:25:59'),
+(2, '1', '300', 'i want home loan', '1715702138', '2024-05-14 18:30:12'),
+(3, '2', '300', 'cash out', '1715702138', '2024-05-14 18:33:12'),
+(4, '1', '500', 'saklsdn', '1715702138', '2024-05-14 18:33:51'),
+(5, '1', '200', 'shaheer', '1715702138', '2024-05-14 18:36:02'),
+(6, '2', '200', 'sakjsd', '1715702138', '2024-05-14 18:37:12'),
+(7, '1', '50000', 'in', '1715880077', '2024-05-16 17:23:27'),
+(8, '1', '50000', 'Musa ki trf sa aya', '1715880980', '2024-05-17 11:47:59'),
+(9, '1', '500', 'ii6', 'null', '2024-05-28 02:55:22'),
+(10, '1', '500', 'ii6', 'null', '2024-05-28 02:55:25');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `shift_log`
 --
 
@@ -804,7 +949,7 @@ CREATE TABLE `shift_log` (
   `open_blc` varchar(100) NOT NULL,
   `close_blc` varchar(100) NOT NULL,
   `login_time` datetime NOT NULL DEFAULT current_timestamp(),
-  `logout_time` int(11) DEFAULT NULL
+  `logout_time` datetime(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -812,7 +957,11 @@ CREATE TABLE `shift_log` (
 --
 
 INSERT INTO `shift_log` (`id`, `uid`, `track`, `open_blc`, `close_blc`, `login_time`, `logout_time`) VALUES
-(1, 11, '1715231815', '5000', '', '2024-05-09 10:16:55', NULL);
+(1, 7, '1715779541', '50000', '48500', '2024-05-15 18:25:41', '2024-05-16 04:24:22.000000'),
+(2, 7, '1715815475', '500', '450', '2024-05-16 04:24:35', '2024-05-16 22:19:03.000000'),
+(3, 7, '1715880077', '10000', '59000', '2024-05-16 22:21:17', '2024-05-16 22:34:00.000000'),
+(4, 7, '1715880980', '9000', '58000', '2024-05-16 22:36:20', '2024-05-28 11:48:19.000000'),
+(5, 7, '1716879269', '500', '', '2024-05-28 11:54:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -973,7 +1122,10 @@ INSERT INTO `staff_loan` (`id`, `sid`, `amount_out`, `amount_in`, `reason`, `cre
 (1, 24, 5000, '3000', 'testing', '2024-04-11 06:37:49', 1),
 (2, 35, 23, '100', 'gthrtghrt', '2024-04-16 11:23:52', 1),
 (3, 44, 1000, '', 'test 1000', '2024-04-16 11:52:22', 1),
-(4, 44, 500, '', 'udhar la gya', '2024-05-05 17:06:28', 1);
+(4, 44, 500, '', 'udhar la gya', '2024-05-05 17:06:28', 1),
+(5, 1, 500, '0', 'test loan', '2024-05-13 22:41:54', 7),
+(6, 3, 50000, '0', 'fzol mn', '2024-05-14 15:56:20', 7),
+(7, 1, 500, '0', 'Test', '2024-05-17 11:46:08', 7);
 
 -- --------------------------------------------------------
 
@@ -1062,11 +1214,19 @@ INSERT INTO `tbl_fuel` (`id`, `trip_id`, `pump`, `fuel_quantity`, `fuel_type`, `
 (62, 71, '2', '234', NULL, 345, 80730),
 (63, 72, '2', '345', NULL, 3445, 1188525),
 (64, 73, '2', '200', NULL, 1, 200),
-(66, 4, '2', '50', NULL, 270, 13500),
 (68, 5, '2', '50', NULL, 270, 13500),
 (70, 1, '2', '5', NULL, 270, 1350),
 (71, 2, '2', '200', NULL, 298, 59600),
-(73, 3, '2', '200', NULL, 298, 59600);
+(73, 3, '2', '200', NULL, 298, 59600),
+(75, 5, '2', '', NULL, 0, 0),
+(77, 7, '3', '8', NULL, 19, 152),
+(78, 7, '2', '7', NULL, 80, 560),
+(82, 8, '2', '7', NULL, 78, 546),
+(83, 9, '2', '7', NULL, 7, 49),
+(84, 6, '2', '7', NULL, 9, 63),
+(87, 4, '2', '50', NULL, 270, 13500),
+(88, 4, '2', '262.81', NULL, 275.6, 72430.44),
+(89, 10, '2', '220.22', NULL, 271.7010264648, 59834);
 
 -- --------------------------------------------------------
 
@@ -1090,6 +1250,8 @@ CREATE TABLE `trips` (
   `t_created_date` datetime NOT NULL,
   `t_modified_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `cmt` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `t_days` varchar(255) DEFAULT NULL,
+  `t_type` varchar(255) DEFAULT NULL,
   `t_trackingcode` varchar(225) DEFAULT NULL,
   `t_start_meter` varchar(225) DEFAULT NULL,
   `t_end_meter` varchar(255) DEFAULT NULL
@@ -1099,10 +1261,18 @@ CREATE TABLE `trips` (
 -- Dumping data for table `trips`
 --
 
-INSERT INTO `trips` (`t_id`, `t_customer_id`, `t_vechicle`, `t_driver`, `t_driver_2`, `helper`, `t_start_date`, `t_end_date`, `t_totaldistance`, `t_trip_amount`, `t_exp_amount`, `t_created_by`, `t_created_date`, `t_modified_date`, `cmt`, `t_trackingcode`, `t_start_meter`, `t_end_meter`) VALUES
-(1, '1', '4', '24', 27, 34, '2024-04-08 00:15:00', '2024-04-09 00:45:00', '0', '50000', 55378, '1', '2024-04-08 03:52:19', '2024-04-10 23:22:53', '', 'TMM-965-1', '1970-01-01 05:00', '1970-01-01 05:00'),
-(2, '5', '15', '10', 7, 34, '2024-04-07 12:16:00', '2024-04-10 12:16:00', '6776', '140000', 74900, '1', '2024-04-08 12:15:19', '2024-04-08 07:20:28', '', 'TMJ-765-1', '29999', '36775'),
-(3, '4', '30', '7', 4, 36, '2024-04-21 16:34:00', '2024-04-23 16:35:00', '23000', '140000', 70100, '1', '2024-04-08 04:52:50', '2024-04-08 11:53:00', '', 'TAL-714-1', '1970-01-01 05:00', '1970-01-01 05:00');
+INSERT INTO `trips` (`t_id`, `t_customer_id`, `t_vechicle`, `t_driver`, `t_driver_2`, `helper`, `t_start_date`, `t_end_date`, `t_totaldistance`, `t_trip_amount`, `t_exp_amount`, `t_created_by`, `t_created_date`, `t_modified_date`, `cmt`, `t_days`, `t_type`, `t_trackingcode`, `t_start_meter`, `t_end_meter`) VALUES
+(1, '1', '4', '24', 27, 34, '2024-04-08 00:15:00', '2024-04-09 00:45:00', '0', '50000', 55378, '1', '2024-04-08 03:52:19', '2024-04-10 23:22:53', '', NULL, NULL, 'TMM-965-1', '1970-01-01 05:00', '1970-01-01 05:00'),
+(2, '5', '15', '10', 7, 34, '2024-04-07 12:16:00', '2024-04-10 12:16:00', '6776', '140000', 74900, '1', '2024-04-08 12:15:19', '2024-04-08 07:20:28', '', NULL, NULL, 'TMJ-765-1', '29999', '36775'),
+(3, '4', '30', '7', 4, 36, '2024-04-21 16:34:00', '2024-04-23 16:35:00', '23000', '140000', 70100, '1', '2024-04-08 04:52:50', '2024-04-08 11:53:00', '', NULL, NULL, 'TAL-714-1', '1970-01-01 05:00', '1970-01-01 05:00'),
+(4, '7', '21', '25', 0, 33, '2024-05-28 00:00:00', '2024-06-01 00:00:00', '698', '137403', 88866.44, '1', '2024-06-01 01:36:57', '2024-05-31 20:37:35', '', NULL, 'Single day', 'E-4065-1', '2024-06-01 18:22', '2024-06-01 18:29'),
+(5, '4', '2', '4', 5, 34, '2024-05-30 23:42:00', '2024-05-31 23:42:00', '0', '396690', 0, '1', '2024-05-28 11:42:02', '2024-05-28 18:42:51', '', '5', 'Rounded day', 'hghd-1', 'gfhgf', 'sdg'),
+(6, '1', '4', '24', 28, 34, '2024-05-31 00:45:00', '2024-05-31 00:30:00', '0', '39620', 1795, '1', '2024-05-31 09:35:27', '2024-05-31 16:48:58', '', '7', 'Single day', 'TMM-965-2', '1970-01-01 05:00', '1970-01-01 05:00'),
+(7, '5', '27', '31', 42, 1, '2024-05-31 22:37:00', '2024-06-01 22:37:00', '50', '48000', 9893, '1', '2024-05-30 10:36:11', '2024-05-30 17:40:42', '', '5', 'Rounded day', 'E-4665-1', '80', '130'),
+(8, '4', '4', '24', 27, 34, '2024-05-30 23:11:00', '2024-05-31 23:11:00', '0', '850050', 991, '1', '2024-05-30 11:30:42', '2024-05-30 18:30:57', '', '6', 'Rounded day', 'TMM-965-3', '1970-01-01 05:00', '1970-01-01 05:00'),
+(9, '4', '2', '2', 4, 33, '2024-05-31 21:38:00', '2024-07-01 21:38:00', '700', '3804863', 980, '1', '2024-05-31 09:38:04', '2024-05-31 16:40:18', 'rdfytui', '7', 'Rounded day', 'hghd-2', '787', '87'),
+(10, '7', '10', '27', 3, NULL, '2024-05-31 00:00:00', '2024-05-31 00:00:00', '709', '146777.4', 95014, '1', '2024-06-02 01:16:19', '2024-06-01 20:31:20', '', NULL, 'Single day', 'TML-165-1', '523929', '524638'),
+(11, '4', '2', '3', 0, 0, '2024-06-06 00:00:00', '2024-06-20 00:00:00', '0', '4600', 0, '1', '2024-06-02 11:58:24', '2024-06-02 18:59:46', '', NULL, 'Single day', 'hghd-3', '', '');
 
 -- --------------------------------------------------------
 
@@ -1132,17 +1302,27 @@ CREATE TABLE `trip_routes` (
   `weight` double NOT NULL,
   `unit_price` double NOT NULL,
   `total` double NOT NULL,
-  `trip_id` int(11) NOT NULL
+  `trip_id` int(11) NOT NULL,
+  `material_type` int(11) NOT NULL,
+  `is_paid` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `trip_routes`
 --
 
-INSERT INTO `trip_routes` (`id`, `route_from`, `route_to`, `weight`, `unit_price`, `total`, `trip_id`) VALUES
-(2, '5', '5', 500, 100, 50000, 1),
-(3, 'khushab', 'Joharabad', 40, 3500, 140000, 2),
-(5, '5', '6', 40, 3500, 140000, 3);
+INSERT INTO `trip_routes` (`id`, `route_from`, `route_to`, `weight`, `unit_price`, `total`, `trip_id`, `material_type`, `is_paid`) VALUES
+(2, '5', '5', 500, 100, 50000, 1, 0, 0),
+(3, 'khushab', 'Joharabad', 40, 3500, 140000, 2, 0, 0),
+(5, '5', '6', 40, 3500, 140000, 3, 0, 0),
+(7, 'Qamar Mashani', 'Joharabad', 70, 5667, 396690, 5, 0, 0),
+(10, 'Joharabad', 'Qamar Mashani', 80, 600, 48000, 7, 0, 0),
+(16, 'Joharabad', '6', 70, 5667, 396690, 8, 0, 0),
+(17, 'Qamar Mashani', '6', 80, 5667, 453360, 8, 0, 0),
+(18, 'Joharabad', 'Tariq Glass, Sheikhupura', 67, 56789, 3804863, 9, 0, 0),
+(19, 'khushab', 'khushab', 70, 566, 39620, 6, 0, 0),
+(21, 'Qamar Mashani', 'Tariq Glass, Sheikhupura', 36.35, 3780, 137403, 4, 3, 1),
+(22, 'Qamar Mashani', 'Tariq Glass, Sheikhupura', 38.83, 3780, 146777.4, 10, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1278,7 +1458,7 @@ CREATE TABLE `vehicles` (
   `driver_1` int(11) DEFAULT NULL,
   `driver_2` int(11) DEFAULT NULL,
   `helper` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Dumping data for table `vehicles`
@@ -1294,7 +1474,7 @@ INSERT INTO `vehicles` (`v_id`, `v_registration_no`, `v_name`, `v_model`, `v_cha
 (7, '123', 'qwer', '1234', '12345', '2345', 'sangha', 'TRUCK', '#D6E1F3', '0', 1, 1, NULL, NULL, NULL, NULL, NULL, '6226_Mercedes-Benz-21.png', NULL, '1', '2024-03-31 06:41:17', '2024-03-31 18:43:06', NULL, NULL, NULL),
 (8, '23XX-222-22', 'Test', 'XX', 'XX', 'XX', 'XX', '2', '#D6E1F3', '0', 1, 1, '1970-01-01', NULL, NULL, NULL, NULL, 'Lighthouse.jpg', 'Hydrangeas.jpg', '1', '2024-04-30 02:57:55', '2024-04-30 09:57:58', 11, 14, 0),
 (9, 'TML-265', 'FAW', '2021', 'AHFMC28P6210396', '53598146', 'FAW', 'TRUCK', 'WHITE', '0', 1, 1, '1970-01-01', NULL, NULL, NULL, NULL, 'WhatsApp_Image_2024-04-07_at_3_06_48_PM1.jpeg', NULL, '2', '2024-04-07 10:19:19', '2024-04-07 10:22:07', 5, 0, 0),
-(10, 'TML-165', 'FAW', '2021', 'AHFMC28P6210395', '53598149', 'FAW', 'TRUCK', 'WHITE', '0', 1, 1, NULL, NULL, NULL, NULL, NULL, 'WhatsApp_Image_2024-04-07_at_3_06_48_PM2.jpeg', NULL, '2', '2024-04-07 10:22:16', '2024-04-07 10:23:36', 0, 0, 0),
+(10, 'TML-165', 'FAW', '2021', 'AHFMC28P6210395', '53598149', 'FAW', '1', 'WHITE', '0', 1, 1, '1970-01-01', NULL, NULL, NULL, NULL, 'WhatsApp_Image_2024-04-07_at_3_06_48_PM2.jpeg', NULL, '1', '2024-06-02 01:14:37', '2024-06-01 20:16:03', 27, 3, 0),
 (11, 'TML-365', 'FAW', '2021', 'AHFMC28P6210397', '53606938', 'FAW', 'TRUCK', 'WHITR', '0', 1, 1, NULL, NULL, NULL, NULL, NULL, 'WhatsApp_Image_2024-04-07_at_3_06_48_PM3.jpeg', NULL, '2', '2024-04-07 10:30:33', '2024-04-07 10:32:14', 6, 0, 0),
 (12, 'TML-465', 'FAW', '2021', 'AHFMC28P6210398', '53598145', 'FAW', 'TRUCK', 'WHITE', '0', 1, 1, NULL, NULL, NULL, NULL, NULL, 'WhatsApp_Image_2024-04-07_at_3_06_48_PM4.jpeg', NULL, '2', '2024-04-07 10:32:21', '2024-04-07 10:34:24', 11, 31, 0),
 (13, 'TMG-565', 'ISUZU', '2018', 'JALFVZ34PH7001351', '6HK1V3938', 'ISUZU', 'TRUCK', 'WHITE', '0', 1, 1, NULL, NULL, NULL, NULL, NULL, 'WhatsApp_Image_2024-04-07_at_3_06_48_PM5.jpeg', NULL, '2', '2024-04-07 10:34:30', '2024-04-07 10:38:44', 8, 0, 0),
@@ -1385,6 +1565,32 @@ CREATE TABLE `vehicle_maintenance_parts_used` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `vendors`
+--
+
+CREATE TABLE `vendors` (
+  `c_id` int(11) NOT NULL,
+  `c_name` varchar(256) NOT NULL,
+  `c_mobile` varchar(15) NOT NULL,
+  `c_email` varchar(100) NOT NULL,
+  `c_address` varchar(256) NOT NULL,
+  `c_created_date` datetime NOT NULL,
+  `c_pwd` varchar(100) DEFAULT NULL,
+  `c_isactive` varchar(11) NOT NULL DEFAULT '1',
+  `c_modified_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+--
+-- Dumping data for table `vendors`
+--
+
+INSERT INTO `vendors` (`c_id`, `c_name`, `c_mobile`, `c_email`, `c_address`, `c_created_date`, `c_pwd`, `c_isactive`, `c_modified_date`) VALUES
+(2, 'Qila Katas', '0000000000', 'vendor@gmail.com', 'qila katas', '2024-06-02 10:44:34', NULL, '1', '2024-06-02 17:45:32'),
+(3, 'Sargodha', '0000000000', 'vendor@gmail.com', 'sargodha', '2024-06-02 10:44:34', NULL, '1', '2024-06-02 17:45:32');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `vih_expense`
 --
 
@@ -1402,9 +1608,6 @@ CREATE TABLE `vih_expense` (
 --
 
 INSERT INTO `vih_expense` (`id`, `trip_id`, `expense_id`, `exp_name`, `amount`, `create_at`) VALUES
-(7, 4, 19, 'Diesel', 13500, '2024-04-08 02:52:08'),
-(8, 4, 21, 'Toll Tax', 5, '2024-04-08 02:52:08'),
-(9, 4, 22, 'Roti Kharcha', 7, '2024-04-08 02:52:08'),
 (13, 5, 19, 'Diesel', 13500, '2024-04-08 02:54:36'),
 (14, 5, 21, 'Toll Tax', 5, '2024-04-08 02:54:36'),
 (15, 5, 22, 'Roti Kharcha', 7, '2024-04-08 02:54:36'),
@@ -1427,7 +1630,59 @@ INSERT INTO `vih_expense` (`id`, `trip_id`, `expense_id`, `exp_name`, `amount`, 
 (48, 3, 19, 'Diesel', 59600, '2024-04-08 11:53:00'),
 (49, 3, 21, 'Toll Tax', 1000, '2024-04-08 11:53:00'),
 (50, 3, 22, 'Roti Kharcha', 3000, '2024-04-08 11:53:00'),
-(51, 3, 23, 'Fone Hawa Jali', 300, '2024-04-08 11:53:00');
+(51, 3, 23, 'Fone Hawa Jali', 300, '2024-04-08 11:53:00'),
+(67, 7, 19, 'Diesel', 712, '2024-05-30 13:40:42'),
+(68, 7, 21, 'Toll Tax', 5589, '2024-05-30 13:40:42'),
+(69, 7, 22, 'Roti Kharcha', 90, '2024-05-30 13:40:42'),
+(70, 7, 24, 'Loading Kharcha', 100, '2024-05-30 13:40:42'),
+(71, 7, 25, 'Unloading Kharcha', 80, '2024-05-30 13:40:42'),
+(72, 7, 26, 'Inam', 70, '2024-05-30 13:40:42'),
+(73, 7, 27, 'Motorway Challan', 500, '2024-05-30 13:40:42'),
+(74, 7, 28, 'Traffic Challan', 700, '2024-05-30 13:40:42'),
+(75, 7, 29, 'Tax', 299, '2024-05-30 13:40:42'),
+(76, 7, 30, 'Mobil Oil Change', 100, '2024-05-30 13:40:42'),
+(77, 7, 31, 'Grease', 700, '2024-05-30 13:40:42'),
+(78, 7, 32, 'Khairat', 20, '2024-05-30 13:40:42'),
+(79, 7, 33, 'Wash Service', 33, '2024-05-30 13:40:42'),
+(80, 7, 35, 'ٹول خرچہ', 900, '2024-05-30 13:40:42'),
+(94, 8, 19, 'Diesel', 546, '2024-05-30 14:30:57'),
+(95, 8, 31, 'Grease', 78, '2024-05-30 14:30:57'),
+(96, 8, 32, 'Khairat', 89, '2024-05-30 14:30:57'),
+(97, 8, 33, 'Wash Service', 200, '2024-05-30 14:30:57'),
+(98, 9, 19, 'Diesel', 49, '2024-05-31 12:40:18'),
+(99, 9, 21, 'Toll Tax', 89, '2024-05-31 12:40:18'),
+(100, 9, 22, 'Roti Kharcha', 8, '2024-05-31 12:40:18'),
+(101, 9, 23, 'Fone Hawa Jali', 89, '2024-05-31 12:40:18'),
+(102, 9, 24, 'Loading Kharcha', 98, '2024-05-31 12:40:18'),
+(103, 9, 25, 'Unloading Kharcha', 98, '2024-05-31 12:40:18'),
+(104, 9, 26, 'Inam', 9, '2024-05-31 12:40:18'),
+(105, 9, 28, 'Traffic Challan', 67, '2024-05-31 12:40:18'),
+(106, 9, 29, 'Tax', 87, '2024-05-31 12:40:18'),
+(107, 9, 30, 'Mobil Oil Change', 87, '2024-05-31 12:40:18'),
+(108, 9, 31, 'Grease', 78, '2024-05-31 12:40:18'),
+(109, 9, 32, 'Khairat', 78, '2024-05-31 12:40:18'),
+(110, 9, 33, 'Wash Service', 67, '2024-05-31 12:40:18'),
+(111, 9, 35, 'ٹول خرچہ', 76, '2024-05-31 12:40:18'),
+(112, 6, 26, 'Inam', 89, '2024-05-31 12:48:58'),
+(113, 6, 27, 'Motorway Challan', 899, '2024-05-31 12:48:58'),
+(114, 6, 28, 'Traffic Challan', 787, '2024-05-31 12:48:58'),
+(115, 6, 29, 'Tax', 20, '2024-05-31 12:48:58'),
+(120, 4, 19, 'Diesel', 13500, '2024-05-31 16:37:35'),
+(121, 4, 21, 'Toll Tax', 5, '2024-05-31 16:37:35'),
+(122, 4, 22, 'Roti Kharcha', 7, '2024-05-31 16:37:35'),
+(123, 4, 19, 'Diesel', 72430, '2024-05-31 16:37:35'),
+(124, 10, 19, 'Diesel', 59834, '2024-06-01 16:31:20'),
+(125, 10, 21, 'Toll Tax', 3640, '2024-06-01 16:31:20'),
+(126, 10, 22, 'Roti Kharcha', 1500, '2024-06-01 16:31:20'),
+(127, 10, 23, 'Fone Hawa Jali', 300, '2024-06-01 16:31:20'),
+(128, 10, 24, 'Loading Kharcha', 300, '2024-06-01 16:31:20'),
+(129, 10, 25, 'Unloading Kharcha', 300, '2024-06-01 16:31:20'),
+(130, 10, 26, 'Inam', 3500, '2024-06-01 16:31:20'),
+(131, 10, 27, 'Motorway Challan', 2200, '2024-06-01 16:31:20'),
+(132, 10, 29, 'Tax', 300, '2024-06-01 16:31:20'),
+(133, 10, 30, 'Mobil Oil Change', 18000, '2024-06-01 16:31:20'),
+(134, 10, 31, 'Grease', 5040, '2024-06-01 16:31:20'),
+(135, 10, 32, 'Khairat', 100, '2024-06-01 16:31:20');
 
 -- --------------------------------------------------------
 
@@ -1523,9 +1778,21 @@ ALTER TABLE `backup`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `cashflow`
+--
+ALTER TABLE `cashflow`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `classification`
+--
+ALTER TABLE `classification`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1619,6 +1886,12 @@ ALTER TABLE `maintenance`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `material_type`
+--
+ALTER TABLE `material_type`
+  ADD PRIMARY KEY (`mt_id`);
+
+--
 -- Indexes for table `notification`
 --
 ALTER TABLE `notification`
@@ -1678,6 +1951,12 @@ ALTER TABLE `salary`
 --
 ALTER TABLE `settings`
   ADD PRIMARY KEY (`s_id`);
+
+--
+-- Indexes for table `shift_cash`
+--
+ALTER TABLE `shift_cash`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `shift_log`
@@ -1806,6 +2085,12 @@ ALTER TABLE `vehicle_maintenance_parts_used`
   ADD PRIMARY KEY (`pu_id`);
 
 --
+-- Indexes for table `vendors`
+--
+ALTER TABLE `vendors`
+  ADD PRIMARY KEY (`c_id`);
+
+--
 -- Indexes for table `vih_expense`
 --
 ALTER TABLE `vih_expense`
@@ -1843,7 +2128,13 @@ ALTER TABLE `vih_tyre`
 -- AUTO_INCREMENT for table `backup`
 --
 ALTER TABLE `backup`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `cashflow`
+--
+ALTER TABLE `cashflow`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1852,22 +2143,28 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `classification`
+--
+ALTER TABLE `classification`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `crud_detail`
 --
 ALTER TABLE `crud_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `drivers`
 --
 ALTER TABLE `drivers`
-  MODIFY `d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `driver_files`
@@ -1885,13 +2182,13 @@ ALTER TABLE `email_template`
 -- AUTO_INCREMENT for table `exp_detail`
 --
 ALTER TABLE `exp_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `exp_types`
 --
 ALTER TABLE `exp_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `files`
@@ -1927,19 +2224,25 @@ ALTER TABLE `incomeexpense`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `login_roles`
 --
 ALTER TABLE `login_roles`
-  MODIFY `lr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `lr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `maintenance`
 --
 ALTER TABLE `maintenance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `material_type`
+--
+ALTER TABLE `material_type`
+  MODIFY `mt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `notification`
@@ -1975,7 +2278,7 @@ ALTER TABLE `positions`
 -- AUTO_INCREMENT for table `pumps`
 --
 ALTER TABLE `pumps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `reminder`
@@ -1987,7 +2290,7 @@ ALTER TABLE `reminder`
 -- AUTO_INCREMENT for table `routes`
 --
 ALTER TABLE `routes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `salary`
@@ -2002,10 +2305,16 @@ ALTER TABLE `settings`
   MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `shift_cash`
+--
+ALTER TABLE `shift_cash`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `shift_log`
 --
 ALTER TABLE `shift_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `staff_bonus`
@@ -2041,7 +2350,7 @@ ALTER TABLE `staff_ledger`
 -- AUTO_INCREMENT for table `staff_loan`
 --
 ALTER TABLE `staff_loan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_acountledger`
@@ -2053,13 +2362,13 @@ ALTER TABLE `tbl_acountledger`
 -- AUTO_INCREMENT for table `tbl_fuel`
 --
 ALTER TABLE `tbl_fuel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `trips`
 --
 ALTER TABLE `trips`
-  MODIFY `t_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `t_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `trip_payments`
@@ -2071,7 +2380,7 @@ ALTER TABLE `trip_payments`
 -- AUTO_INCREMENT for table `trip_routes`
 --
 ALTER TABLE `trip_routes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `type_staff`
@@ -2113,7 +2422,7 @@ ALTER TABLE `vehicle_details`
 -- AUTO_INCREMENT for table `vehicle_group`
 --
 ALTER TABLE `vehicle_group`
-  MODIFY `gr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `gr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `vehicle_maintenance`
@@ -2122,10 +2431,16 @@ ALTER TABLE `vehicle_maintenance`
   MODIFY `m_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `vendors`
+--
+ALTER TABLE `vendors`
+  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `vih_expense`
 --
 ALTER TABLE `vih_expense`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 
 --
 -- AUTO_INCREMENT for table `vih_income`

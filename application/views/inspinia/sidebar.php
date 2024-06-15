@@ -47,6 +47,14 @@
                          Dashboard
                       </p>
                    </a>
+                </li> 
+                <li class="nav-item <?php echo activate_menu('cashflow');?>" >
+                   <a href="<?= base_url(); ?>Drivers/cashflow" class="nav-link " style="display: flex;align-items: center;">
+                      <i class="fa fa-money"></i>
+                      <p>
+                        Cash Flow
+                      </p>
+                   </a>
                 </li>
                <?php if(userpermission('lr_drivers_list') || userpermission('lr_drivers_add')) { ?>
             <li class="<?php echo activate_menu('drivers');?> <?php echo activate_menu('adddrivers');?><?php echo activate_menu('editdriver');?>">
@@ -122,6 +130,27 @@
                </ul>
             </li>
             <?php } ?>
+            
+             <?php if(userpermission('lr_cust_list') || userpermission('lr_cust_add')) { ?>
+            <li class="nav-item <?=activate_menu('addcustomer') ?><?= activate_menu('editcustomer')?><?= activate_menu('customer')?>">
+               <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Vendor</span> <span class="fa arrow"></span></a>
+               <ul class="nav nav-treeview">
+                <?php  if(userpermission('lr_cust_list')) { ?>
+                  <li class=" <?php echo activate_menu('vendor');?><?php echo activate_menu('editcustomer');?>">
+                     <a href="<?= base_url(); ?>vendor/vendor_manage">
+                        <p>Vendor Management</p>
+                     </a>
+                  </li>
+                  <?php } if(userpermission('lr_cust_add')) { ?>
+                  <li class="nav-item <?php echo activate_menu('addvendor');?>">
+                     <a href="<?= base_url(); ?>vendor/addvendor">
+                        <p>Add Vendor</p>
+                     </a>
+                  </li>
+                   <?php } ?>
+               </ul>
+            </li>
+            <?php } ?>
             <?php if(userpermission('lr_trips_list') || userpermission('lr_trips_list_view')) { ?>
             <li class="<?php echo activate_menu('trips') ?> <?= activate_menu('addtrips') ?><?= activate_menu('edittrip') ?><?= activate_menu('details') ?>">
                <a href="#"><i class="fa fa-road"></i> <span class="nav-label">Vouchers</span> <span class="fa arrow"></span></a>
@@ -137,16 +166,7 @@
                           Expense Types
                       </a>
                   </li>
-                  <li>
-                      <a href="<?= base_url('trips/routes'); ?>">
-                          Routes
-                      </a>
-                  </li>
-                  <li>
-                      <a href="<?= base_url('trips/pump'); ?>">
-                          Pumps
-                      </a>
-                  </li>
+                 
                   <?php } if(userpermission('lr_trips_add')) { ?>
                   <li class="nav-item <?php echo activate_menu('addtrips');?>">
                      <a href="<?= base_url(); ?>trips/addtrips">
@@ -216,6 +236,7 @@
                         <li class="<?php echo activate_menu('websitesetting');?>">
                             <a href="<?= base_url(); ?>settings/websitesetting">General Settings</a>
                         </li>
+                     
                         <?php
                         }
 

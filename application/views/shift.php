@@ -43,7 +43,7 @@ $murl = base_url('/view29/');
       .tabset .tab-panel {
         display: none;
       }
-      .tabset{
+      #ledger{
           margin-top: 80px;
       }
 
@@ -165,10 +165,31 @@ b{
             text-align: center;
             height: 100vh;
     display: flex;
+    align-items:center;
     justify-content: center;
     }
+    #cashInOut button{
+            display: block;
+    width: 100%;
+    margin: 5px 0;
+    }
+    @media(max-width: 678px){
+        
+        #cashInOut{
+            
+           padding: 20px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 87%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    }
+    }
     .bg-primary{
-        background:brown !important;
+        background:#009688 !important;
     }
     .my_class{
         
@@ -474,7 +495,7 @@ b{
         
         <div class="wide-block pt-2 pb-2">
 
-                <div class="row justify-content-between">
+                <div class="row justify-content-left">
                     <div class=" flex-sm-column flex-column my_class detail_container" ng-repeat="data in detail.ofc_exp" ng-click="showExpense(data.st_id)"> 
                         <div class=" img_box">
                             <img src='<?= base_url('/'); ?>{{ data.exp_img }}'>
@@ -519,7 +540,7 @@ b{
 
     <!-- Ledger -->
     
-    <div id="cashInOut" ng-if="ipages.ledger">
+    <div id="ledger" ng-if="ipages.ledger">
         <!--<h1 class="cblc">{{ detail.cblc}}</h1>-->
         <!--<div>-->
         <!--    Detail-->
@@ -531,6 +552,7 @@ b{
         <!--</div>-->
 
         <div class="container-fluid">
+             <h1>{{ detail.cblc}}</h1>
       <div class="tabset">
         <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
         <label for="tab1">All</label>
@@ -543,7 +565,7 @@ b{
         <div class="tab-panels">
 
           <section id="marzen" class="tab-panel">
-            <h1>{{ detail.cblc}}</h1>
+           
             
               
               
@@ -557,9 +579,10 @@ b{
                 
               </div>
               <div class="w_100 text-left">
+                
                 <b>Rs {{records.amount}}</b>
                 <p>{{records.name}}</p>
-                <p><span ng-if="records.type == 'minus'">-</span><span ng-if="records.type == 'add'">+</span> {</p>
+                <p><span ng-if="records.type == 'minus'">-</span><span ng-if="records.type == 'add'">+</span> </p>
                
               </div>
             </div>

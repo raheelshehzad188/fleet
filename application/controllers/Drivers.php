@@ -805,5 +805,84 @@ $all = $this->db->query($sql)->row_array();
 	        echo json_encode($result);
 	        exit();
 		}
+		public function cashflow(){
+		    $this->template->template_render('cashflow');
+		}
+		 public function add_cashflow(){
+		     
+            $data = $this->input->post();
+            $add = [
+                'vc_name' => $data['vc_name'],
+                'cash_in_out' => $data['cash_in_out'],
+                'price' => $data['price'],
+                'vc_type' => $data['vc_type'],
+                'details' => $data['details'],
+                ];
+            $this->db->insert('cashflow',$add);
+            $this->session->set_flashdata('successmessage', 'Cash added successfully..');
+			redirect('drivers/cashflow');
+            
+            
+    }
+    
+    public function get_cashflow() {
+    $vc_type = $this->input->post('vc_type');
+
+    $this->db->where('vc_type', $vc_type);
+    $cashflow_data = $this->db->get('cashflow')->result_array();
+
+    foreach ($cashflow_data as &$data) {
+        if ($vc_type == 'vendor') {
+
+            $this->db->select('c_name');
+            $this->db->where('c_id', $data['vc_name']);
+            $query = $this->db->get('vendors');
+
+            $vendor = $query->row_array();
+            $data['vc_name'] = isset($vendor['c_name']) ? $vendor['c_name'] : 'Unknown Vendor';
+        } elseif ($vc_type == 'customer') {
+    
+            $this->db->select('c_name');
+            $this->db->where('c_id', $data['vc_name']);
+            $query = $this->db->get('customers');
+            $customer = $query->row_array();
+            $data['vc_name'] = isset($customer['c_name']) ? $customer['c_name'] : 'Unknown Customer';
+        }
+    }
+
+    // Return the fetched data with vendor/customer names as JSON response
+    echo json_encode($cashflow_data);
+}
+
+
+    
+     public function get_options() {
+        $vc_type = $this->input->post('vc_type');
+        
+        if ($vc_type === 'vendor') {
+            $options = $this->db->get('vendors')->result_array();
+        } elseif ($vc_type === 'customer') {
+            $options = $this->db->get('customers')->result_array();
+        } else {
+            $options = array(); // Handle invalid type
+        }
+        
+        // Return options as JSON
+        echo json_encode($options);
+    }
+    public function cashflow_del($id){
+        
+        $this->db->where('id', $id);
+        $result = $this->db->delete('cashflow');
+        if($result){
+        $this->session->set_flashdata('successmessage', 'Cash Deleted successfully..');
+		redirect('drivers/cashflow');
+            
+        }else{
+            $this->session->set_flashdata('warningmessage', 'Cash could be Deleted..');
+		redirect('drivers/cashflow');
+        }
+        
+    }
 
 	}

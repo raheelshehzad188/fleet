@@ -1,4 +1,4 @@
- <style type="text/css">
+<style type="text/css">
  .profile-user-img{
          border: 3px solid #adb5bd;
     margin: 0 auto;
@@ -27,6 +27,9 @@
 }
 .tab-content{
   display: block;
+}
+.footer{
+    display:none;
 }
 
  </style>
@@ -145,7 +148,7 @@
                     </form>
                     <div class="table-responsive">
                       <div class="ibox-content">
-                        <table id="bookingstbl2" class="table table-bordered table-striped table-hover">
+                        <table id="bookingstbl2" class="table table-bordered table-striped table-hover w-100" style="width:100%;">
                           <thead>
                             <tr>
                               <th>Sr/No.</th>
@@ -252,7 +255,7 @@
                                   <div class="col-sm-6 col-md-3">
                                       <div class="form-group">
                                          <label class="form-label">Reason<span class="form-required">*</span></label>
-                                         <textarea  class="form-control " name="reason"></textarea>
+                                         <textarea  class="form-control " style="height:35px;" name="reason"></textarea>
                                       </div>
                                   </div>
                                   <div class="col-sm-6 card-footer">
@@ -274,19 +277,19 @@
                          <form method="post" id="b_form" class="card" action="" novalidate="novalidate">
                          <div class="card-body">
                             <div class="row">
-                                   <div class="col-sm-6 col-md-3">
+                                   <div class="col-sm-6 col-md-5">
                                       <div class="form-group">
                                          <label class="form-label">Amount<span class="form-required">*</span></label>
                                          <input type="text" name="bonus_amount" value="" class="form-control" id="Amount">
                                       </div>
                                   </div>        
-                                  <div class="col-sm-6 col-md-3">
+                                  <div class="col-sm-6 col-md-5">
                                       <div class="form-group">
                                          <label class="form-label">Reason<span class="form-required">*</span></label>
-                                         <textarea  class="form-control " name="bonus_reason"></textarea>
+                                         <textarea  class="form-control " style="height:35px; w-100" name="bonus_reason"></textarea>
                                       </div>
                                   </div>
-                                  <div class="col-sm-6 card-footer">
+                                  <div class="col-sm-6 col-md-2 card-footer">
                                       <button type="submit" class="btn btn-primary" id="submit_bonus">Submit</button>
                                   </div>
 
@@ -295,24 +298,24 @@
                     </form>
                     <hr>
                     
-                    <form method="post" id="trip_add" class="card" action="" novalidate="novalidate">
-                      <div class="col-sm-6 col-md-3">
+                    <form method="post" id="trip_add" class="d-flex align-items-center card" action="" style=" align-items:center;" novalidate="novalidate">
+                      <div class="col-sm-6 col-md-5">
                                       <div class="form-group">
                                          <label class="form-label">Trip Start Date<span class="form-required">*</span></label>
                                          <input type="text" id="b_start_date" value="<?php echo date('Y-m-d', strtotime('-30 days')); ?>" name="t_start_date" class="form-control datetimepicker1" placeholder="Trip Start Date" autocomplete="off">
                                       </div>
                                   </div>
-                                  <div class="col-sm-6 col-md-3">
+                                  <div class="col-sm-6 col-md-5 ">
                                       <div class="form-group">
                                          <label class="form-label">Trip End Date<span class="form-required">*</span></label>
                                          <input type="text"id="b_end_date" value="<?php echo date('Y-m-d'); ?>"  name="t_end_date" class="form-control datetimepicker1" placeholder="Trip End Date" autocomplete="off">
                                       </div>
                                   </div>
-                                  <div class="col-sm-6 card-footer">
+                                  <div class="col-sm-6 col-md-2 card-footer">
                                       <button type="submit" class="btn btn-primary" id="submit_b_t">Submit</button>
                                   </div>
                     </form>
-                     <table id="bonus_data_table" class="table table-bordered table-striped table-hover">
+                     <table id="bonus_data_table" class="w-100 table table-bordered table-striped table-hover" style="width:100%;">
                           <thead>
                             <tr>
                               <th>Sr/No.</th>
@@ -339,22 +342,22 @@
                          <form method="post" id="l_form" class="card" action="" novalidate="novalidate">
                          <div class="card-body">
                             <div class="row">
-                                   <div class="col-sm-6 col-md-3">
+                                   <div class="col-sm-6 col-md-4">
                                       <div class="form-group">
                                          <label class="form-label">Amount IN<span class="form-required">*</span></label>
                                          <input type="text" name="amount_in" value="" class="form-control" id="amount_in">
                                       </div>
                                   </div> 
-                                  <div class="col-sm-6 col-md-3">
+                                  <div class="col-sm-6 col-md-4">
                                       <div class="form-group">
                                          <label class="form-label">Amount Out<span class="form-required">*</span></label>
                                          <input type="text" name="amount_out" value="" class="form-control" id="amount_out">
                                       </div>
                                   </div>        
-                                  <div class="col-sm-6 col-md-3">
+                                  <div class="col-sm-6 col-md-4">
                                       <div class="form-group">
                                          <label class="form-label">Reason<span class="form-required">*</span></label>
-                                         <textarea  class="form-control " name="Ioan_reason"></textarea>
+                                         <textarea  class="form-control "  style="height: 35px;" name="Ioan_reason"></textarea>
                                       </div>
                                   </div>
                                   <div class="col-sm-6 card-footer">
@@ -367,23 +370,23 @@
                     <hr>
                     
                     <form method="post" id="trip_add" class="card" action="" novalidate="novalidate">
-                      <div class="col-sm-6 col-md-3">
+                      <div class="col-sm-6 col-md-5">
                                       <div class="form-group">
                                          <label class="form-label">Date From<span class="form-required">*</span></label>
                                          <input type="text" id="l_start_date" value="<?php echo date('Y-m-d', strtotime('-30 days')); ?>" name="t_start_date" class="form-control datetimepicker1" placeholder="Trip Start Date" autocomplete="off">
                                       </div>
                                   </div>
-                                  <div class="col-sm-6 col-md-3">
+                                  <div class="col-sm-6 col-md-5">
                                       <div class="form-group">
                                          <label class="form-label">End To<span class="form-required">*</span></label>
                                          <input type="text"id="l_end_date" value="<?php echo date('Y-m-d'); ?>"  name="t_end_date" class="form-control datetimepicker1" placeholder="Trip End Date" autocomplete="off">
                                       </div>
                                   </div>
-                                  <div class="col-sm-6 card-footer">
+                                  <div class="col-sm-6 col-md-2 card-footer">
                                       <button type="submit" class="btn btn-primary" id="submit_l_t">Submit</button>
                                   </div>
                     </form>
-                     <table id="loan_data_table" class="table table-bordered table-striped table-hover">
+                     <table id="loan_data_table" class="w-100 table table-bordered table-striped table-hover"  style="width: 100%;">
                           <thead>
                             <tr>
                               <th>Sr/No.</th>
@@ -551,6 +554,10 @@
                     <tr>
                       <td>Driver Mobile NO</td>
                       <td><?= output($vehicledetails['d_mobile']) ?></td>
+                    </tr>
+                    <tr>
+                      <td>Driver City</td>
+                      <td><?= output($vehicledetails['city']) ?></td>
                     </tr>
                     <tr>
                       <td>Driver Address</td>

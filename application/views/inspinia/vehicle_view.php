@@ -7,7 +7,20 @@
 .tab-content{
   display: block;
 }
-
+.footer{
+    display:none;
+}
+.d-flex{
+    display:flex;
+}
+.row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+}
+.pb-15{
+    padding-bottom:15px;
+}
  </style>
    <!-- /.content-wrapper -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
@@ -94,8 +107,9 @@
                                   </div>
                                </div>        
                                <div class="col-sm-6 col-md-3">
-                                <label class="form-label">Customer Name<span class="form-required">*</span></label>
+                               
                                 <div class="form-group">
+                                     <label class="form-label">Customer Name<span class="form-required">*</span></label>
                                    <select id="t_customer_id" class="form-control" required="true" name="t_customer_id">
                                       <option value="">Select Customer</option>
                                       <?php foreach ($customerlist as $key => $customerlists) { ?>
@@ -126,7 +140,7 @@
                             </form>
                     <div class="table-responsive">
             <div class="ibox-content">
-             <table id="bookingstbl2" class="table table-bordered table-striped table-hover">
+             <table id="bookingstbl2" class="table table-bordered table-striped table-hover" style="width:100%;">
             <thead>
               <tr>
                 <th>Sr/No.</th>
@@ -197,7 +211,7 @@
                   </div>
 
                   <div class="tab-pane" id="vechicle_incomexpense">
-                     <table id="incomexpenstbl1" class="table table-striped projects">
+                     <table id="incomexpenstbl1" class="table table-striped projects" style="width:100%;">
                           <thead>
                               <tr>
                                   <th class="percent1">
@@ -219,7 +233,7 @@
                       </table>
                   </div>
                   <div class="tab-pane" id="fuel">
-                     <table id="fueltable1" class="table table-striped projects">
+                     <table id="fueltable1" class="table table-striped projects" style="width:100%">
                          <thead>
                               <tr>
                                   <th class="percent1">
@@ -436,7 +450,7 @@
                     ?>
                     <form method="post" id="form_maintenance" class="card" action="" novalidate="novalidate">
                          <div class="card-body">
-                            <div class="row">
+                            <div class="row d-flex" style="align-items:center;">
                                    
                                 <div class="col-sm-6 col-md-3">
                                   <div class="form-group">
@@ -463,7 +477,7 @@
                                      </select>
                                   </div>
                                </div>
-                               <div class="col-sm-6 col-md-3" id="m_date" style="display: none;">
+                               <div class="col-sm-6 col-md-3" id="m_date" >
                                   <div class="form-group">
                                      <label class="form-label">Date<span class="form-required">*</span></label>
                                      <input type="text"  value="2024-05-08" id="m_date1" name="m_date" class="form-control datetimepicker"  autocomplete="off">
@@ -475,7 +489,7 @@
                                      <input type="text" name="m_km" id="m_km1" class="form-control"  autocomplete="off">
                                   </div>
                                </div>
-                                 <div class="col-sm-6 card-footer">
+                                 <div class="col-sm-6 pb-15 card-footer">
                                <button type="submit" class="btn btn-primary" id="save_maintenance">Submit</button>
                             </div>
 

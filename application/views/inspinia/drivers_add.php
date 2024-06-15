@@ -81,6 +81,13 @@
                         <input type="text" name="cast" value="<?php echo (isset($driverdetails)) ? $driverdetails[0]['cast']:'' ?>" class="form-control" placeholder="Cast" >
                       </div>
                     </div>
+                    
+                    <div class="col-sm-6 col-md-3">
+                      <div class="form-group">
+                        <label class="form-label">Resident City<span class="form-required">*</span></label>
+                        <input type="text" name="city" value="<?php echo (isset($driverdetails)) ? $driverdetails[0]['city']:'' ?>" class="form-control" placeholder="City" >
+                      </div>
+                    </div>
                     <div class="col-sm-6 col-md-3">
                       <div class="form-group">
                         <label class="form-label">CNIC No<span class="form-required">*</span></label>

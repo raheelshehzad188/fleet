@@ -109,18 +109,43 @@
                </div>
                 
                <div class="col-sm-6 col-md-3">
-                  <div class="form-group">
-                     <label class="form-label">Trip Start Date<span class="form-required">*</span></label>
-                     <input type="text" value="<?php echo (isset($tripdetails)) ? date(datetimeformat(), strtotime($tripdetails['detail']['t_start_date'])):'' ?>" name="t_start_date" value="" class="form-control datetimepicker" placeholder="Trip Start Date">
-                  </div>
-               </div>
+    <div class="form-group">
+        <label class="form-label">Trip Start Date<span class="form-required">*</span></label>
+        <input type="date" value="<?php echo (isset($tripdetails)) ? date('Y-m-d', strtotime($tripdetails['detail']['t_start_date'])) : '' ?>" name="t_start_date" id="t_start_date" onchange="cal_days()" class="form-control" placeholder="Trip Start Date">
+    </div>
+</div>
+<div class="col-sm-6 col-md-3">
+    <div class="form-group">
+        <label class="form-label">Trip End Date<span class="form-required">*</span></label>
+        <input type="date" value="<?php echo (isset($tripdetails)) ? date('Y-m-d', strtotime($tripdetails['detail']['t_end_date'])) : '' ?>" name="t_end_date" id="t_end_date" class="form-control" placeholder="Trip End Date">
+    </div>
+</div>
+
                <div class="col-sm-6 col-md-3">
                   <div class="form-group">
-                     <label class="form-label">Trip End Date<span class="form-required">*</span></label>
-                     <input type="text" value="<?php echo (isset($tripdetails)) ? date(datetimeformat(), strtotime($tripdetails['detail']['t_end_date'])):'' ?>" name="t_end_date" value="" class="form-control datetimepicker" placeholder="Trip End Date">
+                     <label class="form-label">NO of Days<span class="form-required">*</span></label>
+                     <input type="number"  id="no_days" value="" class="form-control " placeholder="No of days" readonly>
                   </div>
                </div>
                 
+                
+                <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+            <label for="geo_name">Trip Type</label>
+            <select name="t_type" class="form-control">
+               
+               
+                
+               
+                       
+                       <option value="Single day" <?= (isset($tripdetails) && $tripdetails['detail']['t_type'] == 'Single day') ? 'selected' : ''; ?>>Single day</option>
+                      <option value="Rounded day" <?= (isset($tripdetails) && $tripdetails['detail']['t_type'] == 'Rounded day') ? 'selected' : ''; ?>>Rounded day</option>
+                   
+          
+            </select>
+
+        </div>
+               </div>
 
             </div>
 
@@ -175,7 +200,8 @@
                       </tbody>
                       <tfoot>
                           <tr>
-                              <td colspan="12" style="text-align: right;"><button style="background: #007137;font-size: 12px;"  type="button" index="<?= $fuelindex +1 ?>" class="add_more btn btn-success" target="#petrcontent" content='
+                              <td colspan="12" style="text-align: right;">
+                                  <button style="background: #007137;font-size: 12px;"  type="button" index="<?= $fuelindex +1 ?>" class="add_more btn btn-success" target="#petrcontent" content='
                           <tr id="pet_index" >
                           <td scope="col">
                             <select name="petrol[name][]" class="form-control">
@@ -207,9 +233,11 @@
                         <tr>
                           <th scope="col">From</th>
                           <th scope="col">To</th>
+                          <th scope="col">Material Type</th>
                           <th scope="col">Weight</th>
                           <th scope="col">Unit Price</th>
                           <th scope="col">Wages</th>
+                          <th scope="col">Paid</th>
                           <th scope="col">Action</th>
                         </tr>
                       </thead>
@@ -222,32 +250,44 @@
                               {
                                   $routeindex++;
                                   ?>
-/                                    <tr id="row_<?= $routeindex ?>" >
+                                  <tr id="row_<?= $routeindex ?>" >
                           <td scope="col">
                             <select name="route[route_from][]" class="form-control">
                               <?php
                                 foreach ($routes as $key => $value) {
                                   ?>
-                                    <option value="<?=$value['id'] ?>" <?= ($value['id'] == $v['route_from'])?'selected':'' ?>><?=$value['name'] ?></option>
+                                    <option value="<?=$value['name'] ?>" <?= ($value['name'] == $v['route_from'])?'selected':'' ?>><?=$value['name'] ?></option>
                                   <?php
                                 }
                               ?>
                               </select>
                           </td>
                           <td scope="col">
-                            <select name="route[route_to][]" class="form-control">
+                            <select name="route[vendors][]" class="form-control">
                               <?php
-                                foreach ($routes as $key => $value) {
+                                foreach ($vendors as $key => $value) {
                                   ?>
-                                    <option value="<?=$value['id'] ?>" <?= ($value['id'] == $v['route_to'])?'selected':'' ?>><?=$value['name'] ?></option>
+                                    <option value="<?=$value['c_id'] ?>" <?= ($value['c_id'] == $v['vendors'])?'selected':'' ?>><?=$value['c_name'] ?></option>
                                   <?php
                                 }
                               ?>
                               </select>
                           </td>
+                          <td scope="col">
+                           <select name="route[material_type][]" class="form-control">
+                              <?php
+                                foreach ($material_type as $key => $value) {
+                                  ?>
+                                    <option value="<?=$value['mt_id'] ?>" <?= ($value['mt_id'] == $v['material_type'])?'selected':'' ?>><?=$value['material_name'] ?></option>
+                                  <?php
+                                }
+                              ?>
+                            </select>
+                          </td>
                           <td scope="col"><input class="form-control weight" placeholder="Weight" type="text" name="route[weight][]"  value="<?= $v['weight'] ?>" onkeyup="cal_wages(<?=  $routeindex ?>)" /></td>
                           <td scope="col"><input class="form-control unit_price" placeholder="Unit Price" type="text" name="route[unit_price][]"  value="<?= $v['unit_price'] ?>"  onkeyup="cal_wages(<?= $routeindex ?>)" /></td>
                           <td scope="col"><input class="form-control wages" placeholder="Wages" type="text" name="route[wages][]"  value="<?= $v['total'] ?>" readonly="true"  /></td>
+                          <td scope="col"><input class="form-control" type="checkbox" name="route[is_paid][]" value="1" <?= ($v['is_paid'])?'checked':''; ?>  /></td>
                           <td scope="col"><button class="btn btn-danger" target="#routecontent" onclick="del_row(<?= $routeindex; ?>)">-</button></td>
                         </tr>
                                   <?php
@@ -273,11 +313,22 @@
                             </select>
                           </td>
                           <td scope="col">
-                           <select name="route[route_to][]" class="form-control">
-                              <?php
-                                foreach ($routes as $key => $value) {
+                           <select name="route[vendors][]" class="form-control">
+                              <?php 
+                                foreach ($vendors as $key => $value) {
                                   ?>
-                                    <option value="<?=$value['name'] ?>"><?=$value['name'] ?></option>
+                                    <option value="<?=$value['c_id'] ?>"><?=$value['c_name'] ?></option>
+                                  <?php
+                                }
+                              ?>
+                            </select>
+                          </td>
+                          <td scope="col">
+                           <select name="route[material_type][]" class="form-control">
+                              <?php
+                                foreach ($material_type as $key => $value) {
+                                  ?>
+                                    <option value="<?=$value['mt_id'] ?>"><?=$value['material_name'] ?></option>
                                   <?php
                                 }
                               ?>
@@ -286,6 +337,7 @@
                           <td scope="col"><input class="form-control weight" placeholder="Weight" type="text" name="route[weight][]" onkeyup="cal_wages(index)" /></td>
                           <td scope="col"><input class="form-control unit_price" placeholder="Unit Price" type="text" name="route[unit_price][]"  onkeyup="cal_wages(index)" /></td>
                           <td scope="col"><input class="form-control wages" placeholder="Wages" type="text" name="route[wages][]" readonly="true"  /></td>
+                          <td scope="col"><input class="form-control" type="checkbox" name="route[is_paid][]" value="1"  /></td>
                           <td scope="col"><button class="btn btn-danger" target="#routecontent" onclick="del_row(index)">-</button></td>
                         </tr>
                           '><i class="fa fa-plus"></i> Add Route</button></td>
@@ -430,6 +482,23 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/javascript">
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+  
+  $('ul.tabs li').click(function(){
+    var tab_id = $(this).attr('data-tab');
+
+    $('ul.tabs li').removeClass('current');
+    $('.tab-content').removeClass('current');
+
+    $(this).addClass('current');
+    $("#"+tab_id).addClass('current');
+  })
+
+})
+</script>
+<script type="text/javascript">
     $(document).ready(function() {
         $('#t_vechicle').on('change',function(){
             var id = $(this).val();
@@ -462,5 +531,29 @@ $(document).ready(function(){
                 });
             }
         });
+    });
+    function cal_days()
+    {
+
+      var date2 = new Date($('#t_end_date').val());
+    var date1 = new Date($('#t_start_date').val());
+      
+    // To calculate the time difference of two dates
+    var Difference_In_Time = date2.getTime() - date1.getTime();
+      
+    // To calculate the no. of days between two dates
+    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    if(Difference_In_Days)
+    {
+      $('#no_days').val(Difference_In_Days);
+    }
+    }
+    $('#t_end_date').change(function(){
+
+      cal_days();
+    });
+    $('#t_start_date').change(function(){
+
+      cal_days();
     });
 </script>

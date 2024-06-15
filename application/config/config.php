@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $lenv = 'local';
-// $lenv = 'live';
+$lenv = 'live';
 if($lenv == 'local')
 {
 $config['base_url'] = "http://localhost/fleet/";
